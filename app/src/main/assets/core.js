@@ -22,3 +22,24 @@ postal.listen("android::finish", function(){
 postal.listen("android::exit", function(){
 	android.exit();
 });
+
+
+postal.listen("android::button.pressed", function(data){
+	postal.say("button::pressed", {
+		keycode : data.mKeyCode
+	});
+});
+
+postal.listen("button::pressed", function(data){
+	switch(data.keycode){
+		case 4:
+			android.exit();
+		break;
+		case 24:
+			android.showToast("privet");
+		break;
+		case 25:
+			android.showToast(new Date().toString());
+		break;
+	}
+});

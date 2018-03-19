@@ -22,17 +22,17 @@ public class Main extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        webtoolchain.send(new Envelope("android", "exit", new Object()));
-        if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            switch (keyCode) {
+        webtoolchain.send(new Envelope("android", "button.pressed", event));
+//        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+//            switch (keyCode) {
+//
+//                case KeyEvent.KEYCODE_BACK:
+//                    webtoolchain.onBackButtonPressed();
+//                    return true;
+//            }
+//
+//        }
 
-                case KeyEvent.KEYCODE_BACK:
-                    webtoolchain.onBackButtonPressed();
-                    return true;
-            }
-
-        }
-
-        return super.onKeyDown(keyCode, event);
+        return true;
     }
 }
