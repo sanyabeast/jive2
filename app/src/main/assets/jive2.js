@@ -1,6 +1,7 @@
 "use strict";
 /*Jive2Core*/
 var JiveCore = function(){
+	this.domParser = new DOMParser();
 	this.__setupAndroidBridgeProxy();
 	this.__createSubs();
 
@@ -69,11 +70,76 @@ JiveCore.prototype = {
 
 		};
 	},
+	__loop : function(list, callback, context){
+		if (typeof list.length == "number"){
+			for (var a = 0, l = list.length; a < l; a++){
+				callback.call(context, list[a], a, list);
+			}
+		} else {	
+			for (var a in list){
+				callback.call(context, list[a], a, list);
+			}
+		}
+	},
 	load : function(){
 		var xhr = new XMLHttpRequest();
 		xhr.open("get", "./test/index.html", false);
 		xhr.send();
-		console.log(xhr.responseText);
+
+		var dom = this.parseHTML(xhr.responseText);
+
+		this.integrateDOM(dom);
+	},
+	parseHTML : function(html){
+		var fragment = this.domParser.parseFromString(html, "text/html");
+		return fragment;
+	},
+	integrateDOM : function(dom){
+		var bodyFragment = new DocumentFragment();
+		var headFragment = new DocumentFragment();
+
+		var bodyChildren;
+		var headChildren;
+
+		if (dom.body && dom.body.childNodes && dom.body.childNodes.length){
+			bodyChildren = Array.prototype.slice.apply(dom.body.childNodes);
+
+			this.__loop(bodyChildren, function(node, index){
+				bodyFragment.appendChild(node);
+			}, this);
+
+			this.__revokeScripts(bodyFragment);
+		}
+
+		if (dom.head && dom.head.childNodes && dom.head.childNodes.length){
+			headChildren = Array.prototype.slice.apply(dom.head.childNodes);
+			this.__loop(headChildren, function(node, index){
+				headFragment.appendChild(node);
+			}, this);
+
+			this.__revokeScripts(headFragment);
+		}
+
+		document.head.appendChild(headFragment);
+		document.body.appendChild(bodyFragment);
+	},
+	__revokeScripts : function(fragment){
+		var scripts = fragment.querySelectorAll("script");
+
+		this.__loop(scripts, function(scriptNode, index){
+			scriptNode.replaceWith(this.__revokeScript(scriptNode));
+		}, this);
+	},
+	__revokeScript : function(scriptNode){
+		var newScriptNode = document.createElement("script");
+
+		this.__loop(scriptNode.attributes, function(attr, index){
+			newScriptNode.setAttribute(attr.name, attr.value);
+		});
+
+		newScriptNode.innerHTML = scriptNode.innerHTML;
+
+		return newScriptNode;
 	}
 };
 
