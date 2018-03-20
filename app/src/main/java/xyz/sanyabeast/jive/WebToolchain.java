@@ -24,7 +24,7 @@ public class WebToolchain {
 
         webview = (WebView) mainActivity.findViewById(R.id.webview);
         webview.setWebViewClient(client);
-        webview.addJavascriptInterface(webinterface, "android");
+        webview.addJavascriptInterface(webinterface, "_android");
 
         settings = webview.getSettings();
         settings.setJavaScriptEnabled(true);
