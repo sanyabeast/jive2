@@ -1,12 +1,14 @@
 "use strict";
 /*Jive2Core*/
 var JiveCore = function(){
-	this.domParser = new DOMParser();
+	this.__setupEvents();
 	this.__setupAndroidBridgeProxy();
 	this.__createSubs();
 
 	console.log(typeof window.android);
 	console.log(window.android.showToast);
+
+	window.addEventListener("DOMContentLoaded", this.__onDOMContentLoaded.bind(this));
 };
 
 JiveCore.prototype = {
@@ -70,6 +72,22 @@ JiveCore.prototype = {
 
 		};
 	},
+	__setupEvents : function(){
+		this.events = {
+			jiveReady : new Event("jive.ready")
+		};
+	},
+	__onDOMContentLoaded : function(){
+		this.iframe = document.querySelector("#iframe");
+		this.iframe.addEventListener("load", this.__onIframeLoaded.bind(this));
+		this.iframe.window = window.frames[0].window;
+	},
+	__onIframeLoaded : function(evt){
+		this.iframe.window.postal = window.postal;
+		this.iframe.window.android = window.android;
+		this.iframe.window.core = this;
+		this.iframe.window.dispatchEvent(this.events.jiveReady);
+	},
 	__loop : function(list, callback, context){
 		if (typeof list.length == "number"){
 			for (var a = 0, l = list.length; a < l; a++){
@@ -82,65 +100,14 @@ JiveCore.prototype = {
 		}
 	},
 	load : function(){
-		var xhr = new XMLHttpRequest();
-		xhr.open("get", "./test/index.html", false);
-		xhr.send();
-
-		var dom = this.parseHTML(xhr.responseText);
-
-		this.integrateDOM(dom);
-	},
-	parseHTML : function(html){
-		var fragment = this.domParser.parseFromString(html, "text/html");
-		return fragment;
-	},
-	integrateDOM : function(dom){
-		var bodyFragment = new DocumentFragment();
-		var headFragment = new DocumentFragment();
-
-		var bodyChildren;
-		var headChildren;
-
-		if (dom.body && dom.body.childNodes && dom.body.childNodes.length){
-			bodyChildren = Array.prototype.slice.apply(dom.body.childNodes);
-
-			this.__loop(bodyChildren, function(node, index){
-				bodyFragment.appendChild(node);
-			}, this);
-
-			this.__revokeScripts(bodyFragment);
+		if (!this.iframe){
+			todo.add("load", todo.in(300), function(){
+				this.load.apply(this, arguments);
+			}.bind(this));
+		} else {
+			this.iframe.src = "http://games.cdn.famobi.com/html5games/s/smarty-bubbles/v110/?fg_domain=play.famobi.com&fg_aid=A1000-1&fg_uid=d8f24956-dc91-4902-9096-a46cb1353b6f&fg_pid=4638e320-4444-4514-81c4-d80a8c662371&fg_beat=778#_ga=2.249529728.606019034.1521567737-487884578.1521567737";
 		}
-
-		if (dom.head && dom.head.childNodes && dom.head.childNodes.length){
-			headChildren = Array.prototype.slice.apply(dom.head.childNodes);
-			this.__loop(headChildren, function(node, index){
-				headFragment.appendChild(node);
-			}, this);
-
-			this.__revokeScripts(headFragment);
-		}
-
-		document.head.appendChild(headFragment);
-		document.body.appendChild(bodyFragment);
 	},
-	__revokeScripts : function(fragment){
-		var scripts = fragment.querySelectorAll("script");
-
-		this.__loop(scripts, function(scriptNode, index){
-			scriptNode.replaceWith(this.__revokeScript(scriptNode));
-		}, this);
-	},
-	__revokeScript : function(scriptNode){
-		var newScriptNode = document.createElement("script");
-
-		this.__loop(scriptNode.attributes, function(attr, index){
-			newScriptNode.setAttribute(attr.name, attr.value);
-		});
-
-		newScriptNode.innerHTML = scriptNode.innerHTML;
-
-		return newScriptNode;
-	}
 };
 
 window.core = new JiveCore();
