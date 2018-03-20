@@ -15,7 +15,7 @@ JiveCore.prototype = {
 			return null;
 		};
 
-		window.android = new Proxy(window._android, {
+		window.android = new Proxy(window._android || {}, {
 			get : function(target, propName){
 				if (typeof target[propName] == "function"){
 					return target[propName].bind(target);
