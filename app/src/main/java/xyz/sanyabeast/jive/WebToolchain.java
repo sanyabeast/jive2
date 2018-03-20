@@ -31,8 +31,6 @@ public class WebToolchain {
         settings.setJavaScriptEnabled(true);
         settings.setAllowFileAccessFromFileURLs(true); //Maybe you don't need this rule
         settings.setAllowUniversalAccessFromFileURLs(true);
-
-        webview.loadUrl("https://google.com");
     }
 
     public void open(String location){
