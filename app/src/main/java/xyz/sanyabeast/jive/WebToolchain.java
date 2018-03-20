@@ -26,8 +26,11 @@ public class WebToolchain {
         webview.setWebViewClient(client);
         webview.addJavascriptInterface(webinterface, "_android");
 
+
         settings = webview.getSettings();
         settings.setJavaScriptEnabled(true);
+        settings.setAllowFileAccessFromFileURLs(true); //Maybe you don't need this rule
+        settings.setAllowUniversalAccessFromFileURLs(true);
 
         webview.loadUrl("https://google.com");
     }

@@ -1,0 +1,29 @@
+html, body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+}
+
+.box {
+	position: absolute;
+	width: 5vw;
+	height: 5vw;
+	background-color: #f44336;
+	animation: rotation 4s infinite linear;
+	box-shadow: 26px 18px 80px #00000080;
+}
+
+
+@keyframes rotation {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	50% {
+		transform: rotate(180deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}

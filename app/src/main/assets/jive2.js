@@ -68,6 +68,12 @@ JiveCore.prototype = {
 			}),
 
 		};
+	},
+	load : function(){
+		var xhr = new XMLHttpRequest();
+		xhr.open("get", "./test/index.html", false);
+		xhr.send();
+		console.log(xhr.responseText);
 	}
 };
 
