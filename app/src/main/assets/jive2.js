@@ -31,6 +31,7 @@ JiveCore.prototype = {
 	__createSubs : function(){
 		this.subscriptions = {
 			eventBridge : postal.listen("android::bridge", function(data){
+				console.log(data);
 				if (typeof data == "object" && typeof data.channel == "string" && typeof data.topic == "string"){
 					postal.publish({
 						channel : data.channel,
@@ -105,7 +106,7 @@ JiveCore.prototype = {
 				this.load.apply(this, arguments);
 			}.bind(this));
 		} else {
-			this.iframe.src = "http://games.cdn.famobi.com/html5games/s/smarty-bubbles/v110/?fg_domain=play.famobi.com&fg_aid=A1000-1&fg_uid=d8f24956-dc91-4902-9096-a46cb1353b6f&fg_pid=4638e320-4444-4514-81c4-d80a8c662371&fg_beat=778#_ga=2.249529728.606019034.1521567737-487884578.1521567737";
+			this.iframe.src = "./test/index.html";
 		}
 	},
 };

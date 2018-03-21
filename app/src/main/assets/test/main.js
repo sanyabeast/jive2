@@ -17,7 +17,7 @@ window.addEventListener("jive.ready", function(){
 		}
 	}
 
-	console.log(android.getSystemConfig());
+	console.log(android.gsmIsSignedIn());
 });
 
 // setInterval(function(){

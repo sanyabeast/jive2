@@ -14,9 +14,11 @@ import com.google.gson.Gson;
 
 public class WebAppInterface {
     Context context;
+    GoogleServicesManager gsm;
 
     WebAppInterface(Context c){
         context = c;
+        gsm = new GoogleServicesManager(context);
     }
 
     @JavascriptInterface
@@ -37,5 +39,11 @@ public class WebAppInterface {
         Configuration config = context.getResources().getConfiguration();
         String configJSON = gson.toJson(config);
         return configJSON;
+    }
+
+    @JavascriptInterface
+    public String gsmIsSignedIn(){
+        Gson gson = new Gson();
+        return gson.toJson(gsm.isSignedIn());
     }
 }
