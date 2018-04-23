@@ -1,5 +1,6 @@
 package xyz.sanyabeast.jive;
 import android.app.Activity;
+import android.graphics.Color;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -23,6 +24,7 @@ public class WebToolchain {
         webinterface = new WebAppInterface(activity);
 
         webview = (WebView) mainActivity.findViewById(R.id.webview);
+        webview.setBackgroundColor(Color.TRANSPARENT);
         webview.setWebViewClient(client);
         webview.addJavascriptInterface(webinterface, "_android");
 
