@@ -16,9 +16,9 @@ public class WebAppInterface {
     Context context;
     GoogleServicesManager gsm;
 
-    WebAppInterface(Context c){
+    WebAppInterface(Context c, GoogleServicesManager passedGsm){
         context = c;
-        gsm = new GoogleServicesManager(context);
+        gsm = passedGsm;
     }
 
     @JavascriptInterface
