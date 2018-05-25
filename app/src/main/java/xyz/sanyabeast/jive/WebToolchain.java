@@ -21,9 +21,9 @@ public class WebToolchain {
     WebViewClient client = new WebViewClient();
     WebAppInterface webinterface;
 
-    public WebToolchain(Activity activity){
+    public WebToolchain(Activity activity, GoogleServicesManager passedGsm){
         mainActivity = activity;
-        webinterface = new WebAppInterface(activity);
+        webinterface = new WebAppInterface(activity, passedGsm);
 
         webview = (WebView) mainActivity.findViewById(R.id.webview);
         webview.setBackgroundColor(Color.TRANSPARENT);
