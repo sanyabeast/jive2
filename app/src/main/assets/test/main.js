@@ -11,7 +11,7 @@ window.addEventListener("jive.ready", function(){
 			box.style.backgroundColor = ["hsl(", Math.random() * 360, ", 100%, 60%)"].join("");
 			box.style.left = (x * width) + "px";
 			box.style.top = (y * height) + "px";
-			box.style.animationDuration = (Math.random() * 4 + 2) + "s";
+			box.style.animationDuration = (Math.random() * 2 + 1) + "s";
 
 			document.body.appendChild(box);
 		}

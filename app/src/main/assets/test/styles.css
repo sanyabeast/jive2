@@ -10,7 +10,7 @@ html, body {
 	width: 8vw;
 	height: 8vw;
 	background-color: #f44336;
-	animation: rotation 4s infinite linear;
+	animation: rotation 1s infinite linear;
 	box-shadow: 4px 8px 20px #00000080;
 	border-radius: 25%;
 }
@@ -18,17 +18,17 @@ html, body {
 
 @keyframes rotation {
 	0% {
-		transform: rotate(0deg) scale(0.4);
+		transform: rotate(0deg) scale(0.1) translate(30px, 30px);
 		filter: hue-rotate(0deg);
 	}
 
 	50% {
-		transform: rotate(180deg) scale(1);
+		transform: rotate(180deg) scale(0.6) translate(-30px, -30px);
 		filter: hue-rotate(180deg);
 	}
 
 	100% {
-		transform: rotate(360deg) scale(0.4);
+		transform: rotate(360deg) scale(0.1) translate(-30px, 30px);
 		filter: hue-rotate(360deg);
 	}
 }
