@@ -44,10 +44,12 @@ class GServicesMan {
         );
     }
 
-    private void signInSilently() {
+    public void signInSilently() {
         Log.d(TAG, "signInSilently()");
 
-        mGoogleSignInClient.silentSignIn().addOnCompleteListener((Executor) this,
+        Activity activity = (Activity) context;
+
+        mGoogleSignInClient.silentSignIn().addOnCompleteListener(activity,
                 new OnCompleteListener<GoogleSignInAccount>() {
                     @Override
                     public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
