@@ -13,12 +13,10 @@ import com.google.gson.Gson;
  */
 
 public class WebAppInterface {
-    Context context;
-    GoogleServicesManager gsm;
+    private Context context;
 
-    WebAppInterface(Context c, GoogleServicesManager passedGsm){
+    WebAppInterface(Context c){
         context = c;
-        gsm = passedGsm;
     }
 
     @JavascriptInterface
@@ -42,8 +40,8 @@ public class WebAppInterface {
     }
 
     @JavascriptInterface
-    public String gsmIsSignedIn(){
-        Gson gson = new Gson();
-        return gson.toJson(gsm.isSignedIn());
+    public void gsSignInSilently(){
+        RootActivity mainActivity = (RootActivity) context;
+        GServicesMan mGServicesMan = mainActivity.getmGServicesMan();
     }
 }

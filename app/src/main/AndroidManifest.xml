@@ -22,7 +22,7 @@
             android:value="@integer/google_play_services_version"
         />
         <activity
-            android:name=".Main"
+            android:name=".RootActivity"
             android:theme="@style/AppTheme"
         >
         </activity>

@@ -1,5 +1,6 @@
 package xyz.sanyabeast.jive;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
@@ -15,41 +16,43 @@ import com.google.gson.Gson;
  */
 
 public class WebToolchain {
-    WebView webview;
-    Activity mainActivity;
-    WebSettings settings;
-    WebViewClient client = new WebViewClient();
-    WebAppInterface webinterface;
+    private WebView mWebView;
+    private Context context;
+    private WebSettings mWebSettings;
+    private WebViewClient mWebViewClient = new WebViewClient();
+    private WebAppInterface mWebAppInterface;
 
-    public WebToolchain(Activity activity, GoogleServicesManager passedGsm){
-        mainActivity = activity;
-        webinterface = new WebAppInterface(activity, passedGsm);
+    public WebToolchain(Context c){
+        context = c;
+        mWebAppInterface = new WebAppInterface(c);
 
-        webview = (WebView) mainActivity.findViewById(R.id.webview);
-        webview.setBackgroundColor(Color.TRANSPARENT);
-        webview.setWebViewClient(client);
-        webview.addJavascriptInterface(webinterface, "_android");
+        Activity activity = (Activity) context;
+
+        mWebView = (WebView) activity.findViewById(R.id.webview);
+        mWebView.setBackgroundColor(Color.TRANSPARENT);
+        mWebView.setWebViewClient(mWebViewClient);
+        mWebView.addJavascriptInterface(mWebAppInterface, "_android");
 
 
-        settings = webview.getSettings();
-        settings.setJavaScriptEnabled(true);
-        settings.setAllowFileAccessFromFileURLs(true); //Maybe you don't need this rule
-        settings.setDomStorageEnabled(true);
-        settings.setMediaPlaybackRequiresUserGesture(false);
-        settings.setOffscreenPreRaster(true);
-        settings.setAllowUniversalAccessFromFileURLs(true);
+        mWebSettings = mWebView.getSettings();
+        mWebSettings.setJavaScriptEnabled(true);
+        mWebSettings.setAllowFileAccessFromFileURLs(true); //Maybe you don't need this rule
+        mWebSettings.setDomStorageEnabled(true);
+        mWebSettings.setMediaPlaybackRequiresUserGesture(false);
+        mWebSettings.setOffscreenPreRaster(true);
+        mWebSettings.setAllowUniversalAccessFromFileURLs(true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // chromium, enable hardware acceleration
-            webview.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+            mWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         } else {
             // older android version, disable hardware acceleration
-            webview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+            mWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
     }
 
     public void open(String location){
-        webview.loadUrl(location);
+        mWebView.loadUrl(location);
     }
 
     public void onBackButtonPressed(){
@@ -59,6 +62,6 @@ public class WebToolchain {
     public void send(Envelope envelope){
         Gson gson = new Gson();
         String json = gson.toJson(envelope);
-        webview.loadUrl("javascript:postal.say('android::bridge', " + json + ")");
+        mWebView.loadUrl("javascript:postal.say('android::bridge', " + json + ")");
     }
 }
