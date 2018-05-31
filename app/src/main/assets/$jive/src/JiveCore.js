@@ -7,15 +7,13 @@ define([
 	/*Jive2Core*/
 	var JiveCore = function(){
 		this.__setupAndroidBridgeProxy();
+		this.__patchProtos();
 		this.__patchConsole();
 		this.__setupEvents();
 		this.__createSubs();
 
 		window.postal = postal;
 		window.todo = todo;
-
-		console.log(typeof window.android);
-		console.log(window.android.showToast);
 
 		var debugTextArea = document.querySelector("#debug")
 
@@ -35,8 +33,14 @@ define([
 			return this._iframe;
 		},
 		__setupAndroidBridgeProxy : function(){
+			var jive = this;
+
 			var placeholderMethod = function(){
+				var args = _.slice(arguments);
+				var methodName = args.shift();
+
 				console.warn("Android bridge method is inaccessible");
+				console.warn("Method: " + methodName, "arguments: ", args);
 				return null;
 			};
 
@@ -47,40 +51,39 @@ define([
 					if (typeof target[propName] == "function"){
 						return target[propName].bind(target);
 					} else {
-						return placeholderMethod;
+						return placeholderMethod.bind(jive, propName);
 					}
 				}
 			});
 		},
 		__createSubs : function(){
 			this.subscriptions = {
-				eventBridge : postal.listen("android::bridge", function(data){
+				eventBridge : postal.listen("android.bridge", function(data){
 					if (typeof data == "object" && typeof data.channel == "string" && typeof data.topic == "string"){
-						postal.publish({
-							channel : data.channel,
-							topic : data.topic,
-							data : data.data
-						});
+						postal.say(data.theme, data.data);
 					} else {
-						console.warn("JIVE: unable to dispatch event");
+						console.warn("Unable to dispatch event");
 					}
 				}),
-				showToast : postal.listen("android::showToast", function(message){
+				showToast : postal.listen("android.showToast", function(message){
 					android.showToast(message);
 				}),
-				finishApp : postal.listen("android::finish", function(){
+				finishApp : postal.listen("android.finish", function(){
 					android.finish();
 				}),
-				exitApp : postal.listen("android::exit", function(){
+				exitApp : postal.listen("android.exit", function(){
 					android.exit();
 				}),
-				buttonPressed : postal.listen("android::button.pressed", function(data){
-					postal.say("button::pressed", {
+				buttonPressed : postal.listen("android.button.pressed", function(data){
+					postal.say("button.pressed", {
 						keycode : data.mKeyCode
 					});
 				}),
+				logData : postal.listen("console.log", function(data){
+					console.log("[console.log]", JSON.stringify(data));
+				}),
 				/*test*/
-				btnPressed : postal.listen("button::pressed", function(data){
+				btnPressed : postal.listen("button.pressed", function(data){
 					switch(data.keycode){
 						case 4:
 							android.exit();
@@ -130,7 +133,7 @@ define([
 			_.forEach(["log", "warn", "error", "info"], function(method){
 				var native = console[method];
 				console[method] = function(){
-					var args = Array.prototype.slice.call(arguments);
+					var args = _.slice(arguments);
 
 					if (core.env == "android"){
 						/*_.forEach(args, function(arg, index, list){
@@ -146,6 +149,9 @@ define([
 					}
 				};
 			}.bind(this));
+		},
+		__patchProtos : function(){
+
 		},
 		load : function(){
 			if (!this.iframe){

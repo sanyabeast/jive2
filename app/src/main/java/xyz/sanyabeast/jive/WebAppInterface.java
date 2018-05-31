@@ -57,4 +57,24 @@ public class WebAppInterface {
         Log.d(TAG, gson.toJson(rootActivity.mGServicesMan.isSignedIn()));
         return gson.toJson(rootActivity.mGServicesMan.isSignedIn());
     }
+
+    @JavascriptInterface
+    public void gsSignOut(){
+        rootActivity.mGServicesMan.signOut();
+    }
+
+    @JavascriptInterface
+    public void gsStartSignInIntent(){
+        rootActivity.mGServicesMan.startSignInIntent();
+    }
+
+    @JavascriptInterface
+    public void gsShowAchievements(){
+        rootActivity.mGServicesMan.showAchievements();
+    }
+
+    @JavascriptInterface
+    public void gsShowLeaderboard(){
+        rootActivity.mGServicesMan.showLeaderboard();
+    }
 }

@@ -21,6 +21,7 @@ public class WebToolchain {
     private WebSettings mWebSettings;
     private WebViewClient mWebViewClient = new WebViewClient();
     private WebAppInterface mWebAppInterface;
+    private Gson gson = new Gson();
 
     public WebToolchain(Context c){
         context = c;
@@ -60,7 +61,6 @@ public class WebToolchain {
     }
 
     public void send(Envelope envelope){
-        Gson gson = new Gson();
         String json = gson.toJson(envelope);
         mWebView.loadUrl("javascript:postal.say('android::bridge', " + json + ")");
     }

@@ -22,30 +22,43 @@ import com.google.android.gms.common.api.GoogleApiClient;
  */
 
 public class RootActivity extends FragmentActivity {
-     public WebToolchain mWebToolchain;
-     public GServicesMan mGServicesMan;
+    public WebToolchain mWebToolchain;
+    public GServicesMan mGServicesMan;
 
-     @Override
-     public void onCreate(Bundle savedInstanceState ) {
-         super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState ) {
+        super.onCreate(savedInstanceState);
 
-         setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 
-         this.mGServicesMan = new GServicesMan(this);
-         this.mWebToolchain = new WebToolchain(this);
-         this.mWebToolchain.open("file:///android_asset/index.html");
+        mGServicesMan = new GServicesMan(this);
+        mWebToolchain = new WebToolchain(this);
+        mWebToolchain.open("file:///android_asset/index.html");
 
-         this.mGServicesMan.signInSilently();
+        mGServicesMan.signInSilently();
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        mWebToolchain.send(new Envelope("android", "button.pressed", event));
+        mWebToolchain.send(new Envelope("android.button.pressed", event));
         return true;
     }
 
-    public GServicesMan getmGServicesMan(){
-         return mGServicesMan;
+
+    public void handleException(Exception e, String details) {
+        int status = 0;
+
+        if (e instanceof ApiException) {
+            ApiException apiException = (ApiException) e;
+            status = apiException.getStatusCode();
+        }
+
+        String message = getString(R.string.status_exception_error, details, status, e);
+
+        new AlertDialog.Builder(RootActivity.this)
+                .setMessage(message)
+                .setNeutralButton(android.R.string.ok, null)
+                .show();
     }
 
 }

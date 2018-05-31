@@ -1,17 +1,15 @@
 package xyz.sanyabeast.jive;
 
 /**
- * Created by User13 on 19.03.2018.
+ * Created by sanyabeast on 19.03.2018.
  */
 
 public class Envelope {
-    String channel;
-    String topic;
+    String theme;
     Object data;
 
-    Envelope(String c, String t, Object d){
-        channel = c;
-        topic = t;
+    Envelope(String t, Object d){
+        theme = t;
         data = d;
     }
 }

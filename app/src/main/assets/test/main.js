@@ -16,8 +16,16 @@ window.addEventListener("jive.ready", function(){
 			document.body.appendChild(box);
 		}
 	}
-	
+
 	console.log(android.gsIsSignedIn());
+	setTimeout(function(){
+		android.gsShowAchievements();
+	}, 2000);
+
+	postal.listen("google.services::connected", function(data){
+		console.log("kek", JSON.stringify(data));
+	});
+	//android.gsStartSignInIntent();
 });
 
 // setInterval(function(){
