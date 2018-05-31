@@ -3,6 +3,7 @@ package xyz.sanyabeast.jive;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
@@ -13,10 +14,16 @@ import com.google.gson.Gson;
  */
 
 public class WebAppInterface {
+    private String TAG = "Jive:WebAppInterface";
     private Context context;
+    private Activity activity;
+    private RootActivity rootActivity;
+    private Gson gson = new Gson();
 
     WebAppInterface(Context c){
         context = c;
+        activity = (Activity) c;
+        rootActivity = (RootActivity) c;
     }
 
     @JavascriptInterface
@@ -33,7 +40,6 @@ public class WebAppInterface {
 
     @JavascriptInterface
     public String getSystemConfig(){
-        Gson gson = new Gson();
         Configuration config = context.getResources().getConfiguration();
         String configJSON = gson.toJson(config);
         return configJSON;
@@ -42,6 +48,13 @@ public class WebAppInterface {
     @JavascriptInterface
     public void gsSignInSilently(){
         RootActivity mainActivity = (RootActivity) context;
-        GServicesMan mGServicesMan = mainActivity.getmGServicesMan();
+        rootActivity.mGServicesMan.signInSilently();
+    }
+
+    @JavascriptInterface
+    public String gsIsSignedIn(){
+        Gson gson = new Gson();
+        Log.d(TAG, gson.toJson(rootActivity.mGServicesMan.isSignedIn()));
+        return gson.toJson(rootActivity.mGServicesMan.isSignedIn());
     }
 }

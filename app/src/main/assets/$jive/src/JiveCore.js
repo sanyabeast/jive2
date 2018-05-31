@@ -6,8 +6,9 @@ define([
 
 	/*Jive2Core*/
 	var JiveCore = function(){
-		this.__setupEvents();
 		this.__setupAndroidBridgeProxy();
+		this.__patchConsole();
+		this.__setupEvents();
 		this.__createSubs();
 
 		window.postal = postal;
@@ -21,6 +22,7 @@ define([
 	};
 
 	JiveCore.prototype = {
+		env : "android",
 		get iframe(){
 			if (!this._iframe){
 				this._iframe = document.querySelector("#iframe");
@@ -38,6 +40,8 @@ define([
 				return null;
 			};
 
+			this.env = window._android ? "android" : "web";
+
 			window.android = new Proxy(window._android || {}, {
 				get : function(target, propName){
 					if (typeof target[propName] == "function"){
@@ -51,7 +55,6 @@ define([
 		__createSubs : function(){
 			this.subscriptions = {
 				eventBridge : postal.listen("android::bridge", function(data){
-					console.log(data);
 					if (typeof data == "object" && typeof data.channel == "string" && typeof data.topic == "string"){
 						postal.publish({
 							channel : data.channel,
@@ -101,9 +104,12 @@ define([
 		__onIframeLoaded : function(evt){
 			this.iframe.window.postal = postal;
 			this.iframe.window.todo = todo;
+			this.iframe.window._ = window._;
 			this.iframe.window.android = window.android;
 			this.iframe.window.core = this;
+			this.__patchConsole(this.iframe.window.console, "frame");
 			this.iframe.window.dispatchEvent(this.events.jiveReady);
+
 		},
 		__loop : function(list, callback, context){
 			if (typeof list.length == "number"){
@@ -116,6 +122,31 @@ define([
 				}
 			}
 		},
+		__patchConsole : function(console, namespace){
+			console = console || window.console;
+			namespace = namespace || "";
+			var core = this;
+
+			_.forEach(["log", "warn", "error", "info"], function(method){
+				var native = console[method];
+				console[method] = function(){
+					var args = Array.prototype.slice.call(arguments);
+
+					if (core.env == "android"){
+						/*_.forEach(args, function(arg, index, list){
+							list[index] = arg.toString ? arg.toString() : arg;
+						});*/
+
+						args.unshift(["JiveJS", namespace].join(":") + ": ");
+						native.call(console, args.join(" "));
+					} else {
+						args.unshift("color: #9c27b0; font-weight: bold");
+						args.unshift(["%cJiveJS", namespace].join(":") + ": ");
+						native.apply(console, args);
+					}
+				};
+			}.bind(this));
+		},
 		load : function(){
 			if (!this.iframe){
 				todo.add("load", todo.in(100), function(){
@@ -125,6 +156,7 @@ define([
 				this.iframe.src = "./test/index.html";
 			}
 		},
+
 	};
 
 	return JiveCore;

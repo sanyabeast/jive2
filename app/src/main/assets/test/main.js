@@ -16,8 +16,8 @@ window.addEventListener("jive.ready", function(){
 			document.body.appendChild(box);
 		}
 	}
-
-	console.log(android.gsmIsSignedIn());
+	
+	console.log(android.gsIsSignedIn());
 });
 
 // setInterval(function(){

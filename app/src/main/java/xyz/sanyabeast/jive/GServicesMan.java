@@ -27,6 +27,7 @@ import java.util.concurrent.Executor;
 
 class GServicesMan {
     private Context context;
+    private Activity activity;
     private String TAG = "Jive/GServicesMan";
     private GoogleSignInClient mGoogleSignInClient;
     private AchievementsClient mAchievementsClient;
@@ -37,6 +38,7 @@ class GServicesMan {
 
     GServicesMan(Context _context){
         context = _context;
+        activity = (Activity) context;
 
         mGoogleSignInClient = GoogleSignIn.getClient(
                 context,
@@ -46,8 +48,6 @@ class GServicesMan {
 
     public void signInSilently() {
         Log.d(TAG, "signInSilently()");
-
-        Activity activity = (Activity) context;
 
         mGoogleSignInClient.silentSignIn().addOnCompleteListener(activity,
                 new OnCompleteListener<GoogleSignInAccount>() {
@@ -64,8 +64,11 @@ class GServicesMan {
                 });
     }
 
+    public boolean isSignedIn() {
+        return GoogleSignIn.getLastSignedInAccount(activity) != null;
+    }
+
     private void onConnected(GoogleSignInAccount googleSignInAccount) {
-        Activity activity = (Activity) context;
         Log.d(TAG, "onConnected(): connected to Google APIs");
 
         mAchievementsClient = Games.getAchievementsClient(activity, googleSignInAccount);
