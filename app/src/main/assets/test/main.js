@@ -17,14 +17,14 @@ window.addEventListener("jive.ready", function(){
 		}
 	}
 
-	console.log(android.gsIsSignedIn());
-	setTimeout(function(){
-		android.gsShowAchievements();
-	}, 2000);
+	// console.log(android.gsIsSignedIn());
+	// setTimeout(function(){
+	// 	android.gsShowAchievements();
+	// }, 2000);
 
-	postal.listen("google.services::connected", function(data){
-		console.log("kek", JSON.stringify(data));
-	});
+	// postal.listen("google.services::connected", function(data){
+	// 	console.log("kek", JSON.stringify(data));
+	// });
 	//android.gsStartSignInIntent();
 });
 

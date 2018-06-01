@@ -34,8 +34,6 @@ public class RootActivity extends FragmentActivity {
         mGServicesMan = new GServicesMan(this);
         mWebToolchain = new WebToolchain(this);
         mWebToolchain.open("file:///android_asset/index.html");
-
-        mGServicesMan.signInSilently();
     }
 
     @Override
