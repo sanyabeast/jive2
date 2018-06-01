@@ -5,6 +5,7 @@ define(function(){
 		paths : {
 			postal 	: "../libs/postal",
 			todo 	: "../libs/todo",
+			jsterm 	: "../libs/jsterm",
 			lodash 	: "../vendor/lodash"
 		}
 	};

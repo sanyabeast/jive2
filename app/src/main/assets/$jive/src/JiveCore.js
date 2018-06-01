@@ -1,8 +1,9 @@
 "use strict";
 define([
 		"postal",
-		"todo"
-	], function(postal, todo){
+		"todo",
+		"jsterm"
+	], function(postal, todo, JSTerm){
 
 	/*Jive2Core*/
 	var JiveCore = function(){
@@ -11,6 +12,9 @@ define([
 		this.__patchConsole();
 		this.__setupEvents();
 		this.__createSubs();
+
+		this.jsterm = new JSTerm();
+		document.body.appendChild(this.jsterm.element);
 
 		window.postal = postal;
 		window.todo = todo;
