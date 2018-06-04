@@ -29,6 +29,9 @@ public class WebToolchain {
 
         Activity activity = (Activity) context;
 
+        // TODO make toggling based on enviroment variable (dev/prod);
+        WebView.setWebContentsDebuggingEnabled(true);
+
         mWebView = (WebView) activity.findViewById(R.id.webview);
         mWebView.setBackgroundColor(Color.TRANSPARENT);
         mWebView.setWebViewClient(mWebViewClient);
@@ -38,10 +41,19 @@ public class WebToolchain {
         mWebSettings = mWebView.getSettings();
         mWebSettings.setJavaScriptEnabled(true);
         mWebSettings.setAllowFileAccessFromFileURLs(true); //Maybe you don't need this rule
+        mWebSettings.setAllowUniversalAccessFromFileURLs(true);
+        mWebSettings.setAllowContentAccess(true);
         mWebSettings.setDomStorageEnabled(true);
         mWebSettings.setMediaPlaybackRequiresUserGesture(false);
         mWebSettings.setOffscreenPreRaster(true);
         mWebSettings.setAllowUniversalAccessFromFileURLs(true);
+        mWebSettings.setMinimumFontSize(1);
+        mWebSettings.setMinimumLogicalFontSize(1);
+        mWebSettings.setLoadsImagesAutomatically(true);
+        mWebSettings.setNeedInitialFocus(false);
+        mWebSettings.setSupportZoom(false);
+        mWebSettings.setDatabaseEnabled(true);
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // chromium, enable hardware acceleration
