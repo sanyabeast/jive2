@@ -98,4 +98,9 @@ public class WebAppInterface {
         return storage.get(scopeID, key);
     }
 
+    @JavascriptInterface
+    public void adShowInterstitial(){
+        mAdsManager.showInterstitial();
+    }
+
 }

@@ -12,4 +12,9 @@ public class Envelope {
         theme = t;
         data = d;
     }
+
+    Envelope(String t){
+        theme = t;
+        data = new Object();
+    }
 }

@@ -3,6 +3,8 @@ package xyz.sanyabeast.jive;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -69,6 +71,10 @@ public class RootActivity extends FragmentActivity {
 
     public void showInterstitial(){
         mAdsManager.showInterstitial();
+    }
+
+    public void runOnUIThread(Runnable runnable){
+        new Handler(Looper.getMainLooper()).post(runnable);
     }
 
 }
