@@ -27,6 +27,7 @@ public class RootActivity extends FragmentActivity {
     public WebToolchain mWebToolchain;
     public GServicesMan mGServicesMan;
     public Storage mStorage;
+    public AdsManager mAdsManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState ) {
@@ -34,6 +35,7 @@ public class RootActivity extends FragmentActivity {
 
         setContentView(R.layout.activity_main);
 
+        mAdsManager = new AdsManager(this);
         mStorage = new Storage(this);
         mGServicesMan = new GServicesMan(this);
         mWebToolchain = new WebToolchain(this);
@@ -63,6 +65,10 @@ public class RootActivity extends FragmentActivity {
                 .setMessage(message)
                 .setNeutralButton(android.R.string.ok, null)
                 .show();
+    }
+
+    public void showInterstitial(){
+        mAdsManager.showInterstitial();
     }
 
 }

@@ -20,12 +20,14 @@ public class WebAppInterface {
     private RootActivity rootActivity;
     private Gson gson = new Gson();
     private Storage storage;
+    private AdsManager mAdsManager;
 
     WebAppInterface(Context c){
         context = c;
         activity = (Activity) c;
         rootActivity = (RootActivity) c;
         storage = rootActivity.mStorage;
+        mAdsManager = rootActivity.mAdsManager;
     }
 
     @JavascriptInterface
@@ -80,6 +82,12 @@ public class WebAppInterface {
         rootActivity.mGServicesMan.showLeaderboard();
     }
 
+    /**Storage methods
+     *
+     * @param scopeID - scopes`s ID
+     * @param key - key name
+     * @param value - data to store
+     */
     @JavascriptInterface
     public void storageSet(String scopeID, String key, String value){
         storage.set(scopeID, key, value);
@@ -89,4 +97,5 @@ public class WebAppInterface {
     public String storageGet(String scopeID, String key){
         return storage.get(scopeID, key);
     }
+
 }
