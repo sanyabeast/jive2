@@ -4,6 +4,8 @@ html, body {
 	margin: 0;
 	overflow: hidden;
 	background: #2d2d2d;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
 }
 
 iframe {
@@ -17,7 +19,13 @@ iframe {
 	position: absolute;
     top: 5%;
     left: 50%;
-    transform: translate(-50%);
+    transform: translate(-50%, -1000%);
     height: 40%;
     width: 80%;
+    visibility: hidden;
+
+    &.connected {
+    	visibility: visible;
+		transform: translate(-50%);
+    }
 }

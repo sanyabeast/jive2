@@ -14,6 +14,7 @@
         var _this = this;
 
         this.state = {
+            saveCodeToHistory : true,
             code : "",
             zoom : 1,
             zoomMin : 0.4,
@@ -21,9 +22,22 @@
             zoomStep : 0.2,
             history : [],
             _historyPosition : 0,
+            _connected : false,
+            set connected(v){
+                this._connected = v;
+                if (v){
+                    _this.element.classList.add("connected");
+                } else {
+                    _this.element.classList.remove("connected");
+                }
+            },
+            get connected(){
+                return this._connected;
+            },
             set historyPosition(v){
                 this._historyPosition = v;
-                _this.code = _this.inputLine.value = this.history[v];
+                this.code = _this.inputLine.value = this.history[v] || "";
+                this.saveCodeToHistory = false;
             },
             get historyPosition(){ return this._historyPosition }
         };
@@ -46,6 +60,7 @@
         this.setupMenu(this.menuElement);
 
         this.inputLine.addEventListener("input", function(){
+            this.state.saveCodeToHistory = true;
             this.state.code = this.inputLine.value;
         }.bind(this));
 
@@ -56,7 +71,7 @@
         }.bind(this));
 
         this.realConsole = window.console;
-        window.console = new Proxy(window.console, {
+        this.fakeConsole = new Proxy(window.console, {
             get : function(console, prop){
                 return (typeof this.console[prop] == "function") ? this.console[prop] : console[prop];
             }.bind(this)
@@ -66,8 +81,26 @@
     };
     
     JSTerm.prototype = {
+        connect : function(){
+            this.state.connected = true;
+            window.console = this.fakeConsole;
+        },
+        diconnect : function(){
+            this.state.connected = false;
+            window.console = this.realConsole;
+        },  
+        toggleConnection : function(){
+            this.state.connected ? this.diconnect() : this.connect();
+        },
         evalInput : function(){
+            if (!this.state.connected){
+                this.throwDisconnectionError();
+                return;
+            }
+
             var code = this.state.code;
+            var saveCodeToHistory = this.state.saveCodeToHistory;
+
             if (code.length == 0){
                 return;
             }
@@ -80,7 +113,12 @@
                 console.error(err);
             }
 
-            this.state.history.push(code);
+            if (saveCodeToHistory){
+                this.state.history.push(code);
+            }
+        },
+        throwDisconnectionError : function(){
+            this.console.$output("error", ["JSTerm is not connected"]);
         },
         setupMenu : function(element){
             element.querySelector(".button.zoom-increase").addEventListener("click", function(evt){
@@ -105,6 +143,14 @@
             element.querySelector(".button.next").addEventListener("click", function(evt){
                 this.state.historyPosition++;
                 if (this.state.historyPosition >= this.state.history.length) this.state.historyPosition = 0;
+            }.bind(this));
+
+            element.querySelector(".button.eval").addEventListener("click", function(evt){
+                this.evalInput();
+            }.bind(this));
+
+            element.querySelector(".button.clear").addEventListener("click", function(evt){
+                this.bodyElement.innerHTML = "";
             }.bind(this));
         },
         addStyles : function(){
@@ -281,7 +327,8 @@
                 "font-family" : "monospace",
                 "overflow" : "auto",
                 "background" : "#fff",
-                "font-size" : "1px"
+                "font-size" : "1px",
+                "-webkit-tap-highlight-color": "transparent"
             },
             ".jsterm .menu" : {
                 "height" : "32em",
@@ -290,21 +337,26 @@
                 "flex-direction" : "row",
                 "border-bottom": "1px solid #f7f7f7",
                 "justify-content": "flex-end",
+                "background": "#f3f3f3"
             },
             ".jsterm .menu .button" : {
-                "height" : "2em",
-                "width" : "2em",
-                "font-size" : "16em",
-                "line-height": "2em",
+                "height" : "32em",
+                "width" : "32em",
                 "text-align" : "center",
                 "color": "#969696",
                 "font-weight" : "bold",
-                "border": "1px solid #f1f1f1",
-                "border-bottom" : "none",
+                "border-left": "1px dotted #adadad",
                 "margin-left": "-1px",
                 "cursor": "pointer",
                 "box-sizing": "border-box",
-                "user-select" : "none"
+                "user-select" : "none",
+                "display" : "flex",
+                "align-items" : "center",
+                "justify-content" : "center"
+            },
+            ".jsterm .menu .button p" : {
+                "margin" : "0",
+                "font-size" : "24em",
             },
             ".jsterm .body" : {
                 "width" : "100%",
@@ -360,7 +412,8 @@
                 "tab-size" : "2em"
             },
             ".jsterm .output-line p" : {
-                "margin" : "auto 0"
+                "margin" : "auto 0",
+                "user-select" : "auto"
             },
             ".jsterm .output-line:before" : {
                 "content": "\"<\"",
@@ -391,10 +444,12 @@
             ],
             menu : [
                 "<div class=\"menu\">",
-                "   <div class=\"button prev\">&#8593</div>",
-                "   <div class=\"button next\">&#8595</div>",
-                "   <div class=\"button zoom-decrease\">-</div>",
-                "   <div class=\"button zoom-increase\">+</div>",
+                "   <div title=\"Eval\" class=\"button eval\"><p>&#10003</p></div>",
+                "   <div title=\"Clear console\" class=\"button clear\"><p>&#10799</p></div>",
+                "   <div title=\"Prev\" class=\"button prev\"><p>&#8593</p></div>",
+                "   <div title=\"Next\" class=\"button next\"><p>&#8595</p></div>",
+                "   <div title=\"Zoom-out\" class=\"button zoom-decrease\"><p>-</p></div>",
+                "   <div title=\"Zoom-in\" class=\"button zoom-increase\"><p>+</p></div>",
                 "</div>"
             ],
             output : [
@@ -404,7 +459,7 @@
             ],
             input : [
                 "<div class=\"input-line\">",
-                "   <input type=\"text\">",
+                "   <input autocorrect=\"off\" autocapitalize=\"none\" type=\"text\">",
                 "</div>"
             ]
         },

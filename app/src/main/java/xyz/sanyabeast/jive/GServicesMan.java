@@ -138,7 +138,7 @@ class GServicesMan {
                 });
     }
 
-    public void startSignInIntent() {
+    public void signIn() {
         activity.startActivityForResult(mGoogleSignInClient.getSignInIntent(), RC_SIGN_IN);
     }
 

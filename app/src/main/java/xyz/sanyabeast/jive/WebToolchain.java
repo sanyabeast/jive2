@@ -74,6 +74,6 @@ public class WebToolchain {
 
     public void send(Envelope envelope){
         String json = gson.toJson(envelope);
-        mWebView.loadUrl("javascript:postal.say('android::bridge', " + json + ")");
+        this.open("javascript:postal.say('android.bridge', " + json + ")");
     }
 }

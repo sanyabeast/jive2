@@ -19,11 +19,13 @@ public class WebAppInterface {
     private Activity activity;
     private RootActivity rootActivity;
     private Gson gson = new Gson();
+    private Storage storage;
 
     WebAppInterface(Context c){
         context = c;
         activity = (Activity) c;
         rootActivity = (RootActivity) c;
+        storage = rootActivity.mStorage;
     }
 
     @JavascriptInterface
@@ -64,8 +66,8 @@ public class WebAppInterface {
     }
 
     @JavascriptInterface
-    public void gsStartSignInIntent(){
-        rootActivity.mGServicesMan.startSignInIntent();
+    public void gsSignIn(){
+        rootActivity.mGServicesMan.signIn();
     }
 
     @JavascriptInterface
@@ -76,5 +78,15 @@ public class WebAppInterface {
     @JavascriptInterface
     public void gsShowLeaderboard(){
         rootActivity.mGServicesMan.showLeaderboard();
+    }
+
+    @JavascriptInterface
+    public void storageSet(String scopeID, String key, String value){
+        storage.set(scopeID, key, value);
+    }
+
+    @JavascriptInterface
+    public String storageGet(String scopeID, String key){
+        return storage.get(scopeID, key);
     }
 }

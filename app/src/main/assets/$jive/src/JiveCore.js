@@ -63,7 +63,7 @@ define([
 		__createSubs : function(){
 			this.subscriptions = {
 				eventBridge : postal.listen("android.bridge", function(data){
-					if (typeof data == "object" && typeof data.channel == "string" && typeof data.topic == "string"){
+					if (typeof data == "object" && typeof data.theme == "string"){
 						postal.say(data.theme, data.data);
 					} else {
 						console.warn("Unable to dispatch event");
@@ -82,7 +82,11 @@ define([
 					postal.say("button.pressed", {
 						keycode : data.mKeyCode
 					});
-				}),
+
+					if (data.mKeyCode == 82){
+						this.jsterm.toggleConnection();
+					}
+				}.bind(this)),
 				logData : postal.listen("console.log", function(data){
 					console.log("[console.log]", JSON.stringify(data));
 				}),

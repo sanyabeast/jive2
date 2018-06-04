@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -22,8 +23,10 @@ import com.google.android.gms.common.api.GoogleApiClient;
  */
 
 public class RootActivity extends FragmentActivity {
+    private static String TAG = "RootActivity";
     public WebToolchain mWebToolchain;
     public GServicesMan mGServicesMan;
+    public Storage mStorage;
 
     @Override
     public void onCreate(Bundle savedInstanceState ) {
@@ -31,6 +34,7 @@ public class RootActivity extends FragmentActivity {
 
         setContentView(R.layout.activity_main);
 
+        mStorage = new Storage(this);
         mGServicesMan = new GServicesMan(this);
         mWebToolchain = new WebToolchain(this);
         mWebToolchain.open("file:///android_asset/index.html");
@@ -38,6 +42,8 @@ public class RootActivity extends FragmentActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //Integer keycode = event.getKeyCode();
+        //Log.d(TAG, keycode.toString());
         mWebToolchain.send(new Envelope("android.button.pressed", event));
         return true;
     }
