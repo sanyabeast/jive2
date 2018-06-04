@@ -60,9 +60,7 @@ public class AdsManager {
 
                     @Override
                     public void onAdFailedToLoad(int errorCode) {
-                        rootActivity.mWebToolchain.send(new Envelope("android.ads.interstitial.loading.failed", new Object(){
-                            pub
-                        }));
+                        rootActivity.mWebToolchain.send(new Envelope("android.ads.interstitial.loading.failed", new Object(){}));
                         Log.d(TAG, "Interstitial ad failed to load, errocode: " + errorCode);
                     }
 
