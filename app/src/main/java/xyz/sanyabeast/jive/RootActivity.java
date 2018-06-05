@@ -44,7 +44,7 @@ public class RootActivity extends FragmentActivity {
         mGServicesMan = new GServicesMan(this);
         mWebToolchain = new WebToolchain(this);
         mWebToolchain.open("file:///android_asset/index.html");
-        mWebToolchain.set("activity", this);
+        mWebToolchain.set("activity", mWebToolchain);
     }
 
     @Override
