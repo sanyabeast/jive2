@@ -21,11 +21,12 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.common.api.GoogleApiClient;
 
 /**
- * Created by User13 on 19.03.2018.
+ * Created by Sanyabeast on 19.03.2018.
  */
 
 public class RootActivity extends FragmentActivity {
     private static String TAG = "RootActivity";
+
     public WebToolchain mWebToolchain;
     public GServicesMan mGServicesMan;
     public Storage mStorage;
@@ -57,6 +58,15 @@ public class RootActivity extends FragmentActivity {
     public void onPause(){
         super.onPause();
         Log.d(TAG, "onPause");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent){
+        Log.d(TAG, "activity result: requestCode - " + requestCode + ", resultCode - " + resultCode);
+        if (mGServicesMan.checkRequestCode(requestCode)){
+            mGServicesMan.processRequestCode(requestCode, resultCode, intent);
+            return;
+        }
     }
 
     @Override

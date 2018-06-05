@@ -3,6 +3,7 @@ package xyz.sanyabeast.jive;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
@@ -22,13 +23,14 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.Hashtable;
 import java.util.concurrent.Executor;
 
 /**
  * Created by sanyabeast on 30.05.2018.
  */
 
-class GServicesMan {
+class GServicesMan extends Intending {
     private Context context;
     private Activity activity;
     private RootActivity rootActivity;
@@ -40,20 +42,27 @@ class GServicesMan {
     private EventsClient mEventsClient;
     private PlayersClient mPlayersClient;
 
-    // request codes we use when invoking an external activity
-    private static final int RC_UNUSED = 5001;
-    private static final int RC_SIGN_IN = 9001;
-
-
     GServicesMan(Context _context){
         context = _context;
         activity = (Activity) context;
         rootActivity = (RootActivity) context;
 
+        addRequestCode("RC_UNUSED", 5001);
+        addRequestCode("RC_SIGN_IN", 9001);
+
         mGoogleSignInClient = GoogleSignIn.getClient(
                 context,
                 new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).build()
         );
+    }
+
+    public void processRequestCode(Integer requestCode, Integer resultCode, Intent intent){
+        Log.d(TAG, "Processig request code: " + requestCode);
+        switch(requestCode){
+            case 0:
+
+                break;
+        }
     }
 
     private void onConnected(GoogleSignInAccount googleSignInAccount) {
@@ -97,20 +106,20 @@ class GServicesMan {
         Log.d(TAG, "signInSilently()");
 
         mGoogleSignInClient.silentSignIn().addOnCompleteListener(activity,
-                new OnCompleteListener<GoogleSignInAccount>() {
-                    @Override
-                    public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "signInSilently(): success");
-                            rootActivity.mWebToolchain.send(new Envelope("google.services.sign-in.success", task.getResult()));
-                            onConnected(task.getResult());
-                        } else {
-                            Log.d(TAG, "signInSilently(): failure", task.getException());
-                            rootActivity.mWebToolchain.send(new Envelope("google.services.sign-in.failure"));
-                            onDisconnected();
-                        }
+            new OnCompleteListener<GoogleSignInAccount>() {
+                @Override
+                public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "signInSilently(): success");
+                        rootActivity.mWebToolchain.send(new Envelope("google.services.sign-in.success", task.getResult()));
+                        onConnected(task.getResult());
+                    } else {
+                        Log.d(TAG, "signInSilently(): failure", task.getException());
+                        rootActivity.mWebToolchain.send(new Envelope("google.services.sign-in.failure"));
+                        onDisconnected();
                     }
-                });
+                }
+            });
     }
 
     public boolean isSignedIn() {
@@ -126,54 +135,52 @@ class GServicesMan {
         }
 
         mGoogleSignInClient.signOut().addOnCompleteListener(activity,
-                new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        boolean successful = task.isSuccessful();
-                        String modifier = successful ? "success" : "failure";
-                        Log.d(TAG, "signOut(): " + (successful ? "success" : "failed"));
-                        rootActivity.mWebToolchain.send(new Envelope("google.services.signed-out." + modifier, null));
-                        onDisconnected();
-                    }
-                });
+            new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    boolean successful = task.isSuccessful();
+                    String modifier = successful ? "success" : "failure";
+                    Log.d(TAG, "signOut(): " + (successful ? "success" : "failed"));
+                    rootActivity.mWebToolchain.send(new Envelope("google.services.signed-out." + modifier, null));
+                    onDisconnected();
+                }
+            });
     }
 
     public void signIn() {
-        activity.startActivityForResult(mGoogleSignInClient.getSignInIntent(), RC_SIGN_IN);
+        activity.startActivityForResult(mGoogleSignInClient.getSignInIntent(), REQUEST_CODES.get("RC_SIGN_IN"));
     }
-
-
 
     /*Achievements and leaderboard*/
     public void showAchievements() {
         mAchievementsClient.getAchievementsIntent()
-                .addOnSuccessListener(new OnSuccessListener<Intent>() {
-                    @Override
-                    public void onSuccess(Intent intent) {
-                        activity.startActivityForResult(intent, RC_UNUSED);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        rootActivity.handleException(e, activity.getString(R.string.achievements_exception));
-                    }
-                });
+            .addOnSuccessListener(new OnSuccessListener<Intent>() {
+                @Override
+                public void onSuccess(Intent intent) {
+                    activity.startActivityForResult(intent, REQUEST_CODES.get("RC_UNUSED"));
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    rootActivity.handleException(e, activity.getString(R.string.achievements_exception));
+                }
+            });
     }
 
     public void showLeaderboard() {
         mLeaderboardsClient.getAllLeaderboardsIntent()
-                .addOnSuccessListener(new OnSuccessListener<Intent>() {
-                    @Override
-                    public void onSuccess(Intent intent) {
-                        activity.startActivityForResult(intent, RC_UNUSED);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        rootActivity.handleException(e, activity.getString(R.string.leaderboards_exception));
-                    }
-                });
+            .addOnSuccessListener(new OnSuccessListener<Intent>() {
+                @Override
+                public void onSuccess(Intent intent) {
+                    activity.startActivityForResult(intent, REQUEST_CODES.get("RC_UNUSED"));
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    rootActivity.handleException(e, activity.getString(R.string.leaderboards_exception));
+                }
+            });
     }
 }

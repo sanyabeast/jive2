@@ -14,6 +14,8 @@ define([
 		this.__createSubs();
 
 		this.jsterm = new JSTerm();
+
+		this.jsterm.connect();
 		document.body.appendChild(this.jsterm.element);
 
 		window.postal = postal;
