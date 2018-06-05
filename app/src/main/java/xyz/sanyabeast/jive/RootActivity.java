@@ -30,6 +30,7 @@ public class RootActivity extends FragmentActivity {
     public GServicesMan mGServicesMan;
     public Storage mStorage;
     public AdsManager mAdsManager;
+    public UITools mUITools;
 
     @Override
     public void onCreate(Bundle savedInstanceState ) {
@@ -37,11 +38,24 @@ public class RootActivity extends FragmentActivity {
 
         setContentView(R.layout.activity_main);
 
+        mUITools = new UITools(this);
         mAdsManager = new AdsManager(this);
         mStorage = new Storage(this);
         mGServicesMan = new GServicesMan(this);
         mWebToolchain = new WebToolchain(this);
         mWebToolchain.open("file:///android_asset/index.html");
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.d(TAG, "onResume");
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Log.d(TAG, "onPause");
     }
 
     @Override
@@ -51,7 +65,6 @@ public class RootActivity extends FragmentActivity {
         mWebToolchain.send(new Envelope("android.button.pressed", event));
         return true;
     }
-
 
     public void handleException(Exception e, String details) {
         int status = 0;
@@ -69,12 +82,10 @@ public class RootActivity extends FragmentActivity {
                 .show();
     }
 
-    public void showInterstitial(){
-        mAdsManager.showInterstitial();
-    }
-
     public void runOnMainUIThread(Runnable runnable){
         new Handler(Looper.getMainLooper()).post(runnable);
     }
+
+
 
 }

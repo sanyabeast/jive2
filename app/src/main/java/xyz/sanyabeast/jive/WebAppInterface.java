@@ -31,11 +31,6 @@ public class WebAppInterface {
     }
 
     @JavascriptInterface
-    public void showToast(String toast) {
-        Toast.makeText(context, toast, Toast.LENGTH_SHORT).show();
-    }
-
-    @JavascriptInterface
     public void exit(){
         Activity activity = (Activity)context;
         activity.finishAffinity();
@@ -98,6 +93,7 @@ public class WebAppInterface {
         return storage.get(scopeID, key);
     }
 
+    /**Ads*/
     @JavascriptInterface
     public void adShowInterstitial(){
         mAdsManager.showInterstitial();
@@ -115,6 +111,22 @@ public class WebAppInterface {
     @JavascriptInterface
     public void adShowRewarded(){
         mAdsManager.showRewarded();
+    }
+
+    /**UI Tools*/
+    @JavascriptInterface
+    public void uiShowAlert(String message){
+        rootActivity.mUITools.showAlert(message);
+    }
+
+    @JavascriptInterface
+    public void uiShowToast(String message) {
+        rootActivity.mUITools.showToast(message);
+    }
+
+    @JavascriptInterface
+    public void uiNotify(String title, String content){
+        rootActivity.mUITools.notify(title, content);
     }
 
 }

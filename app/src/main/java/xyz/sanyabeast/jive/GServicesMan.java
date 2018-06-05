@@ -106,7 +106,7 @@ class GServicesMan {
                             onConnected(task.getResult());
                         } else {
                             Log.d(TAG, "signInSilently(): failure", task.getException());
-                            rootActivity.mWebToolchain.send(new Envelope("google.services.sign-in.failure", task.getResult()));
+                            rootActivity.mWebToolchain.send(new Envelope("google.services.sign-in.failure"));
                             onDisconnected();
                         }
                     }
@@ -141,6 +141,8 @@ class GServicesMan {
     public void signIn() {
         activity.startActivityForResult(mGoogleSignInClient.getSignInIntent(), RC_SIGN_IN);
     }
+
+
 
     /*Achievements and leaderboard*/
     public void showAchievements() {
