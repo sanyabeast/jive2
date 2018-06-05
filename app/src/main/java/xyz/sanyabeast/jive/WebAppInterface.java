@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 /**
- * Created by User13 on 19.03.2018.
+ * Created by Sanyabeast on 19.03.2018.
  */
 
 public class WebAppInterface {
@@ -101,6 +101,16 @@ public class WebAppInterface {
     @JavascriptInterface
     public void adShowInterstitial(){
         mAdsManager.showInterstitial();
+    }
+
+    @JavascriptInterface
+    public void adShowBanner(){
+        mAdsManager.showBanner();
+    }
+
+    @JavascriptInterface
+    public void adHideBanner(){
+        mAdsManager.hideBanner();
     }
 
 }

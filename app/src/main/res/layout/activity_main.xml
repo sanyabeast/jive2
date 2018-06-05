@@ -8,11 +8,29 @@
     tools:context="xyz.sanyabeast.jive.RootActivity"
     android:background="@color/colorPrimary"
 >
-    <WebView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/webview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-    />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <WebView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/adbanner"/>
+
+
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adbanner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            ads:adUnitId="@string/ad_banner_id"
+            ads:adSize="BANNER"/>
+    </RelativeLayout>
+
+
 
 </android.support.constraint.ConstraintLayout>

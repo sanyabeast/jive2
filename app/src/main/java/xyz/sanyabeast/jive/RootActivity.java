@@ -73,7 +73,7 @@ public class RootActivity extends FragmentActivity {
         mAdsManager.showInterstitial();
     }
 
-    public void runOnUIThread(Runnable runnable){
+    public void runOnMainUIThread(Runnable runnable){
         new Handler(Looper.getMainLooper()).post(runnable);
     }
 
