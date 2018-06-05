@@ -44,6 +44,7 @@ public class RootActivity extends FragmentActivity {
         mGServicesMan = new GServicesMan(this);
         mWebToolchain = new WebToolchain(this);
         mWebToolchain.open("file:///android_asset/index.html");
+        mWebToolchain.set("activity", this);
     }
 
     @Override
@@ -63,6 +64,7 @@ public class RootActivity extends FragmentActivity {
         //Integer keycode = event.getKeyCode();
         //Log.d(TAG, keycode.toString());
         mWebToolchain.send(new Envelope("android.button.pressed", event));
+        mWebToolchain.set("lastKeyEvent", event);
         return true;
     }
 

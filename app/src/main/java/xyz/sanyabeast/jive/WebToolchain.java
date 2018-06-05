@@ -3,6 +3,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -16,6 +17,8 @@ import com.google.gson.Gson;
  */
 
 public class WebToolchain {
+    private String TAG = "Jive/WebToolChain";
+
     private WebView mWebView;
     private Context context;
     private WebSettings mWebSettings;
@@ -75,5 +78,15 @@ public class WebToolchain {
     public void send(Envelope envelope){
         String json = gson.toJson(envelope);
         this.open("javascript:postal.say('android.bridge', " + json + ")");
+    }
+
+    public void set(String key, Object value){
+        String json = gson.toJson(value);
+        Log.d(TAG, "setting value");
+        try {
+            this.open(String.format("javascript:Object.defineProperty(window, \"%s\", { get : function(){ return JSON.parse(\'%s\'); } })", key, json));
+        } catch (Exception e){
+            Log.d(TAG, "failed to set value: " + e.getMessage());
+        }
     }
 }

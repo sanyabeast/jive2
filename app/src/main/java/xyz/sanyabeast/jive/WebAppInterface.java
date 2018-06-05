@@ -122,6 +122,7 @@ public class WebAppInterface {
     @JavascriptInterface
     public void uiShowToast(String message) {
         rootActivity.mUITools.showToast(message);
+
     }
 
     @JavascriptInterface
