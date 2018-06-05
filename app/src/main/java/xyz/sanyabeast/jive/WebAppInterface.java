@@ -112,5 +112,9 @@ public class WebAppInterface {
     public void adHideBanner(){
         mAdsManager.hideBanner();
     }
+    @JavascriptInterface
+    public void adShowRewarded(){
+        mAdsManager.showRewarded();
+    }
 
 }

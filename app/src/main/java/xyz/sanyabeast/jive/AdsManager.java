@@ -10,6 +10,9 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
 /**
  * Created by Sanyabeast on 04.06.2018.
@@ -40,12 +43,13 @@ public class AdsManager {
 
     private InterstitialAd mInterstitialAd;
     private AdView mAdView;
+    private RewardedVideoAd mRewardedAd;
 
     private String adMobAppID = "ca-app-pub-2521065562985916~6087787085";
 
     private String adUnitIDInterstitial;
     private String adUnitIDBanner;
-    private String adUnitIDReward;
+    private String adUnitIDRewarded;
 
     public AdsManager(Context c){
         context = c;
@@ -54,7 +58,7 @@ public class AdsManager {
 
         adUnitIDInterstitial = activity.getString(R.string.ad_interstital_id);
         adUnitIDBanner = activity.getString(R.string.ad_banner_id);
-        adUnitIDReward = activity.getString(R.string.ad_reward_id);
+        adUnitIDRewarded = activity.getString(R.string.ad_rewarded_id);
 
         MobileAds.initialize(context, adMobAppID);
 
@@ -140,6 +144,65 @@ public class AdsManager {
                 });
             }
         });
+
+        /**Settings up Rewarded ad
+         */
+        mRewardedAd = MobileAds.getRewardedVideoAdInstance(context);
+        rootActivity.runOnMainUIThread(new Runnable() {
+            @Override
+            public void run() {
+                mRewardedAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
+                    @Override
+                    public void onRewardedVideoAdLoaded() {
+                        rootActivity.mWebToolchain.send(new Envelope("android.ads.rewarded.loading.completed"));
+                        Log.d(TAG, "Rewarded loading completed: ");
+                        mRewardedAd.show();
+                    }
+
+                    @Override
+                    public void onRewardedVideoAdOpened() {
+                        rootActivity.mWebToolchain.send(new Envelope("android.ads.rewarded.opened"));
+                        Log.d(TAG, "Rewarded opened: ");
+                    }
+
+                    @Override
+                    public void onRewardedVideoStarted() {
+                        rootActivity.mWebToolchain.send(new Envelope("android.ads.rewarded.video.started"));
+                        Log.d(TAG, "Rewarded video started: ");
+                    }
+
+                    @Override
+                    public void onRewardedVideoAdClosed() {
+                        rootActivity.mWebToolchain.send(new Envelope("android.ads.rewarded.closed"));
+                        Log.d(TAG, "Rewarded closed: ");
+                    }
+
+                    @Override
+                    public void onRewarded(RewardItem rewardItem) {
+                        rootActivity.mWebToolchain.send(new Envelope("android.ads.rewarded.rewarded"));
+                        Log.d(TAG, "Rewarded rewarded: ");
+                    }
+
+                    @Override
+                    public void onRewardedVideoAdLeftApplication() {
+                        rootActivity.mWebToolchain.send(new Envelope("android.ads.rewarded.used"));
+                        Log.d(TAG, "Rewarded used: ");
+                    }
+
+                    @Override
+                    public void onRewardedVideoAdFailedToLoad(int i) {
+                        rootActivity.mWebToolchain.send(new Envelope("android.ads.rewarded.loading.failed"));
+                        Log.d(TAG, "Rewarded loading failed: ");
+                    }
+
+                    @Override
+                    public void onRewardedVideoCompleted() {
+                        rootActivity.mWebToolchain.send(new Envelope("android.ads.rewarded.video.completed"));
+                        Log.d(TAG, "Rewarded video completed: ");
+                    }
+                });
+            }
+        });
     }
 
     public void showInterstitial(){
@@ -172,6 +235,15 @@ public class AdsManager {
             @Override
             public void run() {
                 mAdView.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    public void showRewarded(){
+        rootActivity.runOnMainUIThread(new Runnable() {
+            @Override
+            public void run() {
+                mRewardedAd.loadAd(adUnitIDRewarded, new AdRequest.Builder().build());
             }
         });
     }
