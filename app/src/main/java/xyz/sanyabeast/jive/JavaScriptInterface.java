@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -13,8 +12,8 @@ import com.google.gson.Gson;
  * Created by Sanyabeast on 19.03.2018.
  */
 
-public class WebAppInterface {
-    private String TAG = "Jive:WebAppInterface";
+public class JavaScriptInterface {
+    private String TAG = "Jive/JavaScriptInterface";
     private Context context;
     private Activity activity;
     private RootActivity rootActivity;
@@ -22,7 +21,7 @@ public class WebAppInterface {
     private Storage storage;
     private AdsManager mAdsManager;
 
-    WebAppInterface(Context c){
+    JavaScriptInterface(Context c){
         context = c;
         activity = (Activity) c;
         rootActivity = (RootActivity) c;
@@ -47,34 +46,34 @@ public class WebAppInterface {
     @JavascriptInterface
     public void gsSignInSilently(){
         RootActivity mainActivity = (RootActivity) context;
-        rootActivity.mGServicesMan.signInSilently();
+        rootActivity.mGoogleServicesManager.signInSilently();
     }
 
     @JavascriptInterface
     public String gsIsSignedIn(){
         Gson gson = new Gson();
-        Log.d(TAG, gson.toJson(rootActivity.mGServicesMan.isSignedIn()));
-        return gson.toJson(rootActivity.mGServicesMan.isSignedIn());
+        Log.d(TAG, gson.toJson(rootActivity.mGoogleServicesManager.isSignedIn()));
+        return gson.toJson(rootActivity.mGoogleServicesManager.isSignedIn());
     }
 
     @JavascriptInterface
     public void gsSignOut(){
-        rootActivity.mGServicesMan.signOut();
+        rootActivity.mGoogleServicesManager.signOut();
     }
 
     @JavascriptInterface
     public void gsSignIn(){
-        rootActivity.mGServicesMan.signIn();
+        rootActivity.mGoogleServicesManager.signIn();
     }
 
     @JavascriptInterface
     public void gsShowAchievements(){
-        rootActivity.mGServicesMan.showAchievements();
+        rootActivity.mGoogleServicesManager.showAchievements();
     }
 
     @JavascriptInterface
     public void gsShowLeaderboard(){
-        rootActivity.mGServicesMan.showLeaderboard();
+        rootActivity.mGoogleServicesManager.showLeaderboard();
     }
 
     /**Storage methods

@@ -5,6 +5,8 @@ package xyz.sanyabeast.jive;
  */
 
 public class Envelope {
+    private String TAG = "Jive/Envelope";
+
     String theme;
     Object data;
 

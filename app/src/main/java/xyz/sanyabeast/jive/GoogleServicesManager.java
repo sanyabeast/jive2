@@ -3,10 +3,8 @@ package xyz.sanyabeast.jive;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -23,26 +21,23 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-import java.util.Hashtable;
-import java.util.concurrent.Executor;
-
 /**
  * Created by sanyabeast on 30.05.2018.
  */
 
-class GServicesMan extends Intending {
+class GoogleServicesManager extends Intending {
     private Context context;
     private Activity activity;
     private RootActivity rootActivity;
 
-    private String TAG = "Jive/GServicesMan";
+    private String TAG = "Jive/GoogleServicesManager";
     private GoogleSignInClient mGoogleSignInClient;
     private AchievementsClient mAchievementsClient;
     private LeaderboardsClient mLeaderboardsClient;
     private EventsClient mEventsClient;
     private PlayersClient mPlayersClient;
 
-    GServicesMan(Context _context){
+    GoogleServicesManager(Context _context){
         context = _context;
         activity = (Activity) context;
         rootActivity = (RootActivity) context;
@@ -57,11 +52,9 @@ class GServicesMan extends Intending {
     }
 
     public void processRequestCode(Integer requestCode, Integer resultCode, Intent intent){
-        Log.d(TAG, "Processig request code: " + requestCode);
-        switch(requestCode){
-            case 0:
-
-                break;
+        if (requestCode == REQUEST_CODES.get("RC_SIGN_IN")){
+            Log.d(TAG, "Sign-in intent resulted");
+            signInSilently();
         }
     }
 
@@ -88,7 +81,7 @@ class GServicesMan extends Intending {
             }
         });
 
-        rootActivity.mWebToolchain.send(new Envelope("google.services.connected", null));
+        rootActivity.mWebViewManager.send(new Envelope("google.services.connected", null));
 
     }
 
@@ -99,7 +92,7 @@ class GServicesMan extends Intending {
         mLeaderboardsClient = null;
         mPlayersClient = null;
 
-        rootActivity.mWebToolchain.send(new Envelope("google.services.disconnected", null));
+        rootActivity.mWebViewManager.send(new Envelope("google.services.disconnected", null));
     }
 
     public void signInSilently() {
@@ -111,11 +104,11 @@ class GServicesMan extends Intending {
                 public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
                     if (task.isSuccessful()) {
                         Log.d(TAG, "signInSilently(): success");
-                        rootActivity.mWebToolchain.send(new Envelope("google.services.sign-in.success", task.getResult()));
+                        rootActivity.mWebViewManager.send(new Envelope("google.services.sign-in.success", task.getResult()));
                         onConnected(task.getResult());
                     } else {
                         Log.d(TAG, "signInSilently(): failure", task.getException());
-                        rootActivity.mWebToolchain.send(new Envelope("google.services.sign-in.failure"));
+                        rootActivity.mWebViewManager.send(new Envelope("google.services.sign-in.failure"));
                         onDisconnected();
                     }
                 }
@@ -141,7 +134,7 @@ class GServicesMan extends Intending {
                     boolean successful = task.isSuccessful();
                     String modifier = successful ? "success" : "failure";
                     Log.d(TAG, "signOut(): " + (successful ? "success" : "failed"));
-                    rootActivity.mWebToolchain.send(new Envelope("google.services.signed-out." + modifier, null));
+                    rootActivity.mWebViewManager.send(new Envelope("google.services.signed-out." + modifier, null));
                     onDisconnected();
                 }
             });

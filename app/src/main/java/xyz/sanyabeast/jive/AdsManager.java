@@ -34,12 +34,12 @@ import com.google.android.gms.ads.reward.RewardedVideoAdListener;
  */
 
 public class AdsManager {
-    private String TAG = "AdsManager";
+    private String TAG = "Jive/AdsManager";
 
     private Context context;
     private RootActivity rootActivity;
     private Activity activity;
-    private WebToolchain mWebToolchain;
+    private WebViewManager mWebViewManager;
 
     private InterstitialAd mInterstitialAd;
     private AdView mAdView;
@@ -73,31 +73,31 @@ public class AdsManager {
             mInterstitialAd.setAdListener(new AdListener(){
                 @Override
                 public void  onAdLoaded(){
-                    rootActivity.mWebToolchain.send(new Envelope("android.ads.interstitial.loading.completed"));
+                    rootActivity.mWebViewManager.send(new Envelope("android.ads.interstitial.loading.completed"));
                     mInterstitialAd.show();
                 }
 
                 @Override
                 public void onAdFailedToLoad(int errorCode) {
-                    rootActivity.mWebToolchain.send(new Envelope("android.ads.interstitial.loading.failed", new Object(){}));
+                    rootActivity.mWebViewManager.send(new Envelope("android.ads.interstitial.loading.failed", new Object(){}));
                     Log.d(TAG, "Interstitial ad failed to load, errocode: " + errorCode);
                 }
 
                 @Override
                 public void onAdOpened() {
-                    rootActivity.mWebToolchain.send(new Envelope("android.ads.interstitial.opened"));
+                    rootActivity.mWebViewManager.send(new Envelope("android.ads.interstitial.opened"));
                     Log.d(TAG, "Interstital ad has opened");
                 }
 
                 @Override
                 public void onAdLeftApplication() {
-                    rootActivity.mWebToolchain.send(new Envelope("android.ads.interstitial.used"));
+                    rootActivity.mWebViewManager.send(new Envelope("android.ads.interstitial.used"));
                     Log.d(TAG, "Interstital ad has been used");
                 }
 
                 @Override
                 public void onAdClosed() {
-                    rootActivity.mWebToolchain.send(new Envelope("android.ads.interstitial.closed"));
+                    rootActivity.mWebViewManager.send(new Envelope("android.ads.interstitial.closed"));
                     Log.d(TAG, "Interstital ad has been closed");
                 }
             });
@@ -114,31 +114,31 @@ public class AdsManager {
                 mAdView.setAdListener(new AdListener(){
                     @Override
                     public void  onAdLoaded(){
-                        rootActivity.mWebToolchain.send(new Envelope("android.ads.banner.loading.completed"));
+                        rootActivity.mWebViewManager.send(new Envelope("android.ads.banner.loading.completed"));
                         Log.d(TAG, "Banner loading completed: ");
                     }
 
                     @Override
                     public void onAdFailedToLoad(int errorCode) {
-                        rootActivity.mWebToolchain.send(new Envelope("android.ads.banner.loading.failed", new Object(){}));
+                        rootActivity.mWebViewManager.send(new Envelope("android.ads.banner.loading.failed", new Object(){}));
                         Log.d(TAG, "Banner ad failed to load, errocode: " + errorCode);
                     }
 
                     @Override
                     public void onAdOpened() {
-                        rootActivity.mWebToolchain.send(new Envelope("android.ads.banner.opened"));
+                        rootActivity.mWebViewManager.send(new Envelope("android.ads.banner.opened"));
                         Log.d(TAG, "Banner ad has opened");
                     }
 
                     @Override
                     public void onAdLeftApplication() {
-                        rootActivity.mWebToolchain.send(new Envelope("android.ads.banner.used"));
+                        rootActivity.mWebViewManager.send(new Envelope("android.ads.banner.used"));
                         Log.d(TAG, "Banner ad has been used");
                     }
 
                     @Override
                     public void onAdClosed() {
-                        rootActivity.mWebToolchain.send(new Envelope("android.ads.banner.closed"));
+                        rootActivity.mWebViewManager.send(new Envelope("android.ads.banner.closed"));
                         Log.d(TAG, "Banner ad has been closed");
                     }
                 });
@@ -154,50 +154,50 @@ public class AdsManager {
                 mRewardedAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
                     @Override
                     public void onRewardedVideoAdLoaded() {
-                        rootActivity.mWebToolchain.send(new Envelope("android.ads.rewarded.loading.completed"));
+                        rootActivity.mWebViewManager.send(new Envelope("android.ads.rewarded.loading.completed"));
                         Log.d(TAG, "Rewarded loading completed: ");
                         mRewardedAd.show();
                     }
 
                     @Override
                     public void onRewardedVideoAdOpened() {
-                        rootActivity.mWebToolchain.send(new Envelope("android.ads.rewarded.opened"));
+                        rootActivity.mWebViewManager.send(new Envelope("android.ads.rewarded.opened"));
                         Log.d(TAG, "Rewarded opened: ");
                     }
 
                     @Override
                     public void onRewardedVideoStarted() {
-                        rootActivity.mWebToolchain.send(new Envelope("android.ads.rewarded.video.started"));
+                        rootActivity.mWebViewManager.send(new Envelope("android.ads.rewarded.video.started"));
                         Log.d(TAG, "Rewarded video started: ");
                     }
 
                     @Override
                     public void onRewardedVideoAdClosed() {
-                        rootActivity.mWebToolchain.send(new Envelope("android.ads.rewarded.closed"));
+                        rootActivity.mWebViewManager.send(new Envelope("android.ads.rewarded.closed"));
                         Log.d(TAG, "Rewarded closed: ");
                     }
 
                     @Override
                     public void onRewarded(RewardItem rewardItem) {
-                        rootActivity.mWebToolchain.send(new Envelope("android.ads.rewarded.rewarded"));
+                        rootActivity.mWebViewManager.send(new Envelope("android.ads.rewarded.rewarded"));
                         Log.d(TAG, "Rewarded rewarded: ");
                     }
 
                     @Override
                     public void onRewardedVideoAdLeftApplication() {
-                        rootActivity.mWebToolchain.send(new Envelope("android.ads.rewarded.used"));
+                        rootActivity.mWebViewManager.send(new Envelope("android.ads.rewarded.used"));
                         Log.d(TAG, "Rewarded used: ");
                     }
 
                     @Override
                     public void onRewardedVideoAdFailedToLoad(int i) {
-                        rootActivity.mWebToolchain.send(new Envelope("android.ads.rewarded.loading.failed"));
+                        rootActivity.mWebViewManager.send(new Envelope("android.ads.rewarded.loading.failed"));
                         Log.d(TAG, "Rewarded loading failed: ");
                     }
 
                     @Override
                     public void onRewardedVideoCompleted() {
-                        rootActivity.mWebToolchain.send(new Envelope("android.ads.rewarded.video.completed"));
+                        rootActivity.mWebViewManager.send(new Envelope("android.ads.rewarded.video.completed"));
                         Log.d(TAG, "Rewarded video completed: ");
                     }
                 });
@@ -209,7 +209,7 @@ public class AdsManager {
         rootActivity.runOnMainUIThread(new Runnable() {
             @Override
             public void run() {
-                rootActivity.mWebToolchain.send(new Envelope("android.ads.interstitial.loading.started"));
+                rootActivity.mWebViewManager.send(new Envelope("android.ads.interstitial.loading.started"));
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
                 if (mInterstitialAd.isLoaded()){
                     mInterstitialAd.show();

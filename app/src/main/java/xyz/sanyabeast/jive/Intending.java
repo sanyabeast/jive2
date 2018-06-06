@@ -9,9 +9,10 @@ import java.util.Hashtable;
  */
 
 public abstract class Intending {
+    private String TAG = "Jive/Intending";
     protected Hashtable<String, Integer> REQUEST_CODES = new Hashtable<String, Integer>();
     public boolean checkRequestCode(Integer requestCode){
-        return REQUEST_CODES.containsKey(requestCode);
+        return REQUEST_CODES.containsValue(requestCode);
     }
 
     protected void addRequestCode(String key, Integer value){

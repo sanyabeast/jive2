@@ -11,6 +11,8 @@ import net.rehacktive.waspdb.WaspHash;
  */
 
 public class Storage {
+    private String TAG = "Jive/Storage";
+
     WaspDb db;
     Context context;
     public Storage(Context c){

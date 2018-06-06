@@ -16,6 +16,8 @@ import android.widget.Toast;
  */
 
 public class UITools {
+    private String TAG = "Jive/UITools";
+
     Activity activity;
     Context context;
     RootActivity rootActivity;

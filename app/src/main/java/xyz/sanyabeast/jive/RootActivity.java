@@ -6,29 +6,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.AccountPicker;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-
-import com.google.android.gms.common.api.GoogleApiClient;
 
 /**
  * Created by Sanyabeast on 19.03.2018.
  */
 
 public class RootActivity extends FragmentActivity {
-    private static String TAG = "RootActivity";
+    private String TAG = "Jive/RootActivity";
 
-    public WebToolchain mWebToolchain;
-    public GServicesMan mGServicesMan;
+    public WebViewManager mWebViewManager;
+    public GoogleServicesManager mGoogleServicesManager;
     public Storage mStorage;
     public AdsManager mAdsManager;
     public UITools mUITools;
@@ -42,10 +33,10 @@ public class RootActivity extends FragmentActivity {
         mUITools = new UITools(this);
         mAdsManager = new AdsManager(this);
         mStorage = new Storage(this);
-        mGServicesMan = new GServicesMan(this);
-        mWebToolchain = new WebToolchain(this);
-        mWebToolchain.open("file:///android_asset/index.html");
-        mWebToolchain.set("activity", mWebToolchain);
+        mGoogleServicesManager = new GoogleServicesManager(this);
+        mWebViewManager = new WebViewManager(this);
+        mWebViewManager.open("file:///android_asset/index.html");
+        mWebViewManager.set("activity", mWebViewManager);
     }
 
     @Override
@@ -63,8 +54,8 @@ public class RootActivity extends FragmentActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent){
         Log.d(TAG, "activity result: requestCode - " + requestCode + ", resultCode - " + resultCode);
-        if (mGServicesMan.checkRequestCode(requestCode)){
-            mGServicesMan.processRequestCode(requestCode, resultCode, intent);
+        if (mGoogleServicesManager.checkRequestCode(requestCode)){
+            mGoogleServicesManager.processRequestCode(requestCode, resultCode, intent);
             return;
         }
     }
@@ -73,8 +64,8 @@ public class RootActivity extends FragmentActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //Integer keycode = event.getKeyCode();
         //Log.d(TAG, keycode.toString());
-        mWebToolchain.send(new Envelope("android.button.pressed", event));
-        mWebToolchain.set("lastKeyEvent", event);
+        mWebViewManager.send(new Envelope("android.button.pressed", event));
+        mWebViewManager.set("lastKeyEvent", event);
         return true;
     }
 

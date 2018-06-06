@@ -9,7 +9,7 @@ define([
 	var JiveCore = function(){
 		this.__setupAndroidBridgeProxy();
 		this.__patchProtos();
-		this.__patchConsole();
+		// this.__patchConsole();
 		this.__setupEvents();
 		this.__createSubs();
 
@@ -55,7 +55,13 @@ define([
 			window.android = new Proxy(window._android || {}, {
 				get : function(target, propName){
 					if (typeof target[propName] == "function"){
-						return target[propName].bind(target);
+						return function(){
+							try {
+								return JSON.parse(target[propName].apply(this, arguments));
+							} catch (err){
+								return target[propName].apply(this, arguments);
+							}
+						}.bind(target);
 					} else {
 						return placeholderMethod.bind(jive, propName);
 					}
@@ -64,30 +70,25 @@ define([
 		},
 		__createSubs : function(){
 			this.subscriptions = {
-				eventBridge : postal.listen("android.bridge", function(data){
+				eventBridge : postal.listen("$android", function(data){
 					if (typeof data == "object" && typeof data.theme == "string"){
 						postal.say(data.theme, data.data);
 					} else {
 						console.warn("Unable to dispatch event");
 					}
 				}),
-				showToast : postal.listen("android.showToast", function(message){
-					android.showToast(message);
-				}),
-				finishApp : postal.listen("android.finish", function(){
-					android.finish();
-				}),
-				exitApp : postal.listen("android.exit", function(){
-					android.exit();
-				}),
+				setGloabalVariable : postal.listen("var-global", function(data){
+					var varName = data[0];
+					var varValue = data[1];
+
+					if (varName){
+						window[varName] = varValue;
+					}
+				}.bind(this)),
 				buttonPressed : postal.listen("android.button.pressed", function(data){
 					postal.say("button.pressed", {
 						keycode : data.mKeyCode
 					});
-
-					if (data.mKeyCode == 82){
-						this.jsterm.toggleConnection();
-					}
 				}.bind(this)),
 				logData : postal.listen("console.log", function(data){
 					console.log("[console.log]", JSON.stringify(data));
@@ -98,14 +99,11 @@ define([
 						case 4:
 							android.exit();
 						break;
-						case 24:
-							android.showToast("privet");
-						break;
-						case 25:
-							android.showToast(new Date().toString());
-						break;
+						case 82:
+							this.jsterm.toggleConnection();
+						break;	
 					}
-				}),
+				}.bind(this)),
 
 			};
 		},
@@ -136,6 +134,7 @@ define([
 			}
 		},
 		__patchConsole : function(console, namespace){
+			return;
 			console = console || window.console;
 			namespace = namespace || "";
 			var core = this;
