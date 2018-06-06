@@ -1,6 +1,7 @@
 package xyz.sanyabeast.jive;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -10,6 +11,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.games.AchievementsClient;
 import com.google.android.gms.games.EventsClient;
 import com.google.android.gms.games.Games;
@@ -49,17 +52,32 @@ class GoogleServicesManager extends Intending {
                 context,
                 new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).build()
         );
+
     }
 
     public void processRequestCode(Integer requestCode, Integer resultCode, Intent intent){
-        if (requestCode == REQUEST_CODES.get("RC_SIGN_IN")){
+        Log.d(TAG, "Processing intent result: requestCode: " + requestCode + " resultCode: " + resultCode);
+
+        if ((int) requestCode == (int) REQUEST_CODES.get("RC_SIGN_IN")){
             Log.d(TAG, "Sign-in intent resulted");
-            signInSilently();
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
+
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                rootActivity.mWebViewManager.log(account);
+                onConnected(account);
+            } catch (ApiException apiException) {
+                String message = apiException.getMessage();
+                onDisconnected();
+                rootActivity.mWebViewManager.log(apiException.getStatusCode());
+                Log.d(TAG, "Sign-in failed, statusCode; " + GoogleSignInStatusCodes.getStatusCodeString(apiException.getStatusCode()));
+            }
         }
     }
 
     private void onConnected(GoogleSignInAccount googleSignInAccount) {
         Log.d(TAG, "onConnected(): connected to Google APIs");
+        rootActivity.mWebViewManager.log(googleSignInAccount);
 
         mAchievementsClient = Games.getAchievementsClient(activity, googleSignInAccount);
         mLeaderboardsClient = Games.getLeaderboardsClient(activity, googleSignInAccount);

@@ -19,13 +19,15 @@ iframe {
 	position: absolute;
     top: 5%;
     left: 50%;
-    transform: translate(-50%, -1000%);
+    transform: translateX(-50%) translateY(-200%) scale(0.5);
     height: 50%;
     width: 90%;
-    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease-in, transform 0.5s ease-in;
 
     &.connected {
-    	visibility: visible;
-		transform: translate(-50%);
+		transform: translateX(-50%) scale(1);
+		opacity: 1;
+		transition: opacity 0.5s ease-out, transform 0.5s ease-out;
     }
 }

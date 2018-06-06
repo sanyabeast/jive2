@@ -16,6 +16,13 @@ define([
 		this.jsterm = new JSTerm();
 
 		this.jsterm.connect();
+
+		if (this.env == "android"){
+			for (var k in window._android){
+				this.jsterm.state.history.push(["android.", k, "()"].join(""));
+			}
+		}
+
 		document.body.appendChild(this.jsterm.element);
 
 		window.postal = postal;
@@ -91,7 +98,7 @@ define([
 					});
 				}.bind(this)),
 				logData : postal.listen("console.log", function(data){
-					console.log("[console.log]", JSON.stringify(data));
+					console.log("[console.log]", data);
 				}),
 				/*test*/
 				btnPressed : postal.listen("button.pressed", function(data){

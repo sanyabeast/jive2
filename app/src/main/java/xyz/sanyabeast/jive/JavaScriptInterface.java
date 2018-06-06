@@ -29,20 +29,25 @@ public class JavaScriptInterface {
         mAdsManager = rootActivity.mAdsManager;
     }
 
+    /**System methods*/
     @JavascriptInterface
-    public void exit(){
+    public void sysExit(){
         Activity activity = (Activity)context;
         activity.finishAffinity();
         System.exit(0);
     }
 
     @JavascriptInterface
-    public String getSystemConfig(){
-        Configuration config = context.getResources().getConfiguration();
-        String configJSON = gson.toJson(config);
-        return configJSON;
+    public String sysGetConfig(){
+        try {
+            return gson.toJson(context.getResources().getConfiguration());
+        } catch (Exception e){
+            Log.d(TAG, e.getMessage());
+            return null;
+        }
     }
 
+    /*8Google Services methods*/
     @JavascriptInterface
     public void gsSignInSilently(){
         RootActivity mainActivity = (RootActivity) context;

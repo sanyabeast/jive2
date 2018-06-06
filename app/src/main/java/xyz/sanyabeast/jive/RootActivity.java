@@ -53,7 +53,7 @@ public class RootActivity extends FragmentActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent){
-        Log.d(TAG, "activity result: requestCode - " + requestCode + ", resultCode - " + resultCode);
+        Log.d(TAG, "Processing intent result: requestCode - " + requestCode + ", resultCode - " + resultCode);
         if (mGoogleServicesManager.checkRequestCode(requestCode)){
             mGoogleServicesManager.processRequestCode(requestCode, resultCode, intent);
             return;

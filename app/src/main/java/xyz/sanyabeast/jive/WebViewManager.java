@@ -17,7 +17,7 @@ import com.google.gson.Gson;
  */
 
 public class WebViewManager {
-    private String TAG = "Jive/WebToolChain";
+    private String TAG = "Jive/WebViewManager";
 
     private WebView mWebView;
     private Context context;
@@ -73,7 +73,6 @@ public class WebViewManager {
     public void send(Envelope envelope){
         try {
             String json = gson.toJson(envelope);
-            Log.d(TAG, "postal.say('$android', " + json + ")");
             this.open("javascript:postal.say('$android', " + json + ")");
         } catch (Exception e){
             log("failed to send data: " + e.getMessage());
