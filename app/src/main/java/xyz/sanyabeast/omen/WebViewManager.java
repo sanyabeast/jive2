@@ -1,4 +1,4 @@
-package xyz.sanyabeast.jive;
+package xyz.sanyabeast.omen;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;

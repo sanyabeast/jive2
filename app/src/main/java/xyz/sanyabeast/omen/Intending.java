@@ -1,4 +1,4 @@
-package xyz.sanyabeast.jive;
+package xyz.sanyabeast.omen;
 
 import android.content.Intent;
 

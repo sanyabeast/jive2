@@ -1,4 +1,4 @@
-package xyz.sanyabeast.jive;
+package xyz.sanyabeast.omen;
 
 /**
  * Created by sanyabeast on 19.03.2018.

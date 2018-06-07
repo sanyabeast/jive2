@@ -1,7 +1,6 @@
-package xyz.sanyabeast.jive;
+package xyz.sanyabeast.omen;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;

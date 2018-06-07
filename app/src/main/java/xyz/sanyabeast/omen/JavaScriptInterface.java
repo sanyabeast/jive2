@@ -1,8 +1,7 @@
-package xyz.sanyabeast.jive;
+package xyz.sanyabeast.omen;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 

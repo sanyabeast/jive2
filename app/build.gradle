@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "xyz.sanyabeast.jive"
+        applicationId "xyz.sanyabeast.omen"
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
@@ -21,13 +21,15 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.google.firebase:firebase-ads:15.0.1'
+    implementation "com.google.firebase:firebase-core:16.0.0"
+    implementation "com.google.firebase:firebase-ads:${google_library_version}"
+    implementation "com.google.android.gms:play-services-auth:${google_library_version}"
+    implementation "com.google.android.gms:play-services-games:${google_library_version}"
+    implementation "com.google.android.gms:play-services-ads:${google_library_version}"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation "com.google.android.gms:play-services-games:15.0.1"
-    compile 'com.google.code.gson:gson:2.8.2'
-    compile 'com.google.android.gms:play-services-auth:15.0.1'
-    compile 'com.github.rehacktive:waspdb:1.1.1'
-    implementation 'com.google.android.gms:play-services-ads:15.0.1'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.github.rehacktive:waspdb:1.1.1'
+
 }
 
 repositories {
