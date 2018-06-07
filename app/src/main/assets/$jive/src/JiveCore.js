@@ -152,10 +152,6 @@ define([
 					var args = _.slice(arguments);
 
 					if (core.env == "android"){
-						/*_.forEach(args, function(arg, index, list){
-							list[index] = arg.toString ? arg.toString() : arg;
-						});*/
-
 						args.unshift(["JiveJS", namespace].join(":") + ": ");
 						native.call(console, args.join(" "));
 					} else {
@@ -169,13 +165,13 @@ define([
 		__patchProtos : function(){
 
 		},
-		load : function(){
+		load : function(url){
 			if (!this.iframe){
 				todo.add("load", todo.in(100), function(){
 					this.load.apply(this, arguments);
 				}.bind(this));
 			} else {
-				this.iframe.src = "./test/index.html";
+				this.iframe.src = url;
 			}
 		},
 
