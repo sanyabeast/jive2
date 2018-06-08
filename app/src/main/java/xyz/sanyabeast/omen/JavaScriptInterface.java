@@ -7,6 +7,9 @@ import android.webkit.JavascriptInterface;
 
 import com.google.gson.Gson;
 
+import xyz.sanyabeast.omen.JavascriptInterface.Resources;
+import xyz.sanyabeast.omen.JavascriptInterface.SystemInfo;
+
 /**
  * Created by Sanyabeast on 19.03.2018.
  */
@@ -19,6 +22,8 @@ public class JavaScriptInterface {
     private Gson gson = new Gson();
     private Storage storage;
     private AdsManager mAdsManager;
+    private SystemInfo mSystemInfo;
+    private Resources mResources;
 
     JavaScriptInterface(Context c){
         context = c;
@@ -26,6 +31,9 @@ public class JavaScriptInterface {
         rootActivity = (RootActivity) c;
         storage = rootActivity.mStorage;
         mAdsManager = rootActivity.mAdsManager;
+
+        mSystemInfo = new SystemInfo(c);
+        mResources = new Resources(c);
     }
 
     /**System methods*/
@@ -40,6 +48,26 @@ public class JavaScriptInterface {
     public String sysGetConfig(){
         try {
             return gson.toJson(context.getResources().getConfiguration());
+        } catch (Exception e){
+            Log.d(TAG, e.getMessage());
+            return null;
+        }
+    }
+
+    @JavascriptInterface
+    public String sysGetInfo(){
+        try {
+            return gson.toJson(mSystemInfo);
+        } catch (Exception e){
+            Log.d(TAG, e.getMessage());
+            return null;
+        }
+    }
+
+    /*resources*/
+    public String sysGetResources(){
+        try {
+            return gson.toJson(mResources);
         } catch (Exception e){
             Log.d(TAG, e.getMessage());
             return null;
@@ -78,6 +106,16 @@ public class JavaScriptInterface {
     @JavascriptInterface
     public void gsShowLeaderboard(){
         rootActivity.mGoogleServicesManager.showLeaderboard();
+    }
+
+    @JavascriptInterface
+    public String gsGetPlayer(){
+        try {
+            return gson.toJson(rootActivity.mGoogleServicesManager.mPlayer);
+        } catch (Exception e){
+            Log.d(TAG, e.getMessage());
+            return null;
+        }
     }
 
     /**Storage methods

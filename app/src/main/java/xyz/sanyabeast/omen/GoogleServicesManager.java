@@ -39,6 +39,8 @@ class GoogleServicesManager extends Intending {
     private EventsClient mEventsClient;
     private PlayersClient mPlayersClient;
 
+    public Player mPlayer;
+
     GoogleServicesManager(Context _context){
         context = _context;
         activity = (Activity) context;
@@ -51,6 +53,13 @@ class GoogleServicesManager extends Intending {
                 context,
                 new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).build()
         );
+
+
+        if (isSignedIn()){
+            Log.d(TAG, "Signed in before start");
+        } else {
+            Log.d(TAG, "Not signed in before start");
+        }
 
     }
 
@@ -90,6 +99,7 @@ class GoogleServicesManager extends Intending {
                 String displayName;
                 if (task.isSuccessful()) {
                     displayName = task.getResult().getDisplayName();
+                    mPlayer = task.getResult();
                     Log.d(TAG, "connection successed: " + displayName);
                 } else {
                     Exception e = task.getException();
