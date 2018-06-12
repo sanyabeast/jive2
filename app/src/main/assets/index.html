@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title></title>
-	<link rel="stylesheet/less" type="text/css" href="core/styles/main.less" />
+	<link rel="stylesheet/less" type="text/css" href="core/styles/main.less"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<script src="node_modules/less/dist/less.js"></script>
 </head>
@@ -10,11 +10,22 @@
 	<template id="frame-driver-frame">
 		<iframe 
 			src="javascript:"
-			id="iframe"
 			name="iframe"
 			allowfullscreen
 			sandbox="allow-scripts allow-same-origin allow-modals allow-forms allow-popups allow-pointer-lock"
 		></iframe>
+	</template>
+	<template id="activity">
+		<head_head>
+			<link rel="stylesheet/less" type="text/css" href="./main.less"/>
+			<script src="node_modules/less/dist/less.js"></script>
+		</head_head>
+		<body_body>
+			<content></content>
+			<script data-main="./main" src="node_modules/requirejs/require.js"></script>
+			<script type="text/javascript">
+			</script>
+		</body_body>
 	</template>
 	<script data-main="core/src/main" src="node_modules/requirejs/require.js"></script>
 </body>

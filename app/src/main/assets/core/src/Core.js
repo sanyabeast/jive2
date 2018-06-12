@@ -46,7 +46,7 @@ define([
 			this.patchProto();
 
 			this.jsterm = new JSTerm();
-			this.jsterm.connect();
+			// this.jsterm.connect();
 
 			if (this.env == "android"){
 				for (var k in window._android){
@@ -196,7 +196,12 @@ define([
 				return elements;
 			}
 		},
-		load : function(){
+		load : function(path, name){
+			this.modules.with("frameDriver")
+			.then(function(frameDriver){
+				frameDriver.loadActivity(path, name);
+			});
+
 			console.log(arguments);
 		}
 	});

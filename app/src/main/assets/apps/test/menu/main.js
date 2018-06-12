@@ -1,4 +1,5 @@
 "use strict";
+console.log(2);
 window.addEventListener("jive.ready", function(){
 	var box;
 	var count = 6;

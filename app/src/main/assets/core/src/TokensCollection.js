@@ -21,7 +21,13 @@ define(function(){
 			delete this.__content[name];
 		},
 		with : function(name, callback, context){
-			callback.call(context, this.get(name), name, this);
+			if (_.isFunction(callback)){
+				callback.call(context, this.get(name), name, this);
+			} else {
+				return new Promise(function(resolve, reject){
+					resolve(this.get(name));
+				}.bind(this));
+			}
 		},
 		iterate : function(callback, context){
 			for (var k in this.__content){
