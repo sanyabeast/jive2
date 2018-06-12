@@ -2,18 +2,20 @@
 <html>
 <head>
 	<title></title>
-	<link rel="stylesheet/less" type="text/css" href="$jive/styles/main.less" />
+	<link rel="stylesheet/less" type="text/css" href="core/styles/main.less" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	<script src="$jive/vendor/less.js"></script>
+	<script src="node_modules/less/dist/less.js"></script>
 </head>
 <body>
-	<iframe 
-		src="javascript:"
-		id="iframe"
-		name="iframe"
-		allowfullscreen
-		sandbox="allow-scripts allow-same-origin allow-modals allow-forms allow-popups allow-pointer-lock"
-	></iframe>
-	<script data-main="$jive/src/main" src="$jive/vendor/require.js"></script>
+	<template id="frame-driver-frame">
+		<iframe 
+			src="javascript:"
+			id="iframe"
+			name="iframe"
+			allowfullscreen
+			sandbox="allow-scripts allow-same-origin allow-modals allow-forms allow-popups allow-pointer-lock"
+		></iframe>
+	</template>
+	<script data-main="core/src/main" src="node_modules/requirejs/require.js"></script>
 </body>
 </html>

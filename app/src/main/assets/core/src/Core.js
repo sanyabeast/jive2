@@ -1,51 +1,72 @@
 "use strict";
 define([
+		"Activity",
+		"TokensCollection",
+		"FrameDriver",
+		"PrePatcher",
+		"Subscriber",
 		"postal",
 		"todo",
-		"jsterm"
-	], function(postal, todo, JSTerm){
+		"jsterm",
+		"superagent",
+	], function(
+		  Activity
+		, TokensCollection
+		, FrameDriver
+		, PrePatcher
+		, Subscriber
+		, postal
+		, todo
+		, JSTerm
+		, superagent){
+
+		window.TokensCollection = TokensCollection;
 
 	/*Jive2Core*/
-	var JiveCore = function(){
-		this.__setupAndroidBridgeProxy();
-		this.__patchProtos();
-		// this.__patchConsole();
-		this.__setupEvents();
-		this.__createSubs();
+	var Core = new $Class({ name : "Core", namespace : "Core" }, {
+		Activity : { value : Activity },
+		TokensCollection : { value : TokensCollection },
+		FrameDriver : { value : FrameDriver },
+		PrePatcher : { value : PrePatcher },
+		Subscriber : { value : Subscriber },
+		$constructor : function(){
+			this.modules = new TokensCollection({
+				frameDriver : new FrameDriver(),
+				prePatcher : new PrePatcher()
+			});
 
-		this.jsterm = new JSTerm();
+			this.modules.with("prePatcher", function(prePatcher){
+				prePatcher.patch();
+			});
 
-		this.jsterm.connect();
 
-		if (this.env == "android"){
-			for (var k in window._android){
-				this.jsterm.state.history.push(["android.", k, "()"].join(""));
-			}
-		}
+			this.setupAndroidBridgeProxy();
+			this.setupEvents();
+			this.createSubs();
+			this.patchProto();
 
-		document.body.appendChild(this.jsterm.element);
+			this.jsterm = new JSTerm();
+			this.jsterm.connect();
 
-		window.postal = postal;
-		window.todo = todo;
-
-		var debugTextArea = document.querySelector("#debug")
-
-	};
-
-	JiveCore.prototype = {
-		env : "android",
-		get iframe(){
-			if (!this._iframe){
-				this._iframe = document.querySelector("#iframe");
-				if (this._iframe){
-					this.iframe.addEventListener("load", this.__onIframeLoaded.bind(this));
-					this.iframe.window = window.frames[0].window;
+			if (this.env == "android"){
+				for (var k in window._android){
+					this.jsterm.state.history.push(["android.", k, "()"].join(""));
 				}
 			}
 
-			return this._iframe;
+			this.blobURLs = {};
+
+			document.body.appendChild(this.jsterm.element);
+
+			window.postal = postal;
+			window.todo = todo;
+			window.superagent = superagent;
 		},
-		__setupAndroidBridgeProxy : function(){
+		env : {
+			value : "android",
+			writable : true
+		},
+		setupAndroidBridgeProxy : function(){
 			var jive = this;
 
 			var placeholderMethod = function(){
@@ -75,7 +96,7 @@ define([
 				}
 			});
 		},
-		__createSubs : function(){
+		createSubs : function(){
 			this.subscriptions = {
 				eventBridge : postal.listen("$android", function(data){
 					if (typeof data == "object" && typeof data.theme == "string"){
@@ -114,22 +135,22 @@ define([
 
 			};
 		},
-		__setupEvents : function(){
+		setupEvents : function(){
 			this.events = {
 				jiveReady : new Event("jive.ready")
 			};
 		},
-		__onIframeLoaded : function(evt){
+		onIframeLoaded : function(evt){
 			this.iframe.window.postal = postal;
 			this.iframe.window.todo = todo;
 			this.iframe.window._ = window._;
 			this.iframe.window.android = window.android;
 			this.iframe.window.core = this;
-			this.__patchConsole(this.iframe.window.console, "frame");
+			this.patchConsole(this.iframe.window.console, "frame");
 			this.iframe.window.dispatchEvent(this.events.jiveReady);
 
 		},
-		__loop : function(list, callback, context){
+		loop : function(list, callback, context){
 			if (typeof list.length == "number"){
 				for (var a = 0, l = list.length; a < l; a++){
 					callback.call(context, list[a], a, list);
@@ -140,7 +161,7 @@ define([
 				}
 			}
 		},
-		__patchConsole : function(console, namespace){
+		patchConsole : function(console, namespace){
 			return;
 			console = console || window.console;
 			namespace = namespace || "";
@@ -162,22 +183,25 @@ define([
 				};
 			}.bind(this));
 		},
-		__patchProtos : function(){
+		patchProto : function(){
+			var _this = this;
+			Node.prototype.select = function(selector, callback, context){
+				var elements = this.querySelectorAll(selector);
+				if (callback){
+					_this.loop(elements, function(element, index, list){
+						callback.call(context, element, index, list);
+					});
+				}
 
-		},
-		load : function(url){
-			if (!this.iframe){
-				todo.add("load", todo.in(100), function(){
-					this.load.apply(this, arguments);
-				}.bind(this));
-			} else {
-				this.iframe.src = url;
+				return elements;
 			}
 		},
+		load : function(){
+			console.log(arguments);
+		}
+	});
 
-	};
-
-	return JiveCore;
+	return Core;
 
 });
 

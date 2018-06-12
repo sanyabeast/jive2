@@ -24,11 +24,14 @@
         <activity
             android:name="xyz.sanyabeast.omen.RootActivity"
             android:theme="@style/AppTheme"
-        >
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="xyz.sanyabeast.omen.SplashActivity"
-            android:theme="@style/SpashTheme">
+            android:theme="@style/SpashTheme"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

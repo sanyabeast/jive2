@@ -1,0 +1,21 @@
+{
+  "name": "assets",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies" : {
+  	"three" : "latest",
+  	"less": "latest",
+  	"postal": "git://github.com/sanyabeast/postal.git",
+  	"requirejs": "^2.3.5",
+    "requirejs-text": "latest",
+    "superagent": "latest",
+    "lodash" : "latest",
+    "jquery" : "latest",
+    "todojs": "git://github.com/sanyabeast/todojs.git",
+    "tweener": "git://github.com/sanyabeast/tweener.git",
+    "unicycle": "git://github.com/sanyabeast/unicycle.git",
+    "jsterm" : "git://github.com/sanyabeast/jsterm.git",
+    "dollaclass" : "git://github.com/sanyabeast/dollaclass.git"
+  }
+}

@@ -163,12 +163,22 @@ public class JavaScriptInterface {
     @JavascriptInterface
     public void uiShowToast(String message) {
         rootActivity.mUITools.showToast(message);
+    }
 
+    @JavascriptInterface
+    public void uiSetOrientation(String type){
+        rootActivity.mUITools.setOrientation(type);
     }
 
     @JavascriptInterface
     public void uiNotify(String title, String content){
         rootActivity.mUITools.notify(title, content);
+    }
+
+    @JavascriptInterface
+    public void uiSetNavBarVisible(String isVisible){
+        Log.d(TAG, isVisible);
+        rootActivity.mUITools.setNavBarVisible(isVisible.equals("true"));
     }
 
 }
