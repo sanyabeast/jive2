@@ -1,12 +1,11 @@
 "use strict";
-requirejs(["require.config.js"], function(requireConfig){
-	requirejs.config(requireConfig);
+requirejs(["require.config.js"], function(RequireConfig){
+	requirejs.config(new RequireConfig().valueOf());
 
 	new Promise(function(resolve, reject){
 		requirejs(["dollaclass"], function($Class){
 			window.$Class = $Class;
 			window.$Inteface = $Class.$Interface;
-
 			resolve();
 		});
 	}).then(function(){
@@ -15,9 +14,4 @@ requirejs(["require.config.js"], function(requireConfig){
 			window.core.load("test.menu");
 		});
 	});
-
-	
-
-	
-
 });

@@ -32,7 +32,8 @@ define([
 		$constructor : function(){
 			this.modules = new TokensCollection({
 				frameDriver : new FrameDriver(),
-				prePatcher : new PrePatcher()
+				prePatcher : new PrePatcher(),
+				jsterm : new JSTerm()
 			});
 
 			this.modules.with("prePatcher", function(prePatcher){
@@ -41,22 +42,18 @@ define([
 
 
 			this.setupAndroidBridgeProxy();
-			this.setupEvents();
 			this.createSubs();
-			this.patchProto();
-
-			this.jsterm = new JSTerm();
 			// this.jsterm.connect();
 
 			if (this.env == "android"){
 				for (var k in window._android){
-					this.jsterm.state.history.push(["android.", k, "()"].join(""));
+					this.modules.get("jsterm").state.history.push(["android.", k, "()"].join(""));
 				}
 			}
 
 			this.blobURLs = {};
 
-			document.body.appendChild(this.jsterm.element);
+			document.body.appendChild(this.modules.get("jsterm").element);
 
 			window.postal = postal;
 			window.todo = todo;
@@ -135,74 +132,11 @@ define([
 
 			};
 		},
-		setupEvents : function(){
-			this.events = {
-				jiveReady : new Event("jive.ready")
-			};
-		},
-		onIframeLoaded : function(evt){
-			this.iframe.window.postal = postal;
-			this.iframe.window.todo = todo;
-			this.iframe.window._ = window._;
-			this.iframe.window.android = window.android;
-			this.iframe.window.core = this;
-			this.patchConsole(this.iframe.window.console, "frame");
-			this.iframe.window.dispatchEvent(this.events.jiveReady);
-
-		},
-		loop : function(list, callback, context){
-			if (typeof list.length == "number"){
-				for (var a = 0, l = list.length; a < l; a++){
-					callback.call(context, list[a], a, list);
-				}
-			} else {	
-				for (var a in list){
-					callback.call(context, list[a], a, list);
-				}
-			}
-		},
-		patchConsole : function(console, namespace){
-			return;
-			console = console || window.console;
-			namespace = namespace || "";
-			var core = this;
-
-			_.forEach(["log", "warn", "error", "info"], function(method){
-				var native = console[method];
-				console[method] = function(){
-					var args = _.slice(arguments);
-
-					if (core.env == "android"){
-						args.unshift(["JiveJS", namespace].join(":") + ": ");
-						native.call(console, args.join(" "));
-					} else {
-						args.unshift("color: #9c27b0; font-weight: bold");
-						args.unshift(["%cJiveJS", namespace].join(":") + ": ");
-						native.apply(console, args);
-					}
-				};
-			}.bind(this));
-		},
-		patchProto : function(){
-			var _this = this;
-			Node.prototype.select = function(selector, callback, context){
-				var elements = this.querySelectorAll(selector);
-				if (callback){
-					_this.loop(elements, function(element, index, list){
-						callback.call(context, element, index, list);
-					});
-				}
-
-				return elements;
-			}
-		},
 		load : function(path, name){
 			this.modules.with("frameDriver")
 			.then(function(frameDriver){
 				frameDriver.loadActivity(path, name);
 			});
-
-			console.log(arguments);
 		}
 	});
 

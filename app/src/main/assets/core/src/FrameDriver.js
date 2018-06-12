@@ -1,19 +1,65 @@
 "use strict";
 define([
+		"Subscriber",
+		"FrameDriver/Patcher",
 		"TokensCollection",
 		"ToolChain",
 		"Activity",
 		"postal",
 		"lodash",
-	], function(TokensCollection, tools, Activity, postal, _){
+	], function(Subscriber, FramePatcher, TokensCollection, tools, Activity, postal, _){
 
 	var FrameDriver = new $Class({name : "FrameDriver", namespace : "Core"}, {
 		$constructor : function(){
+			this.patcher = new FramePatcher();
+
 			this.frames = new TokensCollection();
 			this.activities = new TokensCollection();
+
+			this.subs = new Subscriber(this, {
+				"core.frames.inited" : this.__onFrameInited.bind(this)
+			});
 		},
 		__onFrameLoaded : function(frame){
 			frame.contentWindow.postal = postal;
+			setTimeout(function(){
+				this.setupFrame(frame);
+			}.bind(this), 1000);
+
+		},
+		__onFrameInited : function(activityUrl){
+			console.log(activityUrl);
+		},
+		setupFrame : function(frame){
+			this.patcher.patch(frame);
+			frame.head.appendChild(tools.fragment([
+				tools.element("link", {
+					"rel" : "stylesheet/less" ,
+					"type" : "text/css" ,
+					"href" : "styles.less",
+				}),
+				tools.element("link", {
+					"rel" : "stylesheet/less" ,
+					"type" : "text/css" ,
+					"href" : tools.levelUpPath(frame.activity.level, "core/styles/frame.less")
+				}),
+				tools.element("meta", {
+					name : "viewport",
+					content : "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+				}),
+				/*less.js*/
+				tools.element("script", {
+					src : tools.levelUpPath(frame.activity.level, "node_modules/less/dist/less.js"),
+					"async" : "true"
+				}),
+			]));
+
+			frame.body.appendChild(tools.fragment([
+				tools.element("script", {
+					"data-main" : tools.levelUpPath(frame.activity.level, "scripts/app_input"),
+					src : tools.levelUpPath(frame.activity.level, "node_modules/requirejs/require.js"),
+				}),
+			]));	
 		},
 		getFrame : function(id){
 			var frame;
@@ -51,15 +97,10 @@ define([
 		},
 		loadActivity : function(path, name, frameID){
 			var activity = this.getActivity(path, name);
-			activity.make().then(function(url){
-				this.loadURL(url);
-			}.bind(this));	
-		},
-		loadURL : function(url, frameID){
-			frameID = frameID || "root";
 			var frame = this.getFrame(frameID);
-			frame.src = url;
-		}
+			frame.activity = activity;
+			frame.src = activity.url;
+		},
 	});
 
 	return FrameDriver;
