@@ -5,7 +5,7 @@ define([
 
 	var PrePatcher = new $Class({ name : "PrePatcher", namespace : "Core" }, {
 		patch : function(){
-			Object.defineProperties(window.Node.prototype, {
+			tools.defineProperties(window.Node.prototype, {
 				addChild : function(child){
 					this.appendChild(child);
 				},
@@ -18,9 +18,21 @@ define([
 					}
 					return elements;
 				},
+				disconnect : function(){
+					if (this.parentElement){
+						this._parentElement = this.parentElement;
+						this.parentElement.removeChild(this);
+					}
+				},
+				connect : function(){
+					if (this._parentElement){
+						this._parentElement.appendChild(this);
+						delete this._parentElement;
+					}
+				}
 			});	
 
-			Object.defineProperties(HTMLIFrameElement.prototype, {
+			tools.defineProperties(HTMLIFrameElement.prototype, {
 				window : {
 					get : function(){
 						return this.contentWindow;

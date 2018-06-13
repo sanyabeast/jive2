@@ -18,7 +18,7 @@ define([
 			frame.window.$Interface = window.$Interface;
 			frame.window.postal = postal;
 			frame.window.android = window.android;
-			frame.window.Trident = Trident;
+			frame.window.trident = new Trident(frame.window);
 		},
 	});	
 

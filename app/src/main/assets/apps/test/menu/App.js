@@ -11,6 +11,12 @@ define([
 		var width = window.innerWidth / count;
 		var height = window.innerHeight / count;
 
+		var kek = 0;
+
+		setInterval(function(){
+			console.log(++kek);
+		}, 1000);
+
 		for (var x = 0; x < count; x++ ){
 			for (var y = 0; y < count; y++){
 				box = document.createElement("div");

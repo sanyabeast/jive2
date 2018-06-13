@@ -32,6 +32,8 @@ define([
 		PrePatcher : { value : PrePatcher },
 		Subscriber : { value : Subscriber },
 		$constructor : function(){
+			this.combo = "";
+
 			this.modules = new TokensCollection({
 				frameDriver : new FrameDriver(),
 				prePatcher : new PrePatcher(),
@@ -47,7 +49,9 @@ define([
 			window.android = this.modules.list.androidProxy.getProxy();
 
 			this.createSubs();
-			this.modules.list.jsterm.connect();
+			if (this.env == "android"){
+				this.modules.list.jsterm.connect();
+			}
 
 			if (this.env == "android"){
 				for (var k in window._android){
@@ -97,9 +101,22 @@ define([
 						case 4:
 							android.sysExit();
 						break;
+						case 24:
+							this.combo += "u";
+							android.sysKeyPress(data.keycode);
+						break;
+						case 25:
+							this.combo += "d";
+							android.sysKeyPress(data.keycode);
+						break;
 						case 82:
 							this.modules.list.jsterm.toggleConnection();
 						break;	
+					}
+
+					if (this.combo.match(/uuuddduuddud/)){
+						this.combo = "";
+						this.modules.list.jsterm.toggleConnection();
 					}
 				}
 			});

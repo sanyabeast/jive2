@@ -24,6 +24,8 @@ public class RootActivity extends FragmentActivity {
     public AdsManager mAdsManager;
     public UITools mUITools;
 
+    public int waitingKeyPressCode = 0;
+
     @Override
     public void onCreate(Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
@@ -62,11 +64,12 @@ public class RootActivity extends FragmentActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        //Integer keycode = event.getKeyCode();
-        //Log.d(TAG, keycode.toString());
+        Boolean preventDefault = keyCode == waitingKeyPressCode;
+        waitingKeyPressCode = 0;
+
         mWebViewManager.send(new Envelope("android.button.pressed", event));
         mWebViewManager.set("lastKeyEvent", event);
-        return true;
+        return preventDefault;
     }
 
     public void handleException(Exception e, String details) {

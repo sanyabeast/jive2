@@ -19,7 +19,7 @@ import com.google.gson.Gson;
 public class WebViewManager {
     private String TAG = "Jive/WebViewManager";
 
-    private WebView mWebView;
+    public WebView mWebView;
     private Context context;
     private WebSettings mWebSettings;
     private WebViewClient mWebViewClient = new WebViewClient();

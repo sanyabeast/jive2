@@ -2,8 +2,12 @@ package xyz.sanyabeast.omen;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.inputmethod.BaseInputConnection;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
 
 import com.google.gson.Gson;
 
@@ -24,6 +28,8 @@ public class JavaScriptInterface {
     private AdsManager mAdsManager;
     private SystemInfo mSystemInfo;
     private Resources mResources;
+    private BaseInputConnection mInputConnection;
+    private WebView mWebView;
 
     JavaScriptInterface(Context c){
         context = c;
@@ -31,16 +37,36 @@ public class JavaScriptInterface {
         rootActivity = (RootActivity) c;
         storage = rootActivity.mStorage;
         mAdsManager = rootActivity.mAdsManager;
-
         mSystemInfo = new SystemInfo(c);
         mResources = new Resources(c);
+        mInputConnection = new BaseInputConnection(rootActivity.mWebViewManager.mWebView, true);
     }
 
     /**System methods*/
     @JavascriptInterface
+    public void sysKeyDown(String keycode){
+        int intKeyCode = Integer.parseInt(keycode);
+
+        try {
+            rootActivity.waitingKeyPressCode = intKeyCode;
+            mInputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, intKeyCode));
+        } catch (Exception e){
+            Log.d(TAG, e.getMessage());
+        }
+    }
+
+    public void sysKeyUp(String keycode){
+        try {
+            mInputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, Integer.parseInt(keycode)));
+        } catch (Exception e){
+            Log.d(TAG, e.getMessage());
+        }
+    }
+
+    @JavascriptInterface
     public void sysExit(){
         Activity activity = (Activity)context;
-        activity.finishAffinity();
+        if (Build.VERSION.SDK_INT >= 16) activity.finishAffinity();
         System.exit(0);
     }
 
@@ -173,6 +199,8 @@ public class JavaScriptInterface {
     @JavascriptInterface
     public void uiNotify(String title, String content){
         rootActivity.mUITools.notify(title, content);
+
+
     }
 
     @JavascriptInterface

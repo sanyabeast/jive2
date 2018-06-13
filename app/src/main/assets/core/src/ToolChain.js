@@ -6,6 +6,16 @@ define(function(){
 			var template = document.querySelector("#" + id);
 			return nodeOnly ? template.content.cloneNode(true).children[0] : template.content.cloneNode(true);
 		},
+		element : function(tagName, attributes, content){
+			content = content || "";
+			var element = document.createElement(tagName);
+			_.forEach(attributes, function(attrValue, attrName){
+				element.setAttribute(attrName, attrValue || "");
+			});
+
+			element.innerHTML = content;
+			return element;
+		},
 		levelUpPath : function(level, basePath){
 			var levelUP = "";
 			for (var a = 0; a < level; a++){
@@ -17,16 +27,7 @@ define(function(){
 		shiftPath : function(basePath, targetPath){
 			return [basePath, targetPath].join("/").replace(/\/\//g, "/");
 		},
-		element : function(tagName, attributes, content){
-			content = content || "";
-			var element = document.createElement(tagName);
-			_.forEach(attributes, function(attrValue, attrName){
-				element.setAttribute(attrName, attrValue || "");
-			});
-
-			element.innerHTML = content;
-			return element;
-		},
+		
 		fragment : function(els){
 			var frag = new DocumentFragment();
 			var elements = null;
@@ -42,6 +43,21 @@ define(function(){
 			}
 
 			return frag;
+		},
+		defineProperty : function(target, name, data){
+			if (typeof data == "function"){
+				Object.defineProperty(target, name, {
+					value : data,
+					writable : true
+				});
+			} else {
+				Object.defineProperty(target, name, data);
+			}
+		},
+		defineProperties : function(target, props){
+			_.forEach(props, function(value, name){
+				this.defineProperty(target, name, value);
+			}.bind(this));
 		}
 	});
 

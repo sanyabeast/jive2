@@ -5,8 +5,13 @@ define([
 	], function(THREE, SOM){
 
 	var Trident = new $Class({ name : "Trident", namespace : "Trident" }, {
-		$constructor : function(){
+		SOM : { value : SOM, static : true },
+		$constructor : function(globalContext){
+			this.globalContext = globalContext;
 			console.log(THREE);
+		},
+		setGlobalContext : function(globalContext){
+			
 		}
 	});
 
