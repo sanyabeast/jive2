@@ -46,7 +46,7 @@ define([
 				}),
 				/*less.js*/
 				tools.element("script", {
-					src : tools.levelUpPath(frame.activity.level, "node_modules/less/dist/less.js"),
+					src : tools.bustPath(tools.levelUpPath(frame.activity.level, "node_modules/less/dist/less.js")),
 					"async" : "true"
 				}),
 			]));
@@ -54,7 +54,7 @@ define([
 			frame.body.appendChild(tools.fragment([
 				tools.element("script", {
 					"data-main" : tools.levelUpPath(frame.activity.level, "scripts/app_input"),
-					src : tools.levelUpPath(frame.activity.level, "node_modules/requirejs/require.js"),
+					src : tools.bustPath(tools.levelUpPath(frame.activity.level, "node_modules/requirejs/require.js")),
 				}),
 			]));	
 		},

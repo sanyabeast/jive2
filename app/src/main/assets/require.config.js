@@ -18,6 +18,7 @@ define(function(){
 		};
 
 		this.baseUrl = "core/src/";
+		this.urlArgs = "bust=" + (new Date()).getTime();
 	};
 
 	RequireConfig.prototype = {
@@ -33,6 +34,7 @@ define(function(){
 
 			config.baseUrl = baseUrl;
 			config.paths = {};
+			config.urlArgs = this.urlArgs;
 
 			this.forEach(this.paths, function(path, name){
 				config.paths[name] = this.levelUpPath(level, path).replace(/\/\//g, "/");		

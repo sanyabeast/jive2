@@ -56,6 +56,7 @@ public class WebViewManager {
         mWebSettings.setNeedInitialFocus(false);
         mWebSettings.setSupportZoom(false);
         mWebSettings.setDatabaseEnabled(true);
+        mWebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // chromium, enable hardware acceleration

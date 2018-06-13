@@ -28,8 +28,6 @@ public class JavaScriptInterface {
     private AdsManager mAdsManager;
     private SystemInfo mSystemInfo;
     private Resources mResources;
-    private BaseInputConnection mInputConnection;
-    private WebView mWebView;
 
     JavaScriptInterface(Context c){
         context = c;
@@ -39,12 +37,14 @@ public class JavaScriptInterface {
         mAdsManager = rootActivity.mAdsManager;
         mSystemInfo = new SystemInfo(c);
         mResources = new Resources(c);
-        mInputConnection = new BaseInputConnection(rootActivity.mWebViewManager.mWebView, true);
+
     }
 
     /**System methods*/
     @JavascriptInterface
     public void sysKeyDown(String keycode){
+        BaseInputConnection mInputConnection = new BaseInputConnection(rootActivity.mWebViewManager.mWebView, true);
+
         int intKeyCode = Integer.parseInt(keycode);
 
         try {
@@ -56,6 +56,8 @@ public class JavaScriptInterface {
     }
 
     public void sysKeyUp(String keycode){
+        BaseInputConnection mInputConnection = new BaseInputConnection(rootActivity.mWebViewManager.mWebView, true);
+
         try {
             mInputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, Integer.parseInt(keycode)));
         } catch (Exception e){

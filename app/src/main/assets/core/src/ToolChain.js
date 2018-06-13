@@ -27,7 +27,9 @@ define(function(){
 		shiftPath : function(basePath, targetPath){
 			return [basePath, targetPath].join("/").replace(/\/\//g, "/");
 		},
-		
+		bustPath : function(path){
+			return [path, "bust=" + (new Date()).getTime()].join("?");
+		},
 		fragment : function(els){
 			var frag = new DocumentFragment();
 			var elements = null;
