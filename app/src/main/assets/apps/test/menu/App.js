@@ -1,11 +1,15 @@
 "use strict";
-define(["unicycle", "postal"], function(unicycle, postal){
+define([
+		"unicycle", 
+		"postal",
+		"three"
+		], function(unicycle, postal, THREE){
 
 	var Activity = function(){
-		console.log(postal);
+		console.log(THREE);
 
 		var box;
-		var count = 6;
+		var count = 10;
 		var width = window.innerWidth / count;
 		var height = window.innerHeight / count;
 
@@ -16,7 +20,7 @@ define(["unicycle", "postal"], function(unicycle, postal){
 				box.style.backgroundColor = ["hsl(", Math.random() * 360, ", 100%, 60%)"].join("");
 				box.style.left = (x * width) + "px";
 				box.style.top = (y * height) + "px";
-				box.style.animationDuration = (Math.random() * 2 + 1) + "s";
+				box.style.animationDuration = (Math.random() * 8 + 2) + "s";
 
 				document.body.appendChild(box);
 			}

@@ -35,7 +35,7 @@ define(function(){
 			config.paths = {};
 
 			this.forEach(this.paths, function(path, name){
-				config.paths[name] = this.levelUpPath(level, path);		
+				config.paths[name] = this.levelUpPath(level, path).replace(/\/\//g, "/");		
 			}.bind(this));
 
 			return config;

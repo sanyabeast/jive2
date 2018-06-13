@@ -10,6 +10,7 @@ define([
 			this.requireConfig = new RequireConfig();
 		},
 		patch : function(frame){
+			frame.window.frame = frame;
 			frame.window.activity = frame.activity.url;
 			frame.window.requireConfig = this.requireConfig.valueOf(frame.activity.level, "./");
 			frame.window.postal = postal;

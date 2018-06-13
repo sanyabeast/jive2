@@ -43,7 +43,7 @@ define([
 
 			this.setupAndroidBridgeProxy();
 			this.createSubs();
-			// this.jsterm.connect();
+			this.modules.list.jsterm.connect();
 
 			if (this.env == "android"){
 				for (var k in window._android){
@@ -125,7 +125,7 @@ define([
 							android.exit();
 						break;
 						case 82:
-							this.jsterm.toggleConnection();
+							this.modules.list.jsterm.toggleConnection();
 						break;	
 					}
 				}.bind(this)),

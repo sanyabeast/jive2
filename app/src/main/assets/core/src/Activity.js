@@ -12,7 +12,7 @@ define([
 		},
 		url : {
 			get : function(){
-				return [this.normalizedPath, this.normalizeName].join("/");
+				return [this.normalizedPath, this.normalizedName].join("/");
 			},
 		},
 		level : {

@@ -21,14 +21,10 @@ define([
 			});
 		},
 		__onFrameLoaded : function(frame){
-			frame.contentWindow.postal = postal;
-			setTimeout(function(){
-				this.setupFrame(frame);
-			}.bind(this), 1000);
-
+			this.setupFrame(frame);
 		},
-		__onFrameInited : function(activityUrl){
-			console.log(activityUrl);
+		__onFrameInited : function(frame){
+			frame.classList.remove("loading");
 		},
 		setupFrame : function(frame){
 			this.patcher.patch(frame);
@@ -98,6 +94,7 @@ define([
 		loadActivity : function(path, name, frameID){
 			var activity = this.getActivity(path, name);
 			var frame = this.getFrame(frameID);
+			frame.classList.add("loading");
 			frame.activity = activity;
 			frame.src = activity.url;
 		},

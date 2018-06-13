@@ -12,10 +12,10 @@ define(function(){
 				levelUP+="../";
 			}	
 
-			return [levelUP, basePath].join("/");
+			return [levelUP, basePath].join("/").replace(/\/\//g, "/");
 		},
 		shiftPath : function(basePath, targetPath){
-			return [basePath, targetPath].join("/");
+			return [basePath, targetPath].join("/").replace(/\/\//g, "/");
 		},
 		element : function(tagName, attributes, content){
 			content = content || "";

@@ -11,7 +11,6 @@
     "requirejs-text": "latest",
     "superagent": "latest",
     "lodash": "latest",
-    "jquery": "latest",
     "todojs": "git://github.com/sanyabeast/todojs.git",
     "tweener": "git://github.com/sanyabeast/tweener.git",
     "unicycle": "git://github.com/sanyabeast/unicycle.git",

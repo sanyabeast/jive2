@@ -5,6 +5,11 @@ define(function(){
 		$constructor : function(content){
 			this.__content = content || {};
 		},
+		list : {
+			get : function(){
+				return this.__content;
+			}
+		},
 		set : function(name, value){
 			this.__content[name] =  value;
 		},
