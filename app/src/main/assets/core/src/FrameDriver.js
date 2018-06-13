@@ -25,6 +25,7 @@ define([
 		},
 		__onFrameInited : function(frame){
 			frame.classList.remove("loading");
+			console.log("Frame inited in " + (+new Date() - frame.startLoadingTime) + "ms");
 		},
 		setupFrame : function(frame){
 			this.patcher.patch(frame);
@@ -95,8 +96,27 @@ define([
 			var activity = this.getActivity(path, name);
 			var frame = this.getFrame(frameID);
 			frame.classList.add("loading");
-			frame.activity = activity;
-			frame.src = activity.url;
+			frame.startLoadingTime = +new Date();
+			superagent.get(activity.url).then(function(response){
+				postal.say("core.frames.loading.success", {
+					frame : frame,
+					frameID : frameID,
+					path : path,
+					name : name
+				});
+
+				frame.activity = activity;
+				frame.src = activity.url;
+			}).catch(function(){
+				postal.say("core.frames.loading.failed", {
+					frame : frame,
+					frameID : frameID,
+					path : path,
+					name : name
+				});
+
+				frame.classList.remove("loading");
+			});
 		},
 	});
 

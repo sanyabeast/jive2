@@ -5,6 +5,7 @@ define([
 		"FrameDriver",
 		"PrePatcher",
 		"Subscriber",
+		"AndroidProxy",
 		"postal",
 		"todo",
 		"jsterm",
@@ -15,6 +16,7 @@ define([
 		, FrameDriver
 		, PrePatcher
 		, Subscriber
+		, AndroidProxy
 		, postal
 		, todo
 		, JSTerm
@@ -33,7 +35,8 @@ define([
 			this.modules = new TokensCollection({
 				frameDriver : new FrameDriver(),
 				prePatcher : new PrePatcher(),
-				jsterm : new JSTerm()
+				jsterm : new JSTerm(),
+				androidProxy : new AndroidProxy()
 			});
 
 			this.modules.with("prePatcher", function(prePatcher){
@@ -41,7 +44,8 @@ define([
 			});
 
 
-			this.setupAndroidBridgeProxy();
+			window.android = this.modules.list.androidProxy.getProxy();
+
 			this.createSubs();
 			this.modules.list.jsterm.connect();
 
@@ -51,8 +55,6 @@ define([
 				}
 			}
 
-			this.blobURLs = {};
-
 			document.body.appendChild(this.modules.get("jsterm").element);
 
 			window.postal = postal;
@@ -60,77 +62,48 @@ define([
 			window.superagent = superagent;
 		},
 		env : {
-			value : "android",
-			writable : true
-		},
-		setupAndroidBridgeProxy : function(){
-			var jive = this;
-
-			var placeholderMethod = function(){
-				var args = _.slice(arguments);
-				var methodName = args.shift();
-
-				console.warn("Android bridge method is inaccessible");
-				console.warn("Method: " + methodName, "arguments: ", args);
-				return null;
-			};
-
-			this.env = window._android ? "android" : "web";
-
-			window.android = new Proxy(window._android || {}, {
-				get : function(target, propName){
-					if (typeof target[propName] == "function"){
-						return function(){
-							try {
-								return JSON.parse(target[propName].apply(this, arguments));
-							} catch (err){
-								return target[propName].apply(this, arguments);
-							}
-						}.bind(target);
-					} else {
-						return placeholderMethod.bind(jive, propName);
-					}
-				}
-			});
+			get : function(){
+				return window._android ? "android" : "web";
+			},
 		},
 		createSubs : function(){
-			this.subscriptions = {
-				eventBridge : postal.listen("$android", function(data){
+			this.subscriptions = new Subscriber(this, {
+				"$android" : function(data){
 					if (typeof data == "object" && typeof data.theme == "string"){
 						postal.say(data.theme, data.data);
 					} else {
 						console.warn("Unable to dispatch event");
 					}
-				}),
-				setGloabalVariable : postal.listen("var-global", function(data){
+				},
+				"var-global" : function(data){
 					var varName = data[0];
 					var varValue = data[1];
 
 					if (varName){
 						window[varName] = varValue;
 					}
-				}.bind(this)),
-				buttonPressed : postal.listen("android.button.pressed", function(data){
+				}.bind(this),
+				"android.button.pressed" : function(data){
 					postal.say("button.pressed", {
 						keycode : data.mKeyCode
 					});
-				}.bind(this)),
-				logData : postal.listen("console.log", function(data){
+				}.bind(this),
+				"console.log" : function(data){
 					console.log("[console.log]", data);
-				}),
-				/*test*/
-				btnPressed : postal.listen("button.pressed", function(data){
+				},
+				"button.pressed" : function(data){
+					console.log("Button pressed. KeyCode: " + data.keycode);
 					switch(data.keycode){
 						case 4:
-							android.exit();
+							android.sysExit();
 						break;
 						case 82:
 							this.modules.list.jsterm.toggleConnection();
 						break;	
 					}
-				}.bind(this)),
+				}
+			});
 
-			};
 		},
 		load : function(path, name){
 			this.modules.with("frameDriver")

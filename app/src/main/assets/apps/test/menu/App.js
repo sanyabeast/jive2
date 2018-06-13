@@ -2,11 +2,9 @@
 define([
 		"unicycle", 
 		"postal",
-		"three"
-		], function(unicycle, postal, THREE){
+		], function(unicycle, postal){
 
 	var Activity = function(){
-		console.log(THREE);
 
 		var box;
 		var count = 10;
