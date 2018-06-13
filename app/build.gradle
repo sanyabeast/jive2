@@ -20,7 +20,7 @@ android {
         }
 
         debug {
-            storeFile file("C:/Users/user/amigo.jks")
+            storeFile file("keys/amigo.jks")
             storePassword "12iggyiggy12"
             keyAlias "kloochik"
             keyPassword "12iggyiggy12"
