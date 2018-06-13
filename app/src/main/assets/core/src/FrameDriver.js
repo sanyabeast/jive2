@@ -44,11 +44,9 @@ define([
 					name : "viewport",
 					content : "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
 				}),
-				/*less.js*/
-				tools.element("script", {
-					src : tools.bustPath(tools.levelUpPath(frame.activity.level, "node_modules/less/dist/less.js")),
-					"async" : "true"
-				}),
+				// tools.element("script", {
+				// 	src : tools.bustPath(tools.levelUpPath(frame.activity.level, "node_modules/less/dist/less.js")),
+				// }),
 			]));
 
 			frame.body.appendChild(tools.fragment([
@@ -56,7 +54,9 @@ define([
 					"data-main" : tools.levelUpPath(frame.activity.level, "scripts/app_input"),
 					src : tools.bustPath(tools.levelUpPath(frame.activity.level, "node_modules/requirejs/require.js")),
 				}),
+				
 			]));	
+
 		},
 		getFrame : function(id){
 			var frame;

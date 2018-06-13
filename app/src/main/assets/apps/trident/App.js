@@ -1,5 +1,5 @@
 "use strict";
-define(function(){
+define("App", function(){
 
 	var App =  new $Class({ name : "App" }, {
 		$constructor : function(){

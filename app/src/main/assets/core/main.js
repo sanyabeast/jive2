@@ -1,6 +1,7 @@
 "use strict";
 requirejs(["require.config.js"], function(RequireConfig){
-	requirejs.config(new RequireConfig().valueOf());
+	var requireConfig = new RequireConfig().valueOf();
+	requirejs.config(requireConfig);
 
 	new Promise(function(resolve, reject){
 		requirejs(["dollaclass"], function($Class){
@@ -9,7 +10,7 @@ requirejs(["require.config.js"], function(RequireConfig){
 			resolve();
 		});
 	}).then(function(){
-		requirejs(["lodash", "Core"], function(_, Core){
+		requirejs(["lodash", "Core", "three"], function(_, Core, THREE){
 			window.core = new Core;
 			window.core.load("test.menu");
 		});

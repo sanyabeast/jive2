@@ -13,7 +13,7 @@ define([
 		patch : function(frame){
 			frame.window.frame = frame;
 			frame.window.activity = frame.activity.url;
-			frame.window.requireConfig = frame.window.require = this.requireConfig.valueOf(frame.activity.level, "./");
+			frame.window.requireConfig = this.requireConfig.valueOf(frame.activity.level, "./");
 			frame.window.$Class = window.$Class;
 			frame.window.$Interface = window.$Interface;
 			frame.window.postal = postal;

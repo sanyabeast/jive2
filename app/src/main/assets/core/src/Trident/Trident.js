@@ -8,7 +8,7 @@ define([
 		SOM : { value : SOM, static : true },
 		$constructor : function(globalContext){
 			this.globalContext = globalContext;
-			console.log(THREE);
+			// console.log(THREE);
 		},
 		setGlobalContext : function(globalContext){
 			

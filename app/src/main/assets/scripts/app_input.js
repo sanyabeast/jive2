@@ -4,4 +4,4 @@ setTimeout(function(){
 		window.app = new App();
 		postal.say("core.frames.inited", window.frame);
 	});
-}, 0);
+});
