@@ -7,8 +7,6 @@
     "three": "latest",
     "less": "latest",
     "postal": "git://github.com/sanyabeast/postal.git",
-    "requirejs": "^2.3.5",
-    "requirejs-text": "latest",
     "superagent": "latest",
     "lodash": "latest",
     "todojs": "git://github.com/sanyabeast/todojs.git",

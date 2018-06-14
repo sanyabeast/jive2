@@ -13,7 +13,7 @@ requirejs(["require.config.js"], function(RequireConfig){
 		requirejs(["lodash", "Core", "three"], function(_, Core, THREE){
 			window.THREE = THREE;
 			window.core = new Core;
-			window.core.load("test.menu");
+			window.core.load("trident");
 		});
 	});
 });

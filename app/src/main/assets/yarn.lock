@@ -312,6 +312,10 @@ qs@^6.5.1, qs@~6.5.1:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
 
+"quire@git://github.com/sanyabeast/quire.git":
+  version "1.0.0"
+  resolved "git://github.com/sanyabeast/quire.git#7275e2ed90776fe5bd73f3a0b9ac5ebba251ab00"
+
 readable-stream@^2.3.5:
   version "2.3.6"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.3.6.tgz#b11c27d88b8ff1fbe070643cf94b0c79ae1b0aaf"

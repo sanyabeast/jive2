@@ -3,7 +3,7 @@ define("App", function(){
 
 	var App =  new $Class({ name : "App" }, {
 		$constructor : function(){
-			console.log(trident);
+			this.scene = trident.parse(document.querySelector("#test-scene").content.cloneNode(true).children[0]);
 		}
 	});
 

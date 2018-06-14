@@ -6,6 +6,7 @@ define([
 		"PrePatcher",
 		"Subscriber",
 		"AndroidProxy",
+		"unicycle",
 		"postal",
 		"todo",
 		"jsterm",
@@ -17,6 +18,7 @@ define([
 		, PrePatcher
 		, Subscriber
 		, AndroidProxy
+		, Unicycle
 		, postal
 		, todo
 		, JSTerm
@@ -38,8 +40,11 @@ define([
 				frameDriver : new FrameDriver(),
 				prePatcher : new PrePatcher(),
 				jsterm : new JSTerm(),
-				androidProxy : new AndroidProxy()
+				androidProxy : new AndroidProxy(),
+				unicycle : new Unicycle
 			});
+
+			this.modules.list.unicycle.start();
 
 			this.modules.with("prePatcher", function(prePatcher){
 				prePatcher.patch();
@@ -61,6 +66,7 @@ define([
 
 			document.body.appendChild(this.modules.get("jsterm").element);
 
+			window.unicycle = this.modules.list.unicycle;
 			window.postal = postal;
 			window.todo = todo;
 			window.superagent = superagent;

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<template id="test-scene">
+
+		<renderer
+			width="1000"
+			height="1000"
+		>
+			<scene>
+				<camera
+					type="perspective"
+					fov="45"
+					aspect="1"
+					near="1"
+					far="1000"
+				/>
+				<light
+					type="point"
+				>
+					<position
+						x="10"
+						y="50"
+						z="130"
+					/>
+				</light>
+				<mesh>
+					<position
+						z="-300"
+					/>
+					<geometry
+						type="sphere-geometry"
+						radius="50"
+						segments="16"
+					/>
+					<material
+						type="lambert",
+						color="0xCC0000"
+					/>
+				</mesh>
+			</scene>
+		</renderer>
+
+	</template>
+</body>
+</html>
