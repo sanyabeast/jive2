@@ -21,6 +21,10 @@ define([
 			});
 		},
 		__onFrameLoaded : function(frame){
+			if (frame.src == "javascript:" || !frame.src){
+				return;
+			}
+			
 			this.setupFrame(frame);
 		},
 		__onFrameInited : function(frame){
@@ -44,15 +48,16 @@ define([
 					name : "viewport",
 					content : "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
 				}),
-				// tools.element("script", {
-				// 	src : tools.bustPath(tools.levelUpPath(frame.activity.level, "node_modules/less/dist/less.js")),
-				// }),
+				tools.element("script", {
+					src : tools.bustPath(tools.levelUpPath(frame.activity.level, "node_modules/less/dist/less.js")),
+					defer : ""
+				}),
 			]));
 
 			frame.body.appendChild(tools.fragment([
 				tools.element("script", {
 					"data-main" : tools.levelUpPath(frame.activity.level, "scripts/app_input"),
-					src : tools.bustPath(tools.levelUpPath(frame.activity.level, "node_modules/requirejs/require.js")),
+					src : tools.bustPath(tools.levelUpPath(frame.activity.level, "node_modules/quire/quire.js")),
 				}),
 				
 			]));	
@@ -98,6 +103,9 @@ define([
 			frame.classList.add("loading");
 			frame.startLoadingTime = +new Date();
 			superagent.get(activity.url).then(function(response){
+				frame.activity = activity;
+				frame.src = activity.url;
+
 				postal.say("core.frames.loading.success", {
 					frame : frame,
 					frameID : frameID,
@@ -105,8 +113,6 @@ define([
 					name : name
 				});
 
-				frame.activity = activity;
-				frame.src = activity.url;
 			}).catch(function(){
 				postal.say("core.frames.loading.failed", {
 					frame : frame,

@@ -15,6 +15,7 @@
     "tweener": "git://github.com/sanyabeast/tweener.git",
     "unicycle": "git://github.com/sanyabeast/unicycle.git",
     "jsterm": "git://github.com/sanyabeast/jsterm.git",
-    "dollaclass": "git://github.com/sanyabeast/dollaclass.git"
+    "dollaclass": "git://github.com/sanyabeast/dollaclass.git",
+    "quire": "git://github.com/sanyabeast/quire.git"
   }
 }
