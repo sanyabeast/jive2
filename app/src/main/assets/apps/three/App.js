@@ -102,7 +102,7 @@ define("App", ["three", "threeOrbit", "tweener"], function(THREE, OrbitControls,
 		    // the sphereMaterial next!
 
 		    var boxes = [];
-		    var count = 10;
+		    var count = 20;
 
 		    var colors = [
 		    	0xf44336,
@@ -125,12 +125,32 @@ define("App", ["three", "threeOrbit", "tweener"], function(THREE, OrbitControls,
 			            color: colors[Math.floor(Math.random() * colors.length)]
 			        });
 
-		    		var box = new THREE.Mesh(new THREE.BoxGeometry(6, 6, 6), sphereMaterial);
+		    		var box = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), sphereMaterial);
 
 		    		box.position.z = -300;
-		    		box.position.x = a * 12 - 55;
-		    		box.position.y = b * 12 - 55;
-		    		box.speed = Math.sqrt((a + 1) * (b + 1));
+		    		box.position.x = a * 6 - 55;
+		    		box.position.y = b * 6 - 55;
+
+		    		if (a % 2 == 0){
+		    			setTimeout(function(){
+			    			tweener.to(this.position, 1, {
+				    			z : -280,
+				    			repeat : -1,
+				    			yoyo : true,
+				    			ease : "easeInOutQuad"
+				    		});
+			    		}.bind(box), b * 100);
+		    		} else {
+		    			setTimeout(function(){
+			    			tweener.to(this.position, 1, {
+				    			z : -280,
+				    			repeat : -1,
+				    			yoyo : true,
+				    			ease : "easeInOutQuad"
+				    		});
+			    		}.bind(box), a * 100);
+		    		}
+
 
 		    		scene.add(box);
 		    		boxes.push(box);
@@ -146,9 +166,9 @@ define("App", ["three", "threeOrbit", "tweener"], function(THREE, OrbitControls,
 		    function update () {
 		      renderer.render(scene, camera);
 		      for (var a =0, l = boxes.length; a < l; a++){
-		      		boxes[a].rotation.z+= 0.005 * boxes[a].speed;
-		      		boxes[a].rotation.y+= 0.005 * boxes[a].speed;
-		      		boxes[a].rotation.x+= 0.005 * boxes[a].speed;
+		      		boxes[a].rotation.z+= 0.005;
+		      		boxes[a].rotation.y+= 0.005;
+		      		boxes[a].rotation.x+= 0.005;
 		      }
 
 		      controls.update();
