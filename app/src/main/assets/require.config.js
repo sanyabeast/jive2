@@ -10,6 +10,7 @@ define(function(){
 			jsterm 			: "node_modules/jsterm/jsterm",
 			lodash 			: "node_modules/lodash/lodash",
 			three   		: "node_modules/three/build/three",
+			threeOrbit 		: "node_modules/three-orbit-controls/index",
 			superagent 		: "node_modules/superagent/superagent",
 			tweener 		: "node_modules/tweener/tweener",
 			unicycle 		: "node_modules/unicycle/unicycle",

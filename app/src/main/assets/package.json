@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "three": "latest",
+    "three-orbit-controls" : "latest",
     "less": "latest",
     "postal": "git://github.com/sanyabeast/postal.git",
     "superagent": "latest",

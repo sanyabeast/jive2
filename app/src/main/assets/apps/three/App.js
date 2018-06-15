@@ -1,5 +1,10 @@
 "use strict";
-define("App", ["three"], function(THREE){
+define("App", ["three", "threeOrbit", "tweener"], function(THREE, OrbitControls, tweener){
+
+	window.tweener = tweener;
+
+
+	THREE.OrbitControls = OrbitControls(THREE);
 
 	var App =  new $Class({ name : "App" }, {
 		$constructor : function(){
@@ -33,8 +38,28 @@ define("App", ["three"], function(THREE){
 
 		    var scene = new THREE.Scene();
 
+		    var controls = new THREE.OrbitControls( camera , renderer.domElement);
+		    controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+			controls.dampingFactor = 0.25;
+
+			controls.screenSpacePanning = false;
+
+			controls.minDistance = 1;
+			controls.maxDistance = 500
+
+			window.controls = controls;
+			window.camera = camera;
+
+			controls.maxPolarAngle = Math.PI;
+			controls.rotateSpeed = 0.08;
+			controls.target.set(0,0,-300)
+
 		    // Add the camera to the scene.
 		    scene.add(camera);
+
+		    camera.position.x=0.0206593961445023;
+			camera.position.y=0.0853731858682841;
+			camera.position.z=0.9961348344906146;
 
 		    // Start the renderer.
 		    renderer.setSize(WIDTH, HEIGHT);
@@ -57,6 +82,13 @@ define("App", ["three"], function(THREE){
 		    pointLight.position.y = 50;
 		    pointLight.position.z = 130;
 
+		    tweener.to(pointLight.position, 1, {
+		    	y : 100,
+		    	x : 50,
+		    	repeat : -1,
+		    	yoyo : true
+		    });
+
 		    // add to the scene
 		    scene.add(pointLight);
 
@@ -72,13 +104,28 @@ define("App", ["three"], function(THREE){
 		    var boxes = [];
 		    var count = 10;
 
+		    var colors = [
+		    	0xf44336,
+		    	0xe91e63,
+		    	0x9c27b0,
+		    	0x3f51b5,
+		    	0x2196f3,
+		    	0x00bcd4,
+		    	0x009688,
+		    	0x4caf50,
+		    	0xcddc39,
+		    	0xffeb3b,
+		    	0xff9800,
+		    	0xff5722
+		    ];
+
 		    for (var a = 0; a < count; a++){
 		    	for (var b = 0; b < count; b++){
 		    		var sphereMaterial = new THREE.MeshLambertMaterial({
-			            color: Math.random() * 16000000
+			            color: colors[Math.floor(Math.random() * colors.length)]
 			        });
 
-		    		var box = new THREE.Mesh(new THREE.BoxGeometry(8, 8, 10), sphereMaterial);
+		    		var box = new THREE.Mesh(new THREE.BoxGeometry(6, 6, 6), sphereMaterial);
 
 		    		box.position.z = -300;
 		    		box.position.x = a * 12 - 55;
@@ -99,10 +146,12 @@ define("App", ["three"], function(THREE){
 		    function update () {
 		      renderer.render(scene, camera);
 		      for (var a =0, l = boxes.length; a < l; a++){
-		      		boxes[a].rotation.z+= 0.001 * boxes[a].speed;
-		      		boxes[a].rotation.y+= 0.001 * boxes[a].speed;
-		      		boxes[a].rotation.x+= 0.001 * boxes[a].speed;
+		      		boxes[a].rotation.z+= 0.005 * boxes[a].speed;
+		      		boxes[a].rotation.y+= 0.005 * boxes[a].speed;
+		      		boxes[a].rotation.x+= 0.005 * boxes[a].speed;
 		      }
+
+		      controls.update();
 		      // sphere.rotation.z += 0.001;
 		      // Schedule the next frame.
 		    }

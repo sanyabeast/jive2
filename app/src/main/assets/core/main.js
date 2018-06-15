@@ -10,7 +10,8 @@ requirejs(["require.config.js"], function(RequireConfig){
 			resolve();
 		});
 	}).then(function(){
-		requirejs(["lodash", "Core", "three"], function(_, Core, THREE){
+		requirejs(["lodash", "Core", "three", "threeOrbit"], function(_, Core, THREE, OrbitControls){
+			THREE.OrbitControls = OrbitControls(THREE);
 			window.THREE = THREE;
 			window.core = new Core;
 			window.core.load("trident");
