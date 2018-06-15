@@ -1,5 +1,6 @@
 "use strict";
 define([
+		"R",
 		"Activity",
 		"TokensCollection",
 		"FrameDriver",
@@ -12,7 +13,8 @@ define([
 		"jsterm",
 		"superagent",
 	], function(
-		  Activity
+		  R
+		, Activity
 		, TokensCollection
 		, FrameDriver
 		, PrePatcher
@@ -41,7 +43,8 @@ define([
 				prePatcher : new PrePatcher(),
 				jsterm : new JSTerm(),
 				androidProxy : new AndroidProxy(),
-				unicycle : new Unicycle
+				unicycle : new Unicycle,
+				r : new R()
 			});
 
 			this.modules.list.unicycle.start();
@@ -70,6 +73,7 @@ define([
 			window.postal = postal;
 			window.todo = todo;
 			window.superagent = superagent;
+			window.R = this.modules.list.r;
 		},
 		env : {
 			get : function(){
