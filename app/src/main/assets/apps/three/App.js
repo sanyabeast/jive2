@@ -157,6 +157,9 @@ define("App", ["three", "threeOrbit", "tweener"], function(THREE, OrbitControls,
 		    	}
 		    }
 
+		    window.scene = scene;
+		    window.camera = camera;
+
 		    // Move the Sphere back in Z so we
 		    // can see it.
 		    

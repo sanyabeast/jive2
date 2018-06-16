@@ -16,6 +16,9 @@ define([
 		},
 		parse : function(data){
 			return this.som.make(data);
+		},
+		THREE : {
+			get : function(){ return THREE; }
 		}
 	});
 

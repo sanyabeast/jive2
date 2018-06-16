@@ -353,11 +353,7 @@ request@^2.83.0:
     tunnel-agent "^0.6.0"
     uuid "^3.1.0"
 
-requirejs-text@latest:
-  version "2.0.15"
-  resolved "https://registry.yarnpkg.com/requirejs-text/-/requirejs-text-2.0.15.tgz#13138733613fc4457b7e1247e8cb751df7aa5429"
-
-requirejs@^2.3.5, requirejs@latest:
+requirejs@latest:
   version "2.3.5"
   resolved "https://registry.yarnpkg.com/requirejs/-/requirejs-2.3.5.tgz#617b9acbbcb336540ef4914d790323a8d4b861b0"
 
@@ -408,6 +404,10 @@ superagent@latest:
     mime "^1.4.1"
     qs "^6.5.1"
     readable-stream "^2.3.5"
+
+three-orbit-controls@latest:
+  version "82.1.0"
+  resolved "https://registry.yarnpkg.com/three-orbit-controls/-/three-orbit-controls-82.1.0.tgz#11a7f33d0a20ecec98f098b37780f6537374fab4"
 
 three@latest:
   version "0.93.0"

@@ -7,39 +7,64 @@
 	<template id="test-scene">
 
 		<renderer
-			width="1000"
-			height="1000"
+			width="{window.innerWidth}"
+			height="{window.innerHeight}"
 		>
 			<scene>
+				<axis-helper
+					line="100"
+				>
+				</axis-helper>
 				<camera
 					type="perspective"
 					fov="45"
 					aspect="1"
 					near="1"
 					far="1000"
-				/>
+				>
+					<position
+						x="0.0206593961445023"
+						y="0.0853731858682841"
+						z="0.9961348344906146"
+					></position>
+				</camera>
 				<light
 					type="point"
+					color="0xFCFFFF"
 				>
 					<position
 						x="10"
 						y="50"
 						z="130"
-					/>
+					></position>
 				</light>
 				<mesh>
 					<position
 						z="-300"
-					/>
+					></position>
 					<geometry
-						type="sphere-geometry"
+						type="sphere"
 						radius="50"
 						segments="16"
-					/>
+					></geometry>
 					<material
 						type="lambert",
 						color="0xCC0000"
-					/>
+					></material>
+				</mesh>
+				<mesh>
+					<position
+						z="-300"
+					></position>
+					<geometry
+						type="box"
+						size="10"
+						segments="16"
+					></geometry>
+					<material
+						type="lambert",
+						color="0xCC0000"
+					></material>
 				</mesh>
 			</scene>
 		</renderer>

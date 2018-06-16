@@ -26,6 +26,8 @@ define([
 				dom = data;
 			}
 
+			console.log(dom);
+
 			return new Node(dom);
 		},
 

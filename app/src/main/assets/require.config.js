@@ -15,7 +15,8 @@ define(function(){
 			tweener 		: "node_modules/tweener/tweener",
 			unicycle 		: "node_modules/unicycle/unicycle",
 			dollaclass 		: "node_modules/dollaclass/dollaclass",
-			jquery			: "node_modules/jquery/dist/jquery"
+			jquery			: "node_modules/jquery/dist/jquery",
+			Trident		    : "core/src/Trident/Trident"
 		};
 
 		this.baseUrl = "core/src/";
