@@ -20,6 +20,9 @@ define([
 				},
 				children : []
 			};
+
+
+
 			this.__content = null;
 			this.isRoot = isRoot;
 			this.dom = dom;
@@ -62,20 +65,11 @@ define([
 		},
 		root : {
 			get : function(){
-				var result = null;
-
-				if (this.dom.hasAttribute("data-root")){
-					result = this;
+				if (this.hasAttribute("data-root")){
+					return this;
 				} else {
-					result = this.dom.closest("[data-root]");
-					if (result.som){
-						result = result.som;
-					} else {
-						result = null;
-					}
+					return this.closest("[data-root]");
 				}
-
-				return result;
 			}
 		},
 		dom : {
@@ -83,14 +77,61 @@ define([
 				this.__dom = dom;
 				dom.som = this;
 				dom.setAttribute("data-trident-uuid", this.uuid);
+
 				if (this.isRoot){
 					dom.setAttribute("data-root", "");
 				}
+
+				this.preprocessDOM();
 				this.sync();
 			},
 			get : function(){
 				return this.__dom;
 			}
+		},
+		preprocessDOM : function(){
+			var rootNode = this.root;
+			var linkSelector;
+			var linkSourceNode;
+			var linkSourceNodeDOM;
+			var linkReplacingNodeDOM;
+			var domParentNode = this.dom.parentNode;
+
+			if (this.dom.tagName == "LINK" && rootNode){
+				linkSelector = this.dom.getAttribute("source");
+				linkSourceNode = rootNode.selectFirst(linkSelector);
+
+				if (linkSourceNode){
+					this.state.isLink = true;
+
+					linkReplacingNodeDOM = linkSourceNode.dom.cloneNode(true);
+					linkReplacingNodeDOM.removeAttribute("class");
+					linkReplacingNodeDOM.removeAttribute("id");
+					linkReplacingNodeDOM.setAttribute("data-trident-link", "");
+
+					domParentNode.replaceChild(linkReplacingNodeDOM, this.dom);
+					domParentNode.changed = true;
+
+
+					this.__dom = linkReplacingNodeDOM;
+					this.__dom.som = this;
+					this.subject = linkSourceNode.subject;
+					this.state.prevTagName = this.tagName;
+					this.state.prevAttrsStamp = this.crateAttrsStamp(this.attributes);
+					this.state.prevDomChildrenStamp = this.createDomChidrenStamp(this.state.domChildren);
+				}
+			} else if (this.dom.tagName == "clone"){
+				linkSelector = this.dom.getAttribute("source");
+				linkSourceNode = rootNode.selectFirst(linkSelector);
+
+				if (linkSourceNode){
+					this.state.isClone = true;
+					this.__dom = linkSelector.dom.cloneNode(true);
+				}
+			}
+		},
+		linkNode : function(Node){
+
 		},
 		crateAttrsStamp : function(attrs){
 			var result = [];
@@ -130,6 +171,10 @@ define([
 			this.state.changedAttributes = changedAttributes;
 		},
 		sync : function(){
+			if (this.state.isLink){
+				return;
+			}
+
 			var dom = this.__dom;
 			var attrsStamp = this.crateAttrsStamp(this.attributes);
 			var domChildrenStamp = this.createDomChidrenStamp(this.state.domChildren);
@@ -194,8 +239,20 @@ define([
 			var domChildren = this.state.domChildren;
 			var children = this.children;
 			var newChildren = [];
+			var _break = false;
 
 			_.forEach(domChildren, function(dom, index){
+				if (domChildren.changed){
+					_break = true;
+					domChildren.changed = false;
+					this.syncChildren(fullSync);
+					return;
+				}
+
+				if (_break){
+					return;
+				}
+
 				var uuid = dom.getAttribute("data-trident-uuid");
 				var som = _.filter(children, function(som){ 
 					if (som.uuid == uuid){
@@ -203,8 +260,11 @@ define([
 					}
 				})[0];
 
+				var child;
+
 				if (!som){
-					newChildren.push(new TridentNode(dom));
+					child = new TridentNode(dom);
+					newChildren.push(child);
 				} else {
 					newChildren.push(som);
 					if (fullSync) som.sync();
@@ -214,6 +274,12 @@ define([
 
 			this.state.children = newChildren;
 		},
+		select : function(){
+			return this.querySelectorAll.apply(this, arguments);
+		},
+		selectFirst : function(){
+			return this.querySelector.apply(this, arguments);
+		},	
 		querySelector : function(selector, noCache, handler){
 			var element = this.querySelectorAll(selector, noCache)[0] || null;
 			if (element && typeof handler == "function"){
@@ -255,6 +321,20 @@ define([
 			this.state.selectorsCache[selector] = nodesList;
 
 			return nodesList;
+		},
+		closest : function(selector){
+			var result = this.dom.closest(selector);
+			if (result.som){
+				return result.som;
+			} else {
+				return null;
+			}
+		},
+		matches : function(selector){
+			return this.dom.matches(selector);
+		},
+		hasAttribute : function(attrName){
+			return this.dom.hasAttribute(attrName);
 		}
 	});
 

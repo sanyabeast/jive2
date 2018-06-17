@@ -58,8 +58,12 @@ define(function(){
 
 				_.forEach(tokens, function(alias){
 					var name = this.getName(alias);
+					var value;
 					if (alias.indexOf("=") > -1) alias = alias.split("=")[1];
-					result[name] = this.getValue(alias, attributes, type, node, parentNode);
+					value = this.getValue(alias, attributes, type, node, parentNode);
+					if (typeof value !== "undefined"){
+						result[name] = value;
+					}
 				}.bind(this));
 
 				return result;
@@ -125,7 +129,7 @@ define(function(){
 						constructArgs = this.getArgs(argsMap, attributes, type, node, parentNode);
 						// subject = new (Function.prototype.bind.apply(construct, constructArgs));
 						subject = this.applyFunc(construct, constructArgs, true);
-						console.log(type, subject, constructArgs);
+						// console.log(type, subject, constructArgs);
 					break;
 					case "factory":
 						construct = description.construct;
@@ -152,8 +156,6 @@ define(function(){
 						if (typeof description.name == "string"){
 							if (parentNode.subject){
 								subject = parentNode.subject[description.name];
-							} else {
-								console.warn("Trident.SOM.Node.Atlas: parentNode is null for " + type, node);
 							}
 						} else if (typeof description.name == "function") {
 							subject = description.name(parentNode.subject, attributes);

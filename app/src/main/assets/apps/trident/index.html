@@ -49,6 +49,10 @@
 					></position>
 				</light>
 				<group>
+					<material class="default-lamber-material"
+						type="lambert"
+						color="0xff9800"
+					></material>
 					<position
 						x="-50"
 					></position>
@@ -62,10 +66,7 @@
 							radius="20"
 							segments="16"
 						></geometry>
-						<material
-							type="lambert",
-							color="0xff9800"
-						></material>
+						<link source=".default-lamber-material"></link>
 					</mesh>
 					<mesh class="test-sphere-mesh">
 						<position
@@ -108,10 +109,7 @@
 							depth="10"
 							segments="16"
 						></geometry>
-						<material
-							type="lambert",
-							color="0xe91e63"
-						></material>
+						<link source=".default-lamber-material"></link>
 					</mesh>
 					<mesh class="test-box-mesh">
 						<position

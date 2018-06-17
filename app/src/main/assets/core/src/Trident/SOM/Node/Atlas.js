@@ -8,7 +8,7 @@ define([
 		directives : {
 			value : {
 				"child" : function(value, type, node, parent, attributes){
-					var childNode = node.querySelector(value, true);
+					var childNode = node.selectFirst(value, true);
 					return childNode ? childNode.subject : null;
 				},
 				"int" : function(value, type, node, parent, attributes){
@@ -21,6 +21,12 @@ define([
 					var value = window.parseFloat(attributes[value]) || 0;
 					return value;
 				},
+				"parent" : function(value, type, node, parent, attributes){
+					return parent;
+				},
+				"node" : function(value, type, node, parent, attributes){
+					return node;
+				}
 			}
 		},
 		descriptions : {
@@ -116,7 +122,7 @@ define([
 					},
 					constructArgs : {
 						"lambert" : ["{ int::color, float::opacity, transparent }"],
-						"normal"  : ["{ int::color, float::opacity, transparent }"],
+						"normal"  : ["{ float::opacity, transparent }"],
 						"phong"  : ["{ int::color, float::opacity, transparent }"],
 						"toon"  : ["{ int::color, float::opacity, transparent }"],
 						"shadow"  : ["{ int::color, float::opacity, transparent }"],
