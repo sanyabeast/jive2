@@ -124,7 +124,7 @@ define([
 						break;	
 					}
 
-					if (this.combo.match(/uuuddduuddud/)){
+					if (this.combo.match(/uuddud/)){
 						this.combo = "";
 						this.modules.list.jsterm.toggleConnection();
 					}

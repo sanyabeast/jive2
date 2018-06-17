@@ -7,8 +7,8 @@
 	<template id="test-scene">
 
 		<renderer
-			width="{window.innerWidth}"
-			height="{window.innerHeight}"
+			width="{window.innerWidth * window.devicePixelRatio}"
+			height="{window.innerHeight * window.devicePixelRatio}"
 		>
 			<scene>
 				<axis-helper
@@ -18,7 +18,7 @@
 				<camera
 					type="perspective"
 					fov="45"
-					aspect="1"
+					aspect="{window.innerWidth / window.innerHeight}"
 					near="1"
 					far="1000"
 				>
