@@ -4,7 +4,7 @@ define([
 	], function(Atlas){
 
 	var TridentNode = new $Class({ name : "Node", namespace : "Trident.SOM" }, {
-		$constructor : function(dom){
+		$constructor : function(dom, isRoot){
 			var _this = this;
 
 			this.atlas = new Atlas();
@@ -21,6 +21,7 @@ define([
 				children : []
 			};
 			this.__content = null;
+			this.isRoot = isRoot;
 			this.dom = dom;
 		},
 		uuid : {
@@ -59,11 +60,32 @@ define([
 				return this.parentNode ? this.parentNode.subject : null;
 			}
 		},
+		root : {
+			get : function(){
+				var result = null;
+
+				if (this.dom.hasAttribute("data-root")){
+					result = this;
+				} else {
+					result = this.dom.closest("[data-root]");
+					if (result.som){
+						result = result.som;
+					} else {
+						result = null;
+					}
+				}
+
+				return result;
+			}
+		},
 		dom : {
 			set : function(dom){
 				this.__dom = dom;
 				dom.som = this;
 				dom.setAttribute("data-trident-uuid", this.uuid);
+				if (this.isRoot){
+					dom.setAttribute("data-root", "");
+				}
 				this.sync();
 			},
 			get : function(){
@@ -223,7 +245,7 @@ define([
 					}
 				});
 			} else {
-				_.forEach(nodesList, function(){
+				_.forEach(nodesList, function(som){
 					if (typeof handler == "function"){
 						handler(som);
 					}

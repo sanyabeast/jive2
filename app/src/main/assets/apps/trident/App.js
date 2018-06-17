@@ -1,5 +1,7 @@
 "use strict";
-define("App", function(){
+define("App", [
+		"tweener"
+	], function(tweener){
 
 	var App =  new $Class({ name : "App" }, {
 		$constructor : function(){
@@ -28,11 +30,34 @@ define("App", function(){
 			controls.rotateSpeed = 0.08;
 			controls.target.set(0,0,-300)
 
+			this.scene.querySelectorAll("light[type=\"point\"]", function(node){
+				tweener.to(node.subject.position, 5, {
+					z : -100,
+					repeat : -1,
+					ease : "easeInOutQuad",
+					yoyo : true
+				});
+			})
+
+			this.scene.querySelectorAll("light[type=\"directional\"]", function(node){
+				tweener.to(node.subject.position, 2, {
+					x : -100,
+					y : -100,
+					repeat : -1,
+					ease : "easeInOutQuad",
+					yoyo : true
+				});
+			})
+
 			document.body.appendChild(this.scene.subject.domElement);
 
 			unicycle.addTask(function(){
 				renderer.render(scene, camera);
 				controls.update();
+			});
+
+			window.addEventListener("resize", function(){
+				renderer.setSize(window.innerWidth, window.innerHeight);
 			});
 		}
 	});

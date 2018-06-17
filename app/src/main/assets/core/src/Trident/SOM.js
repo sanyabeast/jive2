@@ -28,7 +28,7 @@ define([
 
 			console.log(dom);
 
-			return new Node(dom);
+			return new Node(dom, true);
 		},
 
 	});

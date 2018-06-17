@@ -30,42 +30,107 @@
 				</camera>
 				<light
 					type="point"
-					color="0xFCFFFF"
+					color="0xFFFFFF"
 				>
 					<position
-						x="10"
-						y="50"
+						x="100"
+						y="100"
 						z="130"
 					></position>
 				</light>
-				<mesh>
+				<light
+					type="directional"
+					color="0xFFFFFF"
+				>
 					<position
-						z="-300"
+						x="100"
+						y="100"
+						z="130"
 					></position>
-					<geometry
-						type="sphere"
-						radius="50"
-						segments="16"
-					></geometry>
-					<material
-						type="lambert",
-						color="0xCC0000"
-					></material>
-				</mesh>
-				<mesh>
+				</light>
+				<group>
 					<position
-						z="-300"
+						x="-50"
 					></position>
-					<geometry
-						type="box"
-						size="10"
-						segments="16"
-					></geometry>
-					<material
-						type="lambert",
-						color="0xCC0000"
-					></material>
-				</mesh>
+					<mesh class="test-sphere-mesh">
+						<position
+							z="-300"
+							x="50"
+						></position>
+						<geometry
+							type="sphere"
+							radius="20"
+							segments="16"
+						></geometry>
+						<material
+							type="lambert",
+							color="0xff9800"
+						></material>
+					</mesh>
+					<mesh class="test-sphere-mesh">
+						<position
+							z="-270"
+							x="50"
+						></position>
+						<geometry
+							type="sphere"
+							radius="5"
+							segments="16"
+						></geometry>
+						<material
+							type="lambert",
+							color="0xff5722"
+						></material>
+					</mesh>
+					<mesh class="test-sphere-mesh">
+						<position
+							z="-220"
+							x="0"
+						></position>
+						<geometry
+							type="sphere"
+							radius="10"
+							segments="16"
+						></geometry>
+						<material
+							type="lambert",
+							color="0xff5722"
+						></material>
+					</mesh>
+					<mesh class="test-box-mesh">
+						<position
+							z="-300"
+						></position>
+						<geometry
+							type="box"
+							width="10"
+							height="10"
+							depth="10"
+							segments="16"
+						></geometry>
+						<material
+							type="lambert",
+							color="0xe91e63"
+						></material>
+					</mesh>
+					<mesh class="test-box-mesh">
+						<position
+							z="-300"
+							x="100"
+						></position>
+						<geometry
+							type="box"
+							width="12"
+							height="16"
+							depth="24"
+							segments="8"
+						></geometry>
+						<material
+							type="lambert",
+							color="0x00bcd4"
+						></material>
+					</mesh>
+				</group>
 			</scene>
 		</renderer>
 
