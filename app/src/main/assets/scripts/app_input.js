@@ -1,6 +1,7 @@
 setTimeout(function(){
 	requirejs.config(window.requireConfig);
-	requirejs(["App"], function(App){
+	requirejs(["unicycle", "App"], function(Unicycle, App){
+		window.unicycle = new Unicycle();
 		window.app = new App();
 		postal.say("core.frames.inited", window.frame);
 	});

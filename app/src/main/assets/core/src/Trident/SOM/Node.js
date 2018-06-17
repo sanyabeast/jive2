@@ -1,7 +1,8 @@
 "use strict";
 define([
-		"Trident/SOM/Node/Atlas"
-	], function(Atlas){
+		"Trident/SOM/Node/Atlas",
+		"postal"
+	], function(Atlas, postal){
 
 	var TridentNode = new $Class({ name : "Node", namespace : "Trident.SOM" }, {
 		$constructor : function(dom, isRoot){
@@ -21,7 +22,7 @@ define([
 				children : []
 			};
 
-
+			this.listeners = {};
 
 			this.__content = null;
 			this.isRoot = isRoot;
@@ -89,6 +90,21 @@ define([
 				return this.__dom;
 			}
 		},
+		traverse : function(callback){
+			var _break = false;
+			// callback(this, this.parentNode);
+			_.forEach(this.children, function(child){
+				_break = callback(child, this);
+
+				if (_break){
+					return;
+				}
+
+				child.traverse(callback);
+			}.bind(this));
+
+			return this;
+		},
 		preprocessDOM : function(){
 			var rootNode = this.root;
 			var linkSelector;
@@ -116,6 +132,7 @@ define([
 					this.__dom = linkReplacingNodeDOM;
 					this.__dom.som = this;
 					this.subject = linkSourceNode.subject;
+					this.subject.som = this;
 					this.state.prevTagName = this.tagName;
 					this.state.prevAttrsStamp = this.crateAttrsStamp(this.attributes);
 					this.state.prevDomChildrenStamp = this.createDomChidrenStamp(this.state.domChildren);
@@ -225,6 +242,7 @@ define([
 			this.formatAttributes(this.dom.attributes);
 
 			this.subject = this.atlas.create(this, tagName, this.state.fAttributes, this.parentNode);
+			if (this.subject) this.subject.som = this;
 			this.state.prevTagName = tagName;
 		},
 		syncAttrs : function(){			
@@ -335,6 +353,13 @@ define([
 		},
 		hasAttribute : function(attrName){
 			return this.dom.hasAttribute(attrName);
+		},
+		addEventListener : function(eventName, callback){
+			var theme = ["trident.node", this.uuid, eventName].join(".");
+			postal.listen(theme, callback);
+		},
+		dispatchEvent : function(eventName, data){
+			postal.say(["trident.node", this.uuid, eventName].join("."));
 		}
 	});
 

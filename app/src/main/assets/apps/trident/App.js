@@ -5,12 +5,12 @@ define("App", [
 
 	var App =  new $Class({ name : "App" }, {
 		$constructor : function(){
-			this.scene = trident.parse(document.querySelector("#test-scene").content.cloneNode(true).children[0]);
-			console.log(this.scene);
+			this.stage = trident.buildStage(document.querySelector("#test-scene").content.cloneNode(true).children[0]);
+			console.log(this.stage);
 
-			var renderer = this.scene.subject;
-			var scene = this.scene.querySelector("scene").subject;
-			var camera = this.scene.querySelector("camera").subject;
+			var renderer = this.stage.subject;
+			var scene = this.stage.querySelector("scene").subject;
+			var camera = this.stage.querySelector("camera").subject;
 
 			var controls = new trident.THREE.OrbitControls(camera, renderer.domElement);
 			controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
@@ -30,7 +30,7 @@ define("App", [
 			controls.rotateSpeed = 0.08;
 			controls.target.set(0,0,-300)
 
-			this.scene.querySelectorAll("light[type=\"point\"]", function(node){
+			this.stage.querySelectorAll("light[type=\"point\"]", function(node){
 				tweener.to(node.subject.position, 5, {
 					z : -100,
 					repeat : -1,
@@ -39,7 +39,7 @@ define("App", [
 				});
 			})
 
-			this.scene.querySelectorAll("light[type=\"directional\"]", function(node){
+			this.stage.querySelectorAll("light[type=\"directional\"]", function(node){
 				tweener.to(node.subject.position, 2, {
 					x : -100,
 					y : -100,
@@ -49,7 +49,7 @@ define("App", [
 				});
 			});
 
-			this.scene.querySelectorAll(".test-sprites", function(node){
+			this.stage.querySelectorAll(".test-sprites", function(node){
 				tweener.to(node.subject.rotation, 3, {
 					z : Math.PI * 2,
 					x : Math.PI * 2,
@@ -57,11 +57,32 @@ define("App", [
 				});
 			});
 
-			document.body.appendChild(this.scene.subject.domElement);
+			document.body.appendChild(this.stage.subject.domElement);
 
 			unicycle.addTask(function(){
 				renderer.render(scene, camera);
 				controls.update();
+			});
+
+			trident.setupEventsHandling(this.stage);
+
+			this.stage.traverse(function(node){
+				node.addEventListener("pointerover", function(data){
+					tweener.to(node.subject.scale, 0.2, {
+						x : 2,
+						y : 2,
+						z : 2
+					});
+				});
+
+				node.addEventListener("pointerout", function(data){
+					tweener.to(node.subject.scale, 0.2, {
+						x : 1,
+						y : 1,
+						z : 1
+					});
+
+				});
 			});
 
 			window.addEventListener("resize", function(){

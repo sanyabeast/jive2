@@ -11,10 +11,6 @@
 			height="{window.innerHeight * window.devicePixelRatio}"
 		>
 			<scene>
-				<axis-helper
-					line="100"
-				>
-				</axis-helper>
 				<camera
 					type="perspective"
 					fov="45"
@@ -64,7 +60,7 @@
 						<geometry
 							type="sphere"
 							radius="20"
-							segments="16"
+							segments="48"
 						></geometry>
 						<link source=".default-lamber-material"></link>
 					</mesh>
@@ -134,6 +130,9 @@
 							x="50"
 							y="50"
 						></position>
+						<rotation
+							z="1"
+						></rotation>
 						<geometry
 							type="circle"
 							radius="8"

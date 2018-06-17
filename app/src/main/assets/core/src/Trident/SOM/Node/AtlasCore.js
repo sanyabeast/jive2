@@ -227,7 +227,7 @@ define(function(){
 						}
 					} else if (member.type == "property"){
 						var value = this.getValue(member.value || name, attributes, type, node, parentNode);
-						if (typeof value !== "undefined"){
+						if (typeof value !== "undefined" && value !== null){
 							subject[name] = value;
 						}
 
