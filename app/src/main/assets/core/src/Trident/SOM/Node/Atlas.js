@@ -29,27 +29,27 @@ define([
 					source : "property",
 					name : "position",
 					members : {
-						x : { type : "property" },
-						y : { type : "property" },
-						z : { type : "property" },
+						x : { type : "property", value : "x|value" },
+						y : { type : "property", value : "y|value" },
+						z : { type : "property", value : "z|value" },
 					}
 				},
 				"rotation" : {
 					source : "property",
 					name : "rotation",
 					members : {
-						x : { type : "property" },
-						y : { type : "property" },
-						z : { type : "property" },
+						x : { type : "property", value : "x|value" },
+						y : { type : "property", value : "y|value" },
+						z : { type : "property", value : "z|value" },
 					}
 				},
 				"scale" : {
 					source : "property",
 					name : "scale",
 					members : {
-						x : { type : "property" },
-						y : { type : "property" },
-						z : { type : "property" },
+						x : { type : "property", value : "x|value" },
+						y : { type : "property", value : "y|value" },
+						z : { type : "property", value : "z|value" },
 					}
 				},
 				"axis-helper" : {
@@ -104,39 +104,97 @@ define([
 					link : "parent.add(child)",
 				},
 				"material" : {
+					childFirst : true,
 					source : "constructor",
 					construct : {
-						"lambert" : THREE.MeshLambertMaterial
+						"lambert" : THREE.MeshLambertMaterial,
+						"normal" : THREE.MeshNormalMaterial,
+						"phong" : THREE.MeshPhongMaterial,
+						"toon" : THREE.MeshToonMaterial,
+						"shadow" : THREE.ShadowMaterial,
+						"sprite" : THREE.SpriteMaterial
 					},
 					constructArgs : {
-						"lambert" : ["{ int::color }"]
+						"lambert" : ["{ int::color, float::opacity, transparent }"],
+						"normal"  : ["{ int::color, float::opacity, transparent }"],
+						"phong"  : ["{ int::color, float::opacity, transparent }"],
+						"toon"  : ["{ int::color, float::opacity, transparent }"],
+						"shadow"  : ["{ int::color, float::opacity, transparent }"],
+						"sprite"  : ["{ map=child::texture, int::color, float::opacity, transparent }"],
 					}
 				},
 				"geometry" : {
 					source : "constructor",
 					construct : {
 						"sphere" : THREE.SphereGeometry,
-						"box" : THREE.BoxGeometry
+						"box" : THREE.BoxGeometry,
+						"circle" : THREE.CircleGeometry,
+						"cylinder" : THREE.CylinderGeometry,
+						"cone" : THREE.ConeGeometry,
+						"ring" : THREE.RingGeometry
 					},
 					constructArgs : {
 						"sphere" : [
 							"radius", 
 							"widthSegments|segments", 
-							"heightSegments|segments", 
-							"phiStart", 
-							"phiLength", 
-							"thetaStart", 
-							"thetaLength"
+							"height-segments|segments", 
+							"phi-start", 
+							"phi-length", 
+							"theta-start", 
+							"theta-length"
 						],
 						"box" : [
 							"width|size",
 							"height|size",
 							"depth|size",
 							"widthSegments|segments",
-							"heightSegments|segments",
+							"height-segments|segments",
 							"depthSegments|segments"
+						],
+						"circle" : ["radius", "segments", "theta-start", "theta-length"],
+						"cylinder" : [
+							"radiusTop|radius",
+							"radiusBottom|radius",
+							"height",
+							"radial-segments|segments",
+							"height-segments|segments",
+							"openEnded",
+							"theta-start",
+							"theta-length"
+						],
+						"cone" : [
+							"radius",
+							"height",
+							"radial-segments|segments",
+							"height-segments|segments",
+							"openEnded",
+							"theta-start",
+							"theta-length"
+						],
+						"ring" : [
+							"inner-radius|radius", 
+							"outer-radius|radius", 
+							"thetaSegments|segments", 
+							"phiSegments|segments", 
+							"theta-start", 
+							"theta-length"
 						]
 					}
+				},
+				"texture" : {
+					source : "factory",
+					get construct(){
+						var loader = new THREE.TextureLoader();
+						return loader.load.bind(loader);
+					},
+					constructArgs : ["src"]
+				},
+				"sprite" : {
+					childFirst : true,
+					source : "constructor",
+					construct : THREE.Sprite,
+					constructArgs : ["child::material"],
+					link : "parent.add(child)"
 				}
 			}
 		},

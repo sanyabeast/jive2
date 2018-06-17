@@ -47,7 +47,15 @@ define("App", [
 					ease : "easeInOutQuad",
 					yoyo : true
 				});
-			})
+			});
+
+			this.scene.querySelectorAll(".test-sprites", function(node){
+				tweener.to(node.subject.rotation, 3, {
+					z : Math.PI * 2,
+					x : Math.PI * 2,
+					repeat : -1,
+				});
+			});
 
 			document.body.appendChild(this.scene.subject.domElement);
 

@@ -130,6 +130,186 @@
 							color="0x00bcd4"
 						></material>
 					</mesh>
+					<mesh class="test-circle-mesh">
+						<position
+							z="-300"
+							x="50"
+							y="50"
+						></position>
+						<geometry
+							type="circle"
+							radius="8"
+							segments="32"
+						></geometry>
+						<material
+							type="lambert",
+							color="0xe91e63"
+						></material>
+					</mesh>
+					<mesh class="test-circle-mesh">
+						<position
+							z="-290"
+							x="50"
+							y="50"
+						></position>
+						<geometry
+							type="circle"
+							radius="6"
+							segments="32"
+						></geometry>
+						<material
+							type="toon",
+							color="0xe91e63"
+						></material>
+					</mesh>
+					<mesh class="test-circle-mesh">
+						<position
+							z="-280"
+							x="50"
+							y="50"
+						></position>
+						<geometry
+							type="circle"
+							radius="4"
+							segments="32"
+						></geometry>
+						<material
+							type="toon",
+							color="0xe91e63"
+						></material>
+					</mesh>
+					<group class="test-sprites">
+						<position
+							z="-260"
+							x="-10"
+							y="50"
+						></position>
+						<sprite class="test-sprite">
+							<position
+								z="0"
+								x="-30"
+								y="0"
+							></position>
+							<scale
+								value="20"
+							></scale>
+							<material
+								type="sprite",
+								color="0xFFFFFF"
+							>
+								<texture
+									src="apps/trident/sprite0.png"
+								></texture>
+							</material>
+						</sprite>
+						<sprite class="test-sprite">
+							<position
+								z="0"
+								x="-10"
+								y="0"
+							></position>
+							<scale
+								value="10"
+							></scale>
+							<material
+								type="sprite",
+								color="0xFFFFFF"
+							>
+								<texture
+									src="apps/trident/sprite1.png"
+								></texture>
+							</material>
+						</sprite>
+						<sprite class="test-sprite">
+							<position
+								z="0"
+								x="10"
+								y="0"
+							></position>
+							<scale
+								value="15"
+							></scale>
+							<material
+								type="sprite",
+								color="0xFFFFFF"
+							>
+								<texture
+									src="apps/trident/sprite0.png"
+								></texture>
+							</material>
+						</sprite>
+						<sprite class="test-sprite">
+							<position
+								z="0"
+								x="30"
+								y="0"
+							></position>
+							<scale
+								value="5"
+							></scale>
+							<material
+								type="sprite",
+								color="0xFFFFFF"
+							>
+								<texture
+									src="apps/trident/sprite1.png"
+								></texture>
+							</material>
+						</sprite>
+					</group>
+					<mesh class="test-circle-mesh">
+						<position
+							z="-260"
+							x="100"
+							y="60"
+						></position>
+						<geometry
+							type="cylinder"
+							radius="10"
+							height="20"
+							segments="32"
+						></geometry>
+						<material
+							type="phong",
+							color="0x4caf50"
+						></material>
+					</mesh>
+					<mesh class="test-circle-mesh">
+						<position
+							z="-240"
+							x="100"
+							y="20"
+						></position>
+						<geometry
+							type="cone"
+							radius="10"
+							height="20"
+							segments="32"
+						></geometry>
+						<material
+							type="normal",
+							color="0x4caf50"
+						></material>
+					</mesh>
+					<mesh class="test-circle-mesh">
+						<position
+							z="-240"
+							x="0"
+							y="20"
+						></position>
+						<geometry
+							type="ring"
+							inner-radius="10"
+							outer-radius="15"
+							segments="32"
+						></geometry>
+						<material
+							type="phong",
+							color="0x9c27b0"
+							opacity="0.5"
+							transparent="true"
+						></material>
+					</mesh>
 				</group>
 			</scene>
 		</renderer>

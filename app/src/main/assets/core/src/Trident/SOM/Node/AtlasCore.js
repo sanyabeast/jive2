@@ -23,12 +23,19 @@ define(function(){
 			return result;
 		},
 		getName : function(alias){
+			var result = alias;
+
 			if (alias.indexOf("::") > -1){
-				return alias.split("::")[1];
+				result = alias.split("::")[1];
 			}
+
+			if (alias.indexOf("=") > -1){
+				result = alias.split("=")[0];
+			}
+
+			return result;
 		},
 		getValue : function(alias, attributes, type, node, parentNode){
-
 			if (alias.indexOf("|") > -1){
 				alias = alias.split("|");
 
@@ -50,17 +57,23 @@ define(function(){
 				var result = {};
 
 				_.forEach(tokens, function(alias){
-					result[this.getName(alias)] = this.getValue(alias, attributes, type, node, parentNode);
+					var name = this.getName(alias);
+					if (alias.indexOf("=") > -1) alias = alias.split("=")[1];
+					result[name] = this.getValue(alias, attributes, type, node, parentNode);
 				}.bind(this));
 
 				return result;
 			} else if (alias.indexOf("::") > 0){
+				if (alias.indexOf("=") > -1) alias = alias.split("=")[1];
+
 				if (this.directives[alias.split("::")[0]]){
 					return this.directives[alias.split("::")[0]](alias.split("::")[1], type, node, parentNode, attributes);
 				} else {
 					console.warn("Trident.SOM.Node.Atlas: handler for " + alias.split("::")[0] + " directive is not described");
 				}
 			} else {
+				if (alias.indexOf("=") > -1) alias = alias.split("=")[1];
+
 				if (typeof attributes[alias] == "string" && attributes[alias].indexOf("{") == 0 && attributes[alias].lastIndexOf("}") == attributes[alias].length - 1){
 					try {
 						return eval(attributes[alias].substring(1, attributes[alias].length - 1));
@@ -76,8 +89,12 @@ define(function(){
 		isChildFirst : function(type){
 			return this.descriptions[type] && this.descriptions[type].childFirst === true;
 		},
-		createNew : function(Construct, a){
-		 	return new Construct(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9], a[10]);
+		applyFunc : function(func, a, isConstructor){
+		 	if (isConstructor){
+		 		return new func(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9], a[10]);
+		 	} else {
+		 		return func(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9], a[10]);
+		 	}
 		},
 		create : function(node, type, attributes, parentNode){
 			var description = this.descriptions[type];
@@ -107,7 +124,29 @@ define(function(){
 
 						constructArgs = this.getArgs(argsMap, attributes, type, node, parentNode);
 						// subject = new (Function.prototype.bind.apply(construct, constructArgs));
-						subject = this.createNew(construct, constructArgs);
+						subject = this.applyFunc(construct, constructArgs, true);
+						console.log(type, subject, constructArgs);
+					break;
+					case "factory":
+						construct = description.construct;
+						argsMap = description.constructArgs;
+
+						if (typeof construct == "object" && attributes.type && construct[attributes.type]){
+							construct = construct[attributes.type];
+						}
+
+						if (typeof construct != "function"){
+							console.warn("Trident.SOM.Node.Atlas: " + type + "`s factory is not a function");
+						}
+
+						if (!Array.isArray(argsMap) && typeof argsMap == "object" && attributes.type && argsMap[attributes.type]){
+							argsMap = argsMap[attributes.type];
+						}
+
+						constructArgs = this.getArgs(argsMap, attributes, type, node, parentNode);
+						// subject = new (Function.prototype.bind.apply(construct, constructArgs));
+						subject = this.applyFunc(construct, constructArgs);
+
 					break;
 					case "property":
 						if (typeof description.name == "string"){
