@@ -11,6 +11,7 @@ define([
 			this.requireConfig = new RequireConfig();
 		},
 		patch : function(frame){
+			frame.window.r = window.core.modules.list.r;
 			frame.window.isFrame = true;
 			frame.window.frame = frame;
 			frame.window.activity = frame.activity.url;

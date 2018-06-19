@@ -99,6 +99,7 @@ define([
 			return this.activities.get(alias);
 		},
 		loadActivity : function(path, name, frameID){
+			frameID = frameID || "root";
 			var activity = this.getActivity(path, name);
 			var frame = this.getFrame(frameID);
 			frame.classList.add("loading");

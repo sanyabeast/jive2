@@ -16,6 +16,7 @@ define(function(){
 				var totalCount = assetsList.length;
 				var resultedAssets = Array.isArray(assetsList) ? [] : {};
 
+
 				_.forEach(assetsList, function(asset, index){
 					this.loadAsset(asset).then(function(loadedAsset){
 						resultedAssets[index] = loadedAsset;

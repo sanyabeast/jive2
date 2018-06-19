@@ -1,8 +1,10 @@
 "use strict";
 define([
 		"R/Loader",
-		"howler"
-	], function(Loader, Howler){
+		"howler",
+		"three",
+		"OBJLoader"
+	], function(Loader, Howler, THREE, OBJLoader){
 
 	var Loaders = new $Class({ name : "Loaders", namespace : "Core.R" }, {
 		$constructor : function(){},
@@ -33,6 +35,16 @@ define([
 						resolve(null);
 						reject(err)
 					}
+				});
+			})
+		},
+		obj : {
+			value : new Loader(function(assetDescription, resolve, reject){
+				var manager = new THREE.LoadingManager();
+				var $loader = new THREE.OBJLoader(manager);
+
+				$loader.load(assetDescription, function(object3D){
+					resolve(object3D);
 				});
 			})
 		}
