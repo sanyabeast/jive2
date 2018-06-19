@@ -7,8 +7,10 @@
 	<template id="test-scene">
 
 		<renderer
+			type="webgl",
 			width="{window.innerWidth * window.devicePixelRatio}"
 			height="{window.innerHeight * window.devicePixelRatio}"
+			antialias="true"
 		>
 			<scene>
 				<camera
@@ -25,7 +27,7 @@
 					></position>
 				</camera>
 				<light
-					type="point"
+					type="ambient"
 					color="0xFFFFFF"
 				>
 					<position
@@ -75,7 +77,7 @@
 							segments="16"
 						></geometry>
 						<material
-							type="lambert",
+							type="lambert"
 							color="0xff5722"
 						></material>
 					</mesh>
@@ -90,8 +92,59 @@
 							segments="16"
 						></geometry>
 						<material
-							type="lambert",
+							type="lambert"
 							color="0xff5722"
+							opacity="0.5"
+							transparent="true"
+						></material>
+					</mesh>
+					<mesh class="test-sphere-mesh">
+						<position
+							z="-180"
+							x="0"
+						></position>
+						<geometry
+							type="sphere"
+							radius="5"
+							segments="16"
+						></geometry>
+						<material
+							type="lambert"
+							color="0xcddc39"
+							opacity="0.5"
+							transparent="true"
+						></material>
+					</mesh>
+					<mesh class="test-sphere-mesh">
+						<position
+							z="-160"
+							x="0"
+						></position>
+						<geometry
+							type="sphere"
+							radius="3"
+							segments="16"
+							opacity="0.5"
+							transparent="true"
+						></geometry>
+						<material
+							type="lambert"
+							color="0xcddc39"
+						></material>
+					</mesh>
+					<mesh class="test-sphere-mesh">
+						<position
+							z="-140"
+							x="0"
+						></position>
+						<geometry
+							type="sphere"
+							radius="3"
+							segments="16"
+						></geometry>
+						<material
+							type="lambert"
+							color="0xcddc39"
 						></material>
 					</mesh>
 					<mesh class="test-box-mesh">
@@ -120,7 +173,7 @@
 							segments="8"
 						></geometry>
 						<material
-							type="lambert",
+							type="lambert"
 							color="0x00bcd4"
 						></material>
 					</mesh>
@@ -139,7 +192,7 @@
 							segments="32"
 						></geometry>
 						<material
-							type="lambert",
+							type="lambert"
 							color="0xe91e63"
 						></material>
 					</mesh>
@@ -155,7 +208,7 @@
 							segments="32"
 						></geometry>
 						<material
-							type="toon",
+							type="toon"
 							color="0xe91e63"
 						></material>
 					</mesh>
@@ -171,7 +224,7 @@
 							segments="32"
 						></geometry>
 						<material
-							type="toon",
+							type="toon"
 							color="0xe91e63"
 						></material>
 					</mesh>
@@ -191,7 +244,7 @@
 								value="20"
 							></scale>
 							<material
-								type="sprite",
+								type="sprite"
 								color="0xFFFFFF"
 							>
 								<texture
@@ -209,7 +262,7 @@
 								value="10"
 							></scale>
 							<material
-								type="sprite",
+								type="sprite"
 								color="0xFFFFFF"
 							>
 								<texture
@@ -227,7 +280,7 @@
 								value="15"
 							></scale>
 							<material
-								type="sprite",
+								type="sprite"
 								color="0xFFFFFF"
 							>
 								<texture
@@ -245,7 +298,7 @@
 								value="5"
 							></scale>
 							<material
-								type="sprite",
+								type="sprite"
 								color="0xFFFFFF"
 							>
 								<texture
@@ -267,7 +320,7 @@
 							segments="32"
 						></geometry>
 						<material
-							type="phong",
+							type="phong"
 							color="0x4caf50"
 						></material>
 					</mesh>
@@ -284,7 +337,7 @@
 							segments="32"
 						></geometry>
 						<material
-							type="normal",
+							type="normal"
 							color="0x4caf50"
 						></material>
 					</mesh>
@@ -301,7 +354,7 @@
 							segments="32"
 						></geometry>
 						<material
-							type="phong",
+							type="phong"
 							color="0x9c27b0"
 							opacity="0.5"
 							transparent="true"

@@ -179,7 +179,10 @@ define(function(){
 						console.warn("Trident.SOM.Node.Atlas: invalid link directive for " + type, node);
 					}
 				} else if (typeof description.link == "function"){
-					description.link(parentNode.subject, child);
+					var child = subject;
+					var parent = parentNode.subject;
+
+					description.link(parent, child);
 				}
 
 			} else {

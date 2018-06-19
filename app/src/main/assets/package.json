@@ -7,6 +7,7 @@
     "three": "latest",
     "three-orbit-controls" : "latest",
     "less": "latest",
+    "howler" : "latest",
     "postal": "git://github.com/sanyabeast/postal.git",
     "superagent": "latest",
     "lodash": "latest",
@@ -15,6 +16,6 @@
     "unicycle": "git://github.com/sanyabeast/unicycle.git",
     "jsterm": "git://github.com/sanyabeast/jsterm.git",
     "dollaclass": "git://github.com/sanyabeast/dollaclass.git",
-    "quire": "git://github.com/sanyabeast/quire.git"
+    "quire": "git://github.com/sanyabeast/quire.git",
   }
 }

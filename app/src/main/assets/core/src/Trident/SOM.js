@@ -8,7 +8,7 @@ define([
 
 		},
 		setGlobalContext : function(context){
-			console.log(context);
+
 		},	
 		parseHTML : function(html){
 			var div = document.createElement("div");
@@ -26,7 +26,7 @@ define([
 				dom = data;
 			}
 
-			console.log(dom);
+
 
 			return new Node(dom, true);
 		},

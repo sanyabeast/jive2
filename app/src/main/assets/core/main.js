@@ -15,6 +15,13 @@ requirejs(["require.config.js"], function(RequireConfig){
 			window.THREE = THREE;
 			window.core = new Core;
 			window.core.load("trident");
+
+			core.modules.list.r.loaders.sound.load([
+				"apps/trident/res/sound/test.mp3"
+			]).then(function(sounds){
+				window.sounds = sounds;
+			});
+
 		});
 	});
 });

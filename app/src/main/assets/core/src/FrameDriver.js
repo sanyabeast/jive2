@@ -48,6 +48,7 @@ define([
 					name : "viewport",
 					content : "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
 				}),
+				tools.template("less-config-template"),
 				tools.element("script", {
 					src : tools.bustPath(tools.levelUpPath(frame.activity.level, "node_modules/less/dist/less.js")),
 					defer : ""

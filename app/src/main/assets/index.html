@@ -4,6 +4,11 @@
 	<title></title>
 	<link rel="stylesheet/less" type="text/css" href="core/styles/main.less"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<script>
+	  	less = {
+			logLevel: 0,
+	  	};	
+	</script>
 	<script src="node_modules/less/dist/less.js"></script>
 </head>
 <body>
@@ -15,6 +20,13 @@
 			allowfullscreen
 			sandbox="allow-scripts allow-same-origin"
 		></iframe>
+	</template>
+	<template id="less-config-template">
+		<script>
+		  	less = {
+				logLevel: 0,
+		  	};	
+		</script>
 	</template>
 	<script data-main="core/main" src="node_modules/quire/quire.js"></script>
 </body>

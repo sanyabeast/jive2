@@ -66,7 +66,14 @@ define([
 				},
 				"renderer" : {
 					source : "constructor",
-					construct : THREE.WebGLRenderer,
+					construct : {
+						"webgl" : THREE.WebGLRenderer,
+						"canvas" : THREE.CanvasRenderer
+					},
+					constructArgs : {
+						"webgl" : ["{ antialias } "],
+						"canvas" : []
+					},
 					members : {
 						setSize : { type : "method", args : ["width", "height"] }
 					}
@@ -89,11 +96,13 @@ define([
 					source : "constructor",
 					construct : {
 						"point" : THREE.PointLight,
-						"directional" : THREE.DirectionalLight
+						"directional" : THREE.DirectionalLight,
+						"ambient" : THREE.AmbientLight
 					},
 					constructArgs : {
 						"point" : ["int::color", "float::intensity", "distance", "decay"],
-						"directional" : ["int::color", "float::intensity"]
+						"directional" : ["int::color", "float::intensity"],
+						"ambient" : ["int::color", "float::intensity"]
 					},
 					link : "parent.add(child)",
 				},
