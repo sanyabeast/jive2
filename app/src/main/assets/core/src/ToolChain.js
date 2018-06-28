@@ -60,6 +60,9 @@ define(function(){
 			_.forEach(props, function(value, name){
 				this.defineProperty(target, name, value);
 			}.bind(this));
+		},
+		getUrlLevel : function(url){
+			return url.split("/").length;
 		}
 	});
 

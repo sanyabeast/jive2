@@ -4,34 +4,37 @@ define([
 		"FrameDriver/Patcher",
 		"TokensCollection",
 		"ToolChain",
-		"Activity",
 		"postal",
 		"lodash",
-	], function(Subscriber, FramePatcher, TokensCollection, tools, Activity, postal, _){
+	], function(Subscriber, FramePatcher, TokensCollection, tools, postal, _){
 
 	var FrameDriver = new $Class({name : "FrameDriver", namespace : "Core"}, {
 		$constructor : function(){
 			this.patcher = new FramePatcher();
 
-			this.frames = new TokensCollection();
 			this.activities = new TokensCollection();
 
 			this.subs = new Subscriber(this, {
-				"core.frames.inited" : this.__onFrameInited.bind(this)
+				"activity.inited" : this.$onActivityInited.bind(this)
 			});
 		},
-		__onFrameLoaded : function(frame){
+		$onFrameLoaded : function(frame){
 			if (frame.src == "javascript:" || !frame.src){
 				return;
 			}
 			
 			this.setupFrame(frame);
 		},
-		__onFrameInited : function(frame){
+		$onActivityInited : function(activityName){
+			var frame = this.getActivityFrame(activityName);
+			
 			frame.classList.remove("loading");
+			this.setActiveFrame(frame.activityName);
 			console.log("Frame inited in " + (+new Date() - frame.startLoadingTime) + "ms");
 		},
 		setupFrame : function(frame){
+			var urlLevel = tools.getUrlLevel(frame.src);
+
 			this.patcher.patch(frame);
 			frame.head.appendChild(tools.fragment([
 				tools.element("link", {
@@ -42,7 +45,7 @@ define([
 				tools.element("link", {
 					"rel" : "stylesheet/less" ,
 					"type" : "text/css" ,
-					"href" : tools.levelUpPath(frame.activity.level, "core/styles/frame.less")
+					"href" : tools.levelUpPath(urlLevel, "core/styles/frame.less")
 				}),
 				tools.element("meta", {
 					name : "viewport",
@@ -50,80 +53,69 @@ define([
 				}),
 				tools.template("less-config-template"),
 				tools.element("script", {
-					src : tools.bustPath(tools.levelUpPath(frame.activity.level, "node_modules/less/dist/less.js")),
+					src : tools.bustPath(tools.levelUpPath(urlLevel, "node_modules/less/dist/less.js")),
 					defer : ""
 				}),
 			]));
 
 			frame.body.appendChild(tools.fragment([
 				tools.element("script", {
-					"data-main" : tools.levelUpPath(frame.activity.level, "core/app_main"),
-					src : tools.bustPath(tools.levelUpPath(frame.activity.level, "node_modules/quire/quire.js")),
+					"data-main" : tools.levelUpPath(urlLevel, "core/app_main"),
+					src : tools.bustPath(tools.levelUpPath(urlLevel, "node_modules/quire/quire.js")),
 				}),
 				
 			]));	
 
 		},
-		getFrame : function(id){
+		getActivityFrame : function(name){
 			var frame;
 
-			if (!this.frames.contains(id)){
+			if (!this.activities.contains(name)){
 				frame = tools.template("frame-driver-frame", true);
-				frame.setAttribute("data-frame-id", id);
-				frame.id = ["frame", id].join("_");
+				frame.setAttribute("data-frame-id", name);
+				frame.activityName = name;
 				document.querySelector("body").appendChild(frame);
-				this.frames.set(id, frame);
-				frame.addEventListener("load", this.__onFrameLoaded.bind(this, frame));
+				this.activities.set(name, frame);
+				frame.addEventListener("load", this.$onFrameLoaded.bind(this, frame));
 			} 
 
-			return this.frames.get(id);
+			return this.activities.get(name);
 		},
-		setActiveFrame : function(id){
-			this.frames.iterate(function(frame, frameID){
-				if (id != frameID){
-					frame.style.display = "none!important";
+		setActiveFrame : function(_activityName){
+			this.activities.iterate(function(frame, activityName){
+				if (activityName != _activityName){
+					frame.reset();
+					frame.style.display = "none";
 				} else {
-					frame.style.display = "";
+					frame.style.display = "flex";
 				}
 			}, this);
 		},
-		getActivity : function(path, name){
-			var activity;
-			var alias = Activity.alias(path, name);
+		launchActivity : function(activityName, params, sourceActivityName){
+			var activityFrame = this.getActivityFrame(activityName);
+			var url = ["apps", activityName, "index.html"].join("/");
 
-			if (!this.activities.contains(alias)){
-				activity = new Activity(path, name);
-				this.activities.set(alias, activity);
-			}
+			activityFrame.classList.add("loading");
+			activityFrame.startLoadingTime = +new Date();
+			activityFrame.sourceActivityName = sourceActivityName;
+			activityFrame.params = params;
+			activityFrame.connect();
 
-			return this.activities.get(alias);
-		},
-		loadActivity : function(path, name, frameID){
-			frameID = frameID || "root";
-			var activity = this.getActivity(path, name);
-			var frame = this.getFrame(frameID);
-			frame.classList.add("loading");
-			frame.startLoadingTime = +new Date();
-			superagent.get(activity.url).then(function(response){
-				frame.activity = activity;
-				frame.src = activity.url;
+			superagent.get(url).then(function(response){
+				activityFrame.src = url;
 
-				postal.say("core.frames.loading.success", {
-					frame : frame,
-					frameID : frameID,
-					path : path,
-					name : name
+				postal.say("core.activity.loading.success", {
+					activityName : activityName,
+					params : params
 				});
 
 			}).catch(function(){
-				postal.say("core.frames.loading.failed", {
-					frame : frame,
-					frameID : frameID,
-					path : path,
-					name : name
+				postal.say("core.activity.loading.failed", {
+					activityName : activityName,
+					params : params
 				});
 
-				frame.classList.remove("loading");
+				activityFrame.classList.remove("loading");
 			});
 		},
 	});

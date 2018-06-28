@@ -3,27 +3,29 @@ define(function(){
 
 	var TokensCollection = new $Class({ name : "TokensCollection", namespace : "Core" }, {
 		$constructor : function(content){
-			this.__content = content || {};
-		},
-		list : {
-			get : function(){
-				return this.__content;
+			if (content){
+				this.setMultiple(content);
 			}
 		},
 		set : function(name, value){
-			this.__content[name] =  value;
+			this[name] =  value;
+		},
+		setMultiple : function(data){
+			for (var k in data){
+				this.set(k, data[k]);
+			}
 		},
 		get : function(name){
-			return this.__content[name] || null;
+			return this[name] || null;
 		},
 		contains : function(name){
-			return typeof this.__content[name] != "undefined";
+			return typeof this[name] != "undefined";
 		},
 		clear : function(){
-			this.__content = {};
+			
 		},
 		remove : function(name){
-			delete this.__content[name];
+			delete this[name];
 		},
 		with : function(name, callback, context){
 			if (_.isFunction(callback)){
@@ -35,7 +37,7 @@ define(function(){
 			}
 		},
 		iterate : function(callback, context){
-			for (var k in this.__content){
+			for (var k in this){
 				this.with(k, callback, context);
 			}
 		}

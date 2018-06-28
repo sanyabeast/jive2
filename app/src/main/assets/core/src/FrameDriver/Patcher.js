@@ -3,25 +3,31 @@ define([
 		"postal",
 		"todo",
 		"requireConfig",
-		"Trident/Trident"
-	], function(postal, todo, RequireConfig, Trident){
+		"Trident/Trident",
+		"ToolChain"
+	], function(postal, todo, RequireConfig, Trident, tools){
 
 	var FramePatcher = new $Class({ name : "FramePatcher", namespace : "Core.FrameDriver" }, {
 		$constructor : function(){
 			this.requireConfig = new RequireConfig();
 		},
 		patch : function(frame){
-			frame.window.r = window.core.modules.list.r;
-			frame.window.isFrame = true;
-			frame.window.frame = frame;
-			frame.window.activity = frame.activity.url;
-			frame.window.requireConfig = this.requireConfig.valueOf(frame.activity.level, "./");
-			frame.window.$Class = window.$Class;
-			frame.window.$Interface = window.$Interface;
-			frame.window.postal = postal;
+			frame.window.source = frame.sourceActivityName || null;
+			frame.window.params = frame.params || null;
+			frame.window.r = window.core.modules.r;
+			frame.window.current = frame.activityName;
+			frame.window.requireConfig = this.requireConfig.valueOf(tools.getUrlLevel(frame.src), "./");
+			frame.window.$postal = postal;
 			frame.window.android = window.android;
-			frame.window.trident = new Trident(frame.window);
+			frame.window.intent = this.$intent.bind(this, frame.activityName);
 		},
+		$intent : function(source, target, params){
+			postal.say("intent", {
+				source : source,
+				target : target,
+				params : params
+			})
+		}
 	});	
 
 	return FramePatcher;

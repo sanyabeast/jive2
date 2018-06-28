@@ -1,7 +1,6 @@
 "use strict";
 define([
 		"R",
-		"Activity",
 		"TokensCollection",
 		"FrameDriver",
 		"PrePatcher",
@@ -14,7 +13,6 @@ define([
 		"superagent",
 	], function(
 		  R
-		, Activity
 		, TokensCollection
 		, FrameDriver
 		, PrePatcher
@@ -30,7 +28,6 @@ define([
 
 	/*Jive2Core*/
 	var Core = new $Class({ name : "Core", namespace : "Core" }, {
-		Activity : { value : Activity },
 		TokensCollection : { value : TokensCollection },
 		FrameDriver : { value : FrameDriver },
 		PrePatcher : { value : PrePatcher },
@@ -47,18 +44,18 @@ define([
 				r : new R()
 			});
 
-			this.modules.list.unicycle.start();
+			this.modules.unicycle.start();
 
 			this.modules.with("prePatcher", function(prePatcher){
 				prePatcher.patch();
 			});
 
 
-			window.android = this.modules.list.androidProxy.getProxy();
+			window.android = this.modules.androidProxy.getProxy();
 
 			this.createSubs();
 			if (this.env == "android"){
-				this.modules.list.jsterm.connect();
+				this.modules.jsterm.connect();
 			}
 
 			if (this.env == "android"){
@@ -69,11 +66,11 @@ define([
 
 			document.body.appendChild(this.modules.get("jsterm").element);
 
-			window.unicycle = this.modules.list.unicycle;
+			window.unicycle = this.modules.unicycle;
 			window.postal = postal;
 			window.todo = todo;
 			window.superagent = superagent;
-			window.R = this.modules.list.r;
+			window.R = this.modules.r;
 		},
 		env : {
 			get : function(){
@@ -120,23 +117,24 @@ define([
 							android.sysKeyPress(data.keycode);
 						break;
 						case 82:
-							this.modules.list.jsterm.toggleConnection();
+							this.modules.jsterm.toggleConnection();
 						break;	
 					}
 
 					if (this.combo.match(/uuddud/)){
 						this.combo = "";
-						this.modules.list.jsterm.toggleConnection();
+						this.modules.jsterm.toggleConnection();
 					}
+				},
+				"intent" : function(data){
+					console.log(data);
+					this.load(data.target, data.params, data.source);
 				}
 			});
 
 		},
-		load : function(path, name){
-			this.modules.with("frameDriver")
-			.then(function(frameDriver){
-				frameDriver.loadActivity(path, name);
-			});
+		load : function(activityName, params, sourceActivityName){
+			this.modules.frameDriver.launchActivity(activityName, params, sourceActivityName);
 		}
 	});
 

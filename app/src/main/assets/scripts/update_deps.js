@@ -15,6 +15,7 @@ for (var k in package.dependencies){
 }
 
 function clone(gitUrl, location, dirName){
+	gitUrl = gitUrl.replace("git://", "https://");
 	var targetPath = path.join(location, dirName);
 	rimraf(targetPath, function(err, data){
 		if (err){

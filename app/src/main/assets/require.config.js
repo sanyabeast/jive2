@@ -16,9 +16,9 @@ define(function(){
 			unicycle 		: "node_modules/unicycle/unicycle",
 			dollaclass 		: "node_modules/dollaclass/dollaclass",
 			jquery			: "node_modules/jquery/dist/jquery",
-			Trident		    : "core/src/Trident/Trident",
+			Trident		    : "core/src/Trident",
 			OBJLoader		: "core/libs/OBJLoader",
-			howler			: "node_modules/howler/dist/howler.min"
+			howler			: "node_modules/howler/dist/howler.min",
 		};
 
 		this.baseUrl = "core/src/";

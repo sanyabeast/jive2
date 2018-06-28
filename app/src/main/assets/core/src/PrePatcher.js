@@ -53,6 +53,13 @@ define([
 						return this.document.head;
 					}
 				},
+				reset : {
+					value : function(){
+						this.params = null;
+						this.sourceActivityName = null;
+						this.src = "javascript:";
+					}
+				},
 			});
 		}
 	});

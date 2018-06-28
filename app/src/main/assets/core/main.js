@@ -14,9 +14,11 @@ requirejs(["require.config.js"], function(RequireConfig){
 			THREE.OrbitControls = OrbitControls(THREE);
 			window.THREE = THREE;
 			window.core = new Core;
-			window.core.load("trident");
+			window.core.load("trident", {
+				name : "Sasha"
+			});
 
-			core.modules.list.r.loaders.obj.load([
+			core.modules.r.loaders.obj.load([
 				"apps/trident/res/object3D/male02.obj"
 			]).then(function(objs){
 				window.objs = objs;
@@ -24,7 +26,7 @@ requirejs(["require.config.js"], function(RequireConfig){
 			});
 
 			function addMan(objs){
-				if (window.core.modules.list.frameDriver.frames.list.root.window.scene){
+				if (window.core.modules.frameDriver.activities.trident.window.scene){
 					objs[0].position.z = -500;
 
 					var basicMaterial = new THREE.MeshPhongMaterial({
@@ -51,7 +53,7 @@ requirejs(["require.config.js"], function(RequireConfig){
 						ease : "easeInOutQuad"
 					});
 
-					window.core.modules.list.frameDriver.frames.list.root.window.scene.add(objs[0]);
+					window.core.modules.frameDriver.activities.trident.window.scene.add(objs[0]);
 					window.objs = objs;
 
 				} else {
@@ -59,7 +61,7 @@ requirejs(["require.config.js"], function(RequireConfig){
 				}
 			}
 
-			core.modules.list.r.loaders.sound.load([
+			core.modules.r.loaders.sound.load([
 				"apps/trident/res/sound/test.mp3"
 			]).then(function(sounds){
 				console.log(sounds);
