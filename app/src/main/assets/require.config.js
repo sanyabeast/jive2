@@ -15,10 +15,12 @@ define(function(){
 			tweener 		: "node_modules/tweener/tweener",
 			unicycle 		: "node_modules/unicycle/unicycle",
 			dollaclass 		: "node_modules/dollaclass/dollaclass",
-			jquery			: "node_modules/jquery/dist/jquery",
+			jquery			: "node_modules/jquery/dist/jquery.min",
 			Trident		    : "core/src/Trident",
 			OBJLoader		: "core/libs/OBJLoader",
 			howler			: "node_modules/howler/dist/howler.min",
+			vue 			: "node_modules/vue/dist/vue.min",
+			vuex			: "node_modules/vuex/dist/vuex.min"
 		};
 
 		this.baseUrl = "core/src/";

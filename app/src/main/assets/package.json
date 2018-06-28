@@ -22,6 +22,8 @@
   	"jsonfile" : "latest",
   	"fs-extra" : "latest",
   	"colors" : "latest",
-  	"rimraf" : "latest"
+  	"rimraf" : "latest",
+  	"vue" : "latest",
+  	"vuex" : "latest"
   }
 }

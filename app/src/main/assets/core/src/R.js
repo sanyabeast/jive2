@@ -15,6 +15,21 @@ define([
 		},
 		load : function(resources){
 
+		},
+		loadTemplates : function(document){
+			var result = {};
+			var templates = document.body.querySelectorAll("template");
+
+			for  (var a = 0, l = templates.length, id; a < l; a++){
+				id = templates[a].id;
+				result[id] = {
+					dom : templates[a].content.cloneNode(true),
+					html : templates[a].innerHTML
+				};	
+			}
+
+			return result;
+
 		}
 	});
 
