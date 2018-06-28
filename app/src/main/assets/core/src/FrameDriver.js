@@ -57,7 +57,7 @@ define([
 
 			frame.body.appendChild(tools.fragment([
 				tools.element("script", {
-					"data-main" : tools.levelUpPath(frame.activity.level, "scripts/app_input"),
+					"data-main" : tools.levelUpPath(frame.activity.level, "core/app_main"),
 					src : tools.bustPath(tools.levelUpPath(frame.activity.level, "node_modules/quire/quire.js")),
 				}),
 				

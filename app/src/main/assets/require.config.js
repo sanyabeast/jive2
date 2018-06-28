@@ -18,7 +18,7 @@ define(function(){
 			jquery			: "node_modules/jquery/dist/jquery",
 			Trident		    : "core/src/Trident/Trident",
 			OBJLoader		: "core/libs/OBJLoader",
-			howler			: "node_modules/howler.js/dist/howler.min"
+			howler			: "node_modules/howler/dist/howler.min"
 		};
 
 		this.baseUrl = "core/src/";

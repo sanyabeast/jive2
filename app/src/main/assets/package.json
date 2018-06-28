@@ -16,6 +16,12 @@
     "unicycle": "git://github.com/sanyabeast/unicycle.git",
     "jsterm": "git://github.com/sanyabeast/jsterm.git",
     "dollaclass": "git://github.com/sanyabeast/dollaclass.git",
-    "quire": "git://github.com/sanyabeast/quire.git",
+    "quire": "git://github.com/sanyabeast/quire.git"
+  },
+  "devDependencies" : {
+  	"jsonfile" : "latest",
+  	"fs-extra" : "latest",
+  	"colors" : "latest",
+  	"rimraf" : "latest"
   }
 }
