@@ -16,11 +16,12 @@ define(function(){
 			unicycle 		: "node_modules/unicycle/unicycle",
 			dollaclass 		: "node_modules/dollaclass/dollaclass",
 			jquery			: "node_modules/jquery/dist/jquery.min",
-			Trident		    : "core/src/Trident",
-			OBJLoader		: "core/libs/OBJLoader",
 			howler			: "node_modules/howler/dist/howler.min",
 			vue 			: "node_modules/vue/dist/vue.min",
-			vuex			: "node_modules/vuex/dist/vuex.min"
+			vuex			: "node_modules/vuex/dist/vuex.min",
+			Trident		    : "core/src/Trident",
+			OBJLoader		: "core/libs/OBJLoader",
+			ResLoader 		: "core/src/ResLoader"
 		};
 
 		this.baseUrl = "core/src/";

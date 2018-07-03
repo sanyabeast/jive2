@@ -18,7 +18,7 @@ define([
 				"activity.inited" : this.$onActivityInited.bind(this)
 			});
 		},
-		$onFrameLoaded : function(frame){
+		$onActivityLoaded : function(frame){
 			if (frame.src == "javascript:" || !frame.src){
 				return;
 			}
@@ -29,6 +29,8 @@ define([
 			var frame = this.getActivityFrame(activityName);
 			
 			frame.classList.remove("loading");
+			frame.active = true;
+
 			this.setActiveFrame(frame.activityName);
 			console.log("Frame inited in " + (+new Date() - frame.startLoadingTime) + "ms");
 		},
@@ -36,6 +38,8 @@ define([
 			var urlLevel = tools.getUrlLevel(frame.url);
 
 			this.patcher.patch(frame);
+			frame.active = true;
+
 			frame.head.appendChild(tools.fragment([
 				tools.element("link", {
 					"rel" : "stylesheet/less" ,
@@ -67,39 +71,53 @@ define([
 			]));	
 
 		},
-		getActivityFrame : function(name){
+		getActivityFrame : function(activityName){
 			var frame;
 
-			if (!this.activities.contains(name)){
+			if (!this.activities.contains(activityName)){
 				frame = tools.template("frame-driver-frame", true);
-				frame.setAttribute("data-frame-id", name);
-				frame.activityName = name;
+				frame.setAttribute("data-frame-id", activityName);
+				frame.activityName = activityName;
 				document.querySelector("body").appendChild(frame);
-				this.activities.set(name, frame);
-				frame.addEventListener("load", this.$onFrameLoaded.bind(this, frame));
+				this.activities.set(activityName, frame);
+				frame.addEventListener("load", this.$onActivityLoaded.bind(this, frame));
 			} 
 
-			return this.activities.get(name);
+			return this.activities.get(activityName);
 		},
 		setActiveFrame : function(_activityName){
 			this.activities.iterate(function(frame, activityName){
 				if (activityName != _activityName){
-					frame.reset();
-					frame.style.zIndex = "0";
+					frame.classList.remove("active");
 				} else {
-					frame.style.zIndex = "1";
+					frame.classList.add("active");
 				}
 			}, this);
 		},
+		killActivity : function(activityName){
+			var frame = this.getActivityFrame(activityName);
+			frame.reset();
+		},
 		launchActivity : function(activityName, params, sourceActivityName){
 			var activityFrame = this.getActivityFrame(activityName);
+
+			if (activityFrame.active){
+				activityFrame.window.postal.say("$restored", {
+					source : sourceActivityName,
+					params : params
+				});
+
+				this.setActiveFrame(activityName);
+
+				return;
+			}
+
 			var url = ["apps", activityName, "index.html"].join("/");
 
 			activityFrame.classList.add("loading");
 			activityFrame.startLoadingTime = +new Date();
 			activityFrame.sourceActivityName = sourceActivityName;
 			activityFrame.params = params;
-			activityFrame.connect();
 
 			superagent.get(url).then(function(response){
 				activityFrame.url = url;

@@ -1,6 +1,6 @@
 "use strict";
 define([
-		"R/Loader",
+		"ResLoader/Loader",
 		"howler",
 		"three",
 		"OBJLoader"

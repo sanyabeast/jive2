@@ -1,10 +1,9 @@
 "use strict";
 define([
-		"TokensCollection",
 		"postal",
-		"R/Loaders",
+		"ResLoader/Loaders",
 		"howler",
-	], function(TokensCollection, postal, Loaders){
+	], function(postal, Loaders){
 
 	var R = new $Class({ name : "R", namespace : "Core" }, {
 		$constructor : function(){

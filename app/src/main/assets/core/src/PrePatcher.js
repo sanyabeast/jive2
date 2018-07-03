@@ -53,11 +53,16 @@ define([
 						return this.document.head;
 					}
 				},
+				active : {
+					value : false,
+					writable : true
+				},
 				reset : {
 					value : function(){
 						this.params = null;
 						this.sourceActivityName = null;
 						this.src = "javascript:";
+						this.active = false;
 					}
 				},
 			});

@@ -1,6 +1,6 @@
 "use strict";
 define([
-		"R",
+		"ResLoader/ResLoader",
 		"TokensCollection",
 		"FrameDriver",
 		"PrePatcher",
@@ -12,7 +12,7 @@ define([
 		"jsterm",
 		"superagent",
 	], function(
-		  R
+		  ResLoader
 		, TokensCollection
 		, FrameDriver
 		, PrePatcher
@@ -41,7 +41,7 @@ define([
 				jsterm : new JSTerm(),
 				androidProxy : new AndroidProxy(),
 				unicycle : new Unicycle,
-				r : new R()
+				r : new ResLoader()
 			});
 
 			this.modules.unicycle.start();
@@ -131,7 +131,10 @@ define([
 					this.load(data.target, data.params, data.source);
 				},
 				"core.preloader.show" : this.showCorePreloader,
-				"core.preloader.hide" : this.hideCorePreloader
+				"core.preloader.hide" : this.hideCorePreloader,
+				"core.frames::kill-activity" : function(data){
+					this.modules.frameDriver.killActivity(data.activityName);
+				}
 			});
 
 		},
