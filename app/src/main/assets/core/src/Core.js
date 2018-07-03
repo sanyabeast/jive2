@@ -129,12 +129,20 @@ define([
 				"intent" : function(data){
 					console.log(data);
 					this.load(data.target, data.params, data.source);
-				}
+				},
+				"core.preloader.show" : this.showCorePreloader,
+				"core.preloader.hide" : this.hideCorePreloader
 			});
 
 		},
 		load : function(activityName, params, sourceActivityName){
 			this.modules.frameDriver.launchActivity(activityName, params, sourceActivityName);
+		},
+		showCorePreloader : function(){
+
+		},
+		hideCorePreloader : function(){
+
 		}
 	});
 
