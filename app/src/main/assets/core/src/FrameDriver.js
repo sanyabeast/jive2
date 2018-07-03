@@ -33,7 +33,7 @@ define([
 			console.log("Frame inited in " + (+new Date() - frame.startLoadingTime) + "ms");
 		},
 		setupFrame : function(frame){
-			var urlLevel = tools.getUrlLevel(frame.src);
+			var urlLevel = tools.getUrlLevel(frame.url);
 
 			this.patcher.patch(frame);
 			frame.head.appendChild(tools.fragment([
@@ -85,9 +85,9 @@ define([
 			this.activities.iterate(function(frame, activityName){
 				if (activityName != _activityName){
 					frame.reset();
-					frame.style.display = "none";
+					frame.style.zIndex = "0";
 				} else {
-					frame.style.display = "flex";
+					frame.style.zIndex = "1";
 				}
 			}, this);
 		},
@@ -102,6 +102,7 @@ define([
 			activityFrame.connect();
 
 			superagent.get(url).then(function(response){
+				activityFrame.url = url;
 				activityFrame.src = url;
 
 				postal.say("core.activity.loading.success", {

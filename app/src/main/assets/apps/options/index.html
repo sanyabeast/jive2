@@ -27,22 +27,16 @@
 			class="menu flex-column flex-align-center z-1"
 		>
 			<menu-item
-				title="New Game"
+				title="Sound"
 			></menu-item>
 			<menu-item
-				title="Continue"
+				title="Graphics"
 			></menu-item>
 			<menu-item
-				title="Options"
+				title="Controls"
 			></menu-item>
 			<menu-item
-				title="Achievements"
-			></menu-item>
-			<menu-item
-				title="Leaderboard"
-			></menu-item>
-			<menu-item
-				title="Exit"
+				title="Back to Menu"
 			></menu-item>
 		</div>
 	</template>
@@ -61,7 +55,7 @@
 		<script>
 			methods : {
 				onItemClick : function(){
-					core.load("options")
+					core.load("menu");
 				}
 			}
 		</script>

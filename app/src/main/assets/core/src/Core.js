@@ -139,10 +139,10 @@ define([
 			this.modules.frameDriver.launchActivity(activityName, params, sourceActivityName);
 		},
 		showCorePreloader : function(){
-
+			document.querySelector("#core-preloader").classList.add("active");
 		},
 		hideCorePreloader : function(){
-
+			document.querySelector("#core-preloader").classList.remove("active");
 		}
 	});
 

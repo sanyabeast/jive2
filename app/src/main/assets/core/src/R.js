@@ -3,7 +3,7 @@ define([
 		"TokensCollection",
 		"postal",
 		"R/Loaders",
-		"howler"
+		"howler",
 	], function(TokensCollection, postal, Loaders){
 
 	var R = new $Class({ name : "R", namespace : "Core" }, {
@@ -28,6 +28,40 @@ define([
 				};	
 			}
 
+			return result;
+
+		},
+		loadVueComponents : function(document, Vue){
+			var result = {};
+			var templates = document.body.querySelectorAll("template.vue-component");
+
+			_.forEach(templates, function(templateNode){
+				var innerScriptParams = {};
+				var innerScript = templateNode.content.querySelector("script");
+				var componentParams;
+
+				if (innerScript){
+					innerScript = innerScript.cloneNode(true);
+					try { innerScriptParams = eval(["var p = {", innerScript.innerHTML, "};p;"].join("")); } catch (err){
+						console.error(err);
+					}
+				}
+
+				var id = templateNode.id;
+				var props = templateNode.getAttribute("props");
+				props = props ? props.split(" ") : [];
+
+				componentParams = {
+					template: templateNode.innerHTML,
+					props : props,
+					data : innerScriptParams.data,
+					methods : innerScriptParams.methods
+				};
+
+				result[id] = Vue.component(id, componentParams);
+			});
+
+			console.log(result);
 			return result;
 
 		}
