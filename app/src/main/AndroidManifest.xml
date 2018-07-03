@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="xyz.sanyabeast.omen"
+    package="xyz.sanyabeast.lure"
 >
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -22,13 +22,13 @@
             android:value="@integer/google_play_services_version"
         />
         <activity
-            android:name="xyz.sanyabeast.omen.RootActivity"
+            android:name=".RootActivity"
             android:theme="@style/AppTheme"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="xyz.sanyabeast.omen.SplashActivity"
+            android:name=".SplashActivity"
             android:theme="@style/SpashTheme"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait">

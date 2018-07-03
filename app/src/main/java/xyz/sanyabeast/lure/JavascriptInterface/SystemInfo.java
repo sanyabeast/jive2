@@ -1,4 +1,4 @@
-package xyz.sanyabeast.omen.JavascriptInterface;
+package xyz.sanyabeast.lure.JavascriptInterface;
 
 import android.content.Context;
 import android.os.Build;

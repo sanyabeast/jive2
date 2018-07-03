@@ -1,4 +1,4 @@
-package xyz.sanyabeast.omen;
+package xyz.sanyabeast.lure;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;

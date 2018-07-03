@@ -1,4 +1,4 @@
-package xyz.sanyabeast.omen;
+package xyz.sanyabeast.lure;
 
 /**
  * Created by sanyabeast on 19.03.2018.

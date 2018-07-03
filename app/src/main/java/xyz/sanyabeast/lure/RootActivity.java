@@ -1,4 +1,4 @@
-package xyz.sanyabeast.omen;
+package xyz.sanyabeast.lure;
 
 import android.app.AlertDialog;
 import android.content.Intent;

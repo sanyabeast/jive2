@@ -1,6 +1,6 @@
 <resources>
     <string name="google_app_id">971569972200</string>
-    <string name="app_name">Omen</string>
+    <string name="app_name">Lure</string>
     <string name="status_exception_error">%1$s (status %2$d). %3$s.</string>
     <string name="achievements_exception">There was an issue communicating with achievements.</string>
     <string name="leaderboards_exception">There was an issue communicating with leaderboards.</string>

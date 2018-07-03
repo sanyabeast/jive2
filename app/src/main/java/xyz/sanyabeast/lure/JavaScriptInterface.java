@@ -1,4 +1,4 @@
-package xyz.sanyabeast.omen;
+package xyz.sanyabeast.lure;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,12 +7,11 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.BaseInputConnection;
 import android.webkit.JavascriptInterface;
-import android.webkit.WebView;
 
 import com.google.gson.Gson;
 
-import xyz.sanyabeast.omen.JavascriptInterface.Resources;
-import xyz.sanyabeast.omen.JavascriptInterface.SystemInfo;
+import xyz.sanyabeast.lure.JavascriptInterface.Resources;
+import xyz.sanyabeast.lure.JavascriptInterface.SystemInfo;
 
 /**
  * Created by Sanyabeast on 19.03.2018.
