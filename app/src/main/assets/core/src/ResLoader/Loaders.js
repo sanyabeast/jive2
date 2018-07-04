@@ -52,9 +52,26 @@ define([
 				});
 			})
 		},
-		template : {
+		templates : {
 			value : new Loader(function(assetDescription, resolve, reject){
-				
+				var div = document.createElement("div");
+
+				superagent.get(assetDescription).then(function(response){
+					var xml = response.text;
+					div.innerHTML = xml;
+
+					resolve({
+						dom : div.children[0],
+						xml : div.innerHTML
+					});
+
+				}).catch(function(err){
+					console.log(err);
+					reject(err);
+				})
+				console.log(assetDescription);
+			}, {
+				cropExtension : true
 			})
 		},
 		"vue-components" : {

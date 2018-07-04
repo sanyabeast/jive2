@@ -5,7 +5,7 @@ define("App", [
 
 	var App =  new $Class({ name : "App" }, {
 		$constructor : function(){
-			this.stage = trident.buildStage(document.querySelector("#test-scene").content.cloneNode(true).children[0]);
+			this.stage = trident.buildStage(resources.templates.test.dom);
 
 			var renderer = this.stage.subject;
 			var scene = this.stage.querySelector("scene").subject;

@@ -11,5 +11,8 @@
   },
   "sound": {
     "test.mp3": "res\\sound\\test.mp3"
+  },
+  "templates": {
+    "test.xml": "res\\templates\\test.xml"
   }
 }

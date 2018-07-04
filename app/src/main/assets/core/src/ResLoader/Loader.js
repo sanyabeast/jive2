@@ -2,8 +2,9 @@
 define(function(){
 
 	var Loader = new $Class({ name : "Loader", namespace : "Core.R" }, {
-		$constructor : function(loader){
+		$constructor : function(loader, params){
 			this.loader = loader;
+			this.params = params || {};
 		},
 		loadAsset : function(asset){
 			return new Promise(function(resolve, reject){
@@ -19,6 +20,10 @@ define(function(){
 
 				_.forEach(assetsList, function(asset, index){
 					this.loadAsset(asset).then(function(loadedAsset){
+						if (this.params.cropExtension){
+							index = index.substring(0, index.lastIndexOf("."));
+						}
+
 						resultedAssets[index] = loadedAsset;
 						loadedCount++;
 
@@ -34,11 +39,11 @@ define(function(){
 							resolve(resultedAssets);
 						}
 						
-					}).catch(function(err){
+					}.bind(this)).catch(function(err){
 						if (_.isFunction(onError)){
 							onError(err);
 						}
-					});
+					}.bind(this));
 				}.bind(this));
 			}.bind(this));
 		},
