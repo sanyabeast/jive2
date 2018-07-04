@@ -1,8 +1,10 @@
 "use strict";
 define([
 		"three",
-		"Trident/SOM/Node/AtlasCore"
-	], function(THREE, AtlasCore){
+		"Trident/SOM/Node/AtlasCore",
+		"matter",
+	], function(THREE, AtlasCore, matter){
+
 
 	var Atlas = new $Class({ name : "Atlas", namespace : "Trident.SOM.Node", extends : [AtlasCore] }, {
 		directives : {
@@ -24,6 +26,11 @@ define([
 				"parent" : function(value, type, node, parent, attributes){
 					return parent;
 				},
+				"ancestor" : function(value, type, node, parent, attributes){
+					var result = parent.root.querySelector(value);
+					console.log(result);
+					return result;
+				},	
 				"node" : function(value, type, node, parent, attributes){
 					return node;
 				},
@@ -37,7 +44,7 @@ define([
 					}
 
 					return result;
-				}
+				},
 			}
 		},
 		descriptions : {
@@ -141,12 +148,12 @@ define([
 						"sprite" : THREE.SpriteMaterial
 					},
 					constructArgs : {
-						"lambert" 	: ["{ int::color, float::opacity, transparent }"],
-						"normal"  	: ["{ float::opacity, transparent }"],
-						"phong"  	: ["{ int::color, float::opacity, transparent }"],
-						"toon"  	: ["{ int::color, float::opacity, transparent }"],
-						"shadow"  	: ["{ int::color, float::opacity, transparent }"],
-						"sprite"  	: ["{ map=child::texture, int::color, float::opacity, transparent }"],
+						"lambert" 	: ["{ int::color, float::opacity, transparent, int::side }"],
+						"normal"  	: ["{ float::opacity, transparent, int::side }"],
+						"phong"  	: ["{ int::color, float::opacity, transparent, int::side }"],
+						"toon"  	: ["{ int::color, float::opacity, transparent, int::side }"],
+						"shadow"  	: ["{ int::color, float::opacity, transparent, int::side }"],
+						"sprite"  	: ["{ map=child::texture, int::color, float::opacity, transparent, int::side }"],
 					}
 				},
 				"geometry" : {
@@ -157,7 +164,8 @@ define([
 						"circle" : THREE.CircleGeometry,
 						"cylinder" : THREE.CylinderGeometry,
 						"cone" : THREE.ConeGeometry,
-						"ring" : THREE.RingGeometry
+						"ring" : THREE.RingGeometry,
+						"plane" : THREE.PlaneGeometry
 					},
 					constructArgs : {
 						"sphere" : [
@@ -204,7 +212,8 @@ define([
 							"phiSegments|segments", 
 							"theta-start", 
 							"theta-length"
-						]
+						],
+						"plane" : ["width", "height", "widthSegments|segments", "height-segments|segments"]
 					}
 				},
 				"texture" : {
@@ -229,6 +238,77 @@ define([
 					construct : THREE.Sprite,
 					constructArgs : ["child::material"],
 					link : "parent.add(child)"
+				},
+				/*MATTER*/
+				"matter-engine" : {
+					source : "factory",
+					construct : function(){ 
+						var engine = matter.Engine.create(); 
+						setTimeout(function(){
+							matter.Engine.run(engine);
+						}, 2000)
+						return engine;
+					}
+				},
+				"matter-world" : {
+					source : "factory",
+					construct : function(engine){ 
+						return engine.subject.world; 
+					},
+					constructArgs : ["ancestor::matter-engine"]
+				},
+				"matter-gravity" : {
+					source : "property",
+					name : "gravity",
+					members : {
+						x : { type : "property", value : "x|value" },
+						y : { type : "property", value : "y|value" },
+						z : { type : "property", value : "z|value" },
+					}
+				},
+				"matter-position" : {
+					source : "factory",
+					construct : function(body, x, y){
+						body = body.subject;
+
+						matter.Body.setPosition(body, {
+							x : x || body.position.x,
+							y : y || body.position.y
+						});
+
+						return body.position;
+
+					},
+					constructArgs : ["parent::", "x", "y"]
+				},
+				"matter" : {
+					childFirst : true,
+					source : "factory",
+					construct : function(parent, body, matterEngine){
+						matter.World.add(matterEngine.subject.world, [body]);
+						return unicycle.addTask(function(){
+							parent.subject.position.x = body.position.x;
+							parent.subject.position.y = body.position.y;
+						});	
+						console.log(arguments);
+
+					},
+					constructArgs : ["parent::", "child::matter-body", "ancestor::matter-engine"]
+				},
+				"matter-body" : {
+					source : "factory",
+					construct : {
+						"rectangle" : function(x, y, width, height, options){
+							return matter.Bodies.rectangle(x, y, width, height, options);
+						},
+						"circle" : function(x, y, radius, options, maxSides){
+							return matter.Bodies.circle(x, y, radius, options, maxSides)
+						}
+					},
+					constructArgs : {
+						"rectangle" : ["x", "y", "width", "height", "{ isStatic=static }"],
+						"circle" : ["x", "y", "radius", "{  }", "maxSides"]
+					}
 				}
 			}
 		},

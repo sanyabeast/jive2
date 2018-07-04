@@ -5,39 +5,44 @@
 	antialias="true"
 >
 	<scene>
+		<!-- Matter -->
+		<matter-engine></matter-engine>
+		<matter-world>
+			<matter-gravity
+				y="-1">
+			</matter-gravity>
+		</matter-world>
+		<!-- !Matter -->
 		<camera
 			type="perspective"
 			fov="45"
 			aspect="{window.innerWidth / window.innerHeight}"
 			near="1"
-			far="1000"
-		>
+			far="1000">
 			<position
 				x="0.0206593961445023"
 				y="0.0853731858682841"
-				z="0.9961348344906146"
-			></position>
+				z="0.9961348344906146">
+			</position>
 		</camera>
 		<light
 			type="point"
 			color="0xFFFFFF"
-			intensity="2"
-		>
+			intensity="2">
 			<position
 				x="100"
 				y="100"
-				z="130"
-			></position>
+				z="130">
+			</position>
 		</light>
 		<light
 			type="directional"
-			color="0xFFFFFF"
-		>
+			color="0xFFFFFF">
 			<position
 				x="100"
 				y="100"
-				z="130"
-			></position>
+				z="130">
+			</position>
 		</light>
 		<group>
 			<material class="default-lamber-material"
@@ -58,7 +63,51 @@
 					segments="48"
 				></geometry>
 				<link source=".default-lamber-material"></link>
+				<matter>
+					<matter-body
+						type="circle"
+						x="0"
+						y="50"
+						radius="20"
+						height="20">
+					</matter-body>
+				</matter>
 			</mesh>
+			<mesh class="test-plane-mesh">
+				<position
+					z="-300"
+					x="0"
+					y="-100"
+				></position>
+				<rotation x="{-Math.PI / 2}">
+				</rotation>
+				<geometry
+					type="plane"
+					width="200"
+					height="200"
+					segments="1"
+				></geometry>
+				<material
+					type="lambert"
+					color="0x555555"
+					side="{ THREE.DoubleSide }"
+				></material>
+				<matter>
+					<matter-body
+						type="rectangle"
+						x="0"
+						y="0"
+						width="200"
+						height="1"
+						static="true">
+						<matter-position
+							y="-150"
+						></matter-position>
+					</matter-body>
+				</matter>
+			</mesh>
+
+			<!--  -->
 			<mesh class="test-sphere-mesh">
 				<position
 					z="-270"
@@ -73,6 +122,16 @@
 					type="lambert"
 					color="0xff5722"
 				></material>
+				<matter>
+					<matter-body
+						type="circle"
+						x="0"
+						y="50"
+						radius="5"
+						height="20">
+					</matter-body>
+				</matter>
+				
 			</mesh>
 			<mesh class="test-sphere-mesh">
 				<position
@@ -188,6 +247,15 @@
 					type="lambert"
 					color="0xe91e63"
 				></material>
+				<matter>
+					<matter-body
+						type="circle"
+						x="0"
+						y="50"
+						radius="8"
+						height="20">
+					</matter-body>
+				</matter>
 			</mesh>
 			<mesh class="test-circle-mesh">
 				<position
@@ -204,6 +272,15 @@
 					type="toon"
 					color="0xe91e63"
 				></material>
+				<matter>
+					<matter-body
+						type="circle"
+						x="0"
+						y="50"
+						radius="8"
+						height="20">
+					</matter-body>
+				</matter>
 			</mesh>
 			<mesh class="test-circle-mesh">
 				<position
@@ -220,6 +297,15 @@
 					type="toon"
 					color="0xe91e63"
 				></material>
+				<matter>
+					<matter-body
+						type="circle"
+						x="0"
+						y="50"
+						radius="4"
+						height="20">
+					</matter-body>
+				</matter>
 			</mesh>
 			<group class="test-sprites">
 				<position

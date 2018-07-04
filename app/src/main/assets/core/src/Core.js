@@ -11,6 +11,7 @@ define([
 		"todo",
 		"jsterm",
 		"superagent",
+		"matter"
 	], function(
 		  ResLoader
 		, TokensCollection
@@ -22,9 +23,12 @@ define([
 		, postal
 		, todo
 		, JSTerm
-		, superagent){
+		, superagent
+		, matter){
 
-		window.TokensCollection = TokensCollection;
+	window.matter = matter;
+
+	window.TokensCollection = TokensCollection;
 
 	/*Jive2Core*/
 	var Core = new $Class({ name : "Core", namespace : "Core" }, {

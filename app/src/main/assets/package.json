@@ -18,7 +18,8 @@
     "dollaclass": "git://github.com/sanyabeast/dollaclass.git",
     "quire": "git://github.com/sanyabeast/quire.git",
     "vue" : "latest",
-    "vuex" : "latest"
+    "vuex" : "latest",
+    "matter-js" : "latest"
   },
   "devDependencies" : {
   	"jsonfile" : "latest",

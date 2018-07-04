@@ -73,7 +73,7 @@ define([
 				var targetUUID;
 
 				stage.traverse(function(node){
-					if (!node.subject.children){
+					if (!node || !node.subject || !node.subject.children){
 						return;
 					}
 

@@ -19,6 +19,7 @@ define(function(){
 			howler			: "node_modules/howler/dist/howler.min",
 			vue 			: "node_modules/vue/dist/vue.min",
 			vuex			: "node_modules/vuex/dist/vuex.min",
+			matter 			: "node_modules/matter-js/build/matter.min",
 			Trident		    : "core/src/Trident",
 			OBJLoader		: "core/libs/OBJLoader",
 			ResLoader 		: "core/src/ResLoader"
