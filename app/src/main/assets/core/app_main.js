@@ -16,6 +16,7 @@ setTimeout(function(){
 			window.r = new ResLoader();
 			window.r.load().then(function(resources){
 				window.resources = resources;
+				console.log(resources);
 
 				requirejs(["unicycle", "postal", "Trident/Trident"], function(Unicycle, postal, Trident){
 					window.trident = new Trident();

@@ -188,8 +188,6 @@ define(function(){
 			} else {
 				console.warn("Trident.SOM.Node.Atlas: no description for element type " + type, node);
 			}	
-
-
 			return subject;
 		},
 		setup : function(node, type, subject, attributes, parentNode){

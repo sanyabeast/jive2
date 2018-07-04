@@ -26,6 +26,17 @@ define([
 				},
 				"node" : function(value, type, node, parent, attributes){
 					return node;
+				},
+				"global" : function(value, type, node, parent, attributes){
+					var result;
+
+					try {
+						result = eval(attributes[value]);
+					} catch (err){
+						console.warn("Failed to finish `global` directive");
+					}
+
+					return result;
 				}
 			}
 		},
@@ -130,12 +141,12 @@ define([
 						"sprite" : THREE.SpriteMaterial
 					},
 					constructArgs : {
-						"lambert" : ["{ int::color, float::opacity, transparent }"],
-						"normal"  : ["{ float::opacity, transparent }"],
-						"phong"  : ["{ int::color, float::opacity, transparent }"],
-						"toon"  : ["{ int::color, float::opacity, transparent }"],
-						"shadow"  : ["{ int::color, float::opacity, transparent }"],
-						"sprite"  : ["{ map=child::texture, int::color, float::opacity, transparent }"],
+						"lambert" 	: ["{ int::color, float::opacity, transparent }"],
+						"normal"  	: ["{ float::opacity, transparent }"],
+						"phong"  	: ["{ int::color, float::opacity, transparent }"],
+						"toon"  	: ["{ int::color, float::opacity, transparent }"],
+						"shadow"  	: ["{ int::color, float::opacity, transparent }"],
+						"sprite"  	: ["{ map=child::texture, int::color, float::opacity, transparent }"],
 					}
 				},
 				"geometry" : {
@@ -198,11 +209,19 @@ define([
 				},
 				"texture" : {
 					source : "factory",
-					get construct(){
-						var loader = new THREE.TextureLoader();
-						return loader.load.bind(loader);
+					construct : {
+						"ready" : function(name){
+							return window.resources.textures[name];
+						},
+						"load" : function(image){
+							texture = new THREE.TextureLoader().load(image.src);
+							return texture;
+						}
 					},
-					constructArgs : ["src"]
+					constructArgs : {
+						"ready" : ["name"],
+						"load" : ["global::image", "mapping", "wrapS", "wrapT", "magFilter", "minFilter", "format", "type", "anisotrpy", "encoding"]
+					}
 				},
 				"sprite" : {
 					childFirst : true,

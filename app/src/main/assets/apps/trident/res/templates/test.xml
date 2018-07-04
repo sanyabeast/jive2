@@ -241,7 +241,8 @@
 						color="0xFFFFFF"
 					>
 						<texture
-							src="sprite0.png"
+							type="ready"
+							name="sprite1.png"
 						></texture>
 					</material>
 				</sprite>
@@ -259,7 +260,8 @@
 						color="0xFFFFFF"
 					>
 						<texture
-							src="sprite1.png"
+							type="ready"
+							name="sprite1.png"
 						></texture>
 					</material>
 				</sprite>
@@ -277,7 +279,8 @@
 						color="0xFFFFFF"
 					>
 						<texture
-							src="sprite0.png"
+							type="ready"
+							name="sprite0.png"
 						></texture>
 					</material>
 				</sprite>
@@ -295,7 +298,8 @@
 						color="0xFFFFFF"
 					>
 						<texture
-							src="sprite1.png"
+							type="ready"
+							name="sprite1.png"
 						></texture>
 					</material>
 				</sprite>

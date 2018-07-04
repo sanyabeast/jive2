@@ -14,18 +14,16 @@ define([
 		$constructor : function(){},
 		images : {
 			value : new Loader(function(assetDescription, resolve, reject){
-				var imageElement = document.createElement("img");
-
-				imageElement.onload = function(){
-					resolve(imageElement);
-				};
-
-				imageElement.onerror = function(evt){
-					resolve(null);
-					reject(evt);
-				};
-
-				imageElement.src = assetDescription;
+				new THREE.ImageLoader().load(assetDescription, function(image){
+					resolve(image);
+				});	
+			})
+		},
+		textures : {
+			value : new Loader(function(assetDescription, resolve, reject){
+				new THREE.TextureLoader().load(assetDescription, function(texture){
+					resolve(texture);
+				});	
 			})
 		},
 		sound : {

@@ -14,5 +14,10 @@
   },
   "templates": {
     "test.xml": "res\\templates\\test.xml"
+  },
+  "textures": {
+    "sprite.jpg": "res\\textures\\sprite.jpg",
+    "sprite0.png": "res\\textures\\sprite0.png",
+    "sprite1.png": "res\\textures\\sprite1.png"
   }
 }
