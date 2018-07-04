@@ -26,10 +26,8 @@ class Resmap {
 		var resmap = {};
 
 		_.forEach(resDirectory.children, (dir)=>{
-			resmap[dir.name] = this.runForAssetType(dir);
+			resmap[dir.name] = this.runForAssetType(dir, "", appTree.path + "\\");
 		});
-
-
 
 		jsonfile.writeFileSync(path.resolve(appTree.path, "resmap.json"), resmap, {spaces: 2});
 
@@ -37,15 +35,15 @@ class Resmap {
 
 	}
 
-	runForAssetType(assetTypeDir, prefix){
+	runForAssetType(assetTypeDir, prefix, cutter){
 		prefix = prefix || "";
 		var result = {};
 
 		_.forEach(assetTypeDir.children, (token)=>{
 			if (token.type == "file"){
-				result[prefix + token.name] = token.path;
+				result[prefix + token.name] = token.path.replace(cutter, "");
 			} else if (token.type == "dir"){
-				result = _.merge(result, this.runForAssetType(token, token.name + "."))
+				result = _.merge(result, this.runForAssetType(token, token.name + "."), cutter)
 			}
 		});
 

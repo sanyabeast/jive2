@@ -13,7 +13,7 @@ define(function(){
 		load : function(assetsList, onProgress, onComplete, onError){
 			return new Promise(function(resolve, reject){
 				var loadedCount = 0;
-				var totalCount = assetsList.length;
+				var totalCount = this.count(assetsList);
 				var resultedAssets = Array.isArray(assetsList) ? [] : {};
 
 
@@ -23,7 +23,7 @@ define(function(){
 						loadedCount++;
 
 						if (_.isFunction(onProgress)){
-							onProgress(loadedCount / totalCount, loadedAsset);
+							onProgress(loadedCount / totalCount, loadedCount, loadedAsset);
 						}
 
 						if (loadedCount >= totalCount){
@@ -42,6 +42,19 @@ define(function(){
 				}.bind(this));
 			}.bind(this));
 		},
+		count : function(assetsList){
+			var result = 0;
+
+			if (Array.isArray(assetsList)){
+				result = assetsList.length;
+			} else {
+				_.forEach(assetsList, function(){
+					result++;
+				});
+			}
+
+			return result;
+		}
 	});
 
 	return Loader;

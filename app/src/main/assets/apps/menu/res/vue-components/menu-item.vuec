@@ -1,0 +1,21 @@
+<template 
+	id="menu-item" 
+	class="vue-component"
+	props="title"
+>
+	<div
+		class="menu-item font-48"
+		v-on:click="onItemClick"
+	>
+		{{ title }}
+	</div>
+</template>
+<script>
+	methods : {
+		onItemClick : function(){
+			intent("options");
+			
+			console.log(arguments);
+		}
+	}
+</script>

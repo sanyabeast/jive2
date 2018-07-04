@@ -1,0 +1,28 @@
+<template 
+	id="menu-container" 
+	class="vue-component"
+	props=""
+>
+	<div
+		class="menu flex-column flex-align-center z-1"
+	>
+		<menu-item
+			title="New Game"
+		></menu-item>
+		<menu-item
+			title="Continue"
+		></menu-item>
+		<menu-item
+			title="Options"
+		></menu-item>
+		<menu-item
+			title="Achievements"
+		></menu-item>
+		<menu-item
+			title="Leaderboard"
+		></menu-item>
+		<menu-item
+			title="Exit"
+		></menu-item>
+	</div>
+</template>

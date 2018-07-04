@@ -37,11 +37,11 @@ iframe {
     }
 }
 
-#core-preloader {
+#core-preloader, #core-loader {
     display: none;
 }
 
-#core-preloader.active {
+#core-preloader.active, #core-loader.active {
     z-index: 2;
     position: absolute;
     width: 100%;
@@ -112,6 +112,20 @@ iframe {
             transform: scaleY(0.6);
             -webkit-transform: scaleY(0.6);
           }
+        }
+    }
+}
+
+#core-loader {
+    .progress-bar {
+        width: 74px;
+        height: 16px;
+        padding: 12px 0;
+
+        .progress {
+            height: 100%;
+            background: #fff;
+            transition: width 0.25s linear;
         }
     }
 }

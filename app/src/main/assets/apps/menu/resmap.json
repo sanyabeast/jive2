@@ -1,5 +1,12 @@
 {
   "images": {
-    "sample-bg.jpg": "apps\\menu\\res\\images\\sample-bg.jpg"
+    "sample-bg.jpg": "res\\images\\sample-bg.jpg",
+    "sprite.jpg": "res\\images\\sprite.jpg",
+    "sprite0.png": "res\\images\\sprite0.png",
+    "sprite1.png": "res\\images\\sprite1.png"
+  },
+  "vue-components": {
+    "menu-item.vuec": "res\\vue-components\\menu-item.vuec",
+    "menu.vuec": "res\\vue-components\\menu.vuec"
   }
 }

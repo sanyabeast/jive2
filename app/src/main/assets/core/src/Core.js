@@ -134,6 +134,11 @@ define([
 				"core.preloader.hide" : this.hideCorePreloader,
 				"core.frames::kill-activity" : function(data){
 					this.modules.frameDriver.killActivity(data.activityName);
+				},
+				"$resloader.loading.started" : this.showCoreLoader,
+				"$resloader.loading.finished" : this.hideCoreLoader,
+				"$resloader.loading.progress" : function(data){
+					this.setCoreLoaderProgress(data.value);
 				}
 			});
 
@@ -146,6 +151,17 @@ define([
 		},
 		hideCorePreloader : function(){
 			document.querySelector("#core-preloader").classList.remove("active");
+		},
+		showCoreLoader : function(){
+			document.querySelector("#core-loader").classList.add("active");
+		},
+		hideCoreLoader : function(){
+			todo.add("core/loader/hide", todo.in(todo.seconds(0.3)), function(){
+				document.querySelector("#core-loader").classList.remove("active");
+			}.bind(this))
+		},
+		setCoreLoaderProgress : function(value){
+			document.querySelector("#core-loader .progress-bar .progress").style.width = (value * 100) + "%";
 		}
 	});
 

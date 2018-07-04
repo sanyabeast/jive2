@@ -17,49 +17,5 @@
 		</menu-container>
 	</div>
 
-	<!-- VUE COMPONENTS -->
-	<template 
-		id="menu-container" 
-		class="vue-component"
-		props=""
-	>
-		<div
-			class="menu flex-column flex-align-center z-1"
-		>
-			<menu-item
-				title="Sound"
-			></menu-item>
-			<menu-item
-				title="Graphics"
-			></menu-item>
-			<menu-item
-				title="Controls"
-			></menu-item>
-			<menu-item
-				title="Back to Menu"
-			></menu-item>
-		</div>
-	</template>
-
-	<template 
-		id="menu-item" 
-		class="vue-component"
-		props="title"
-	>
-		<div
-			class="menu-item font-48"
-			v-on:click="onItemClick"
-		>
-			{{ title }}
-		</div>
-		<script>
-			methods : {
-				onItemClick : function(){
-					intent("menu");
-					die();
-				}
-			}
-		</script>
-	</template>
 </body>
 </html>

@@ -14,22 +14,20 @@ setTimeout(function(){
 
 		requirejs(["ResLoader/ResLoader"], function(ResLoader){
 			window.r = new ResLoader();
-			window.templates = window.r.loadTemplates(document);
-			window.vueComponents = window.r.loadVueComponents(document, Vue);
-			
-			requirejs(["unicycle", "postal", "Trident/Trident"], function(Unicycle, postal, Trident){
-				window.trident = new Trident();
-				window.postal = postal;
-				window.unicycle = new Unicycle();
+			window.r.load().then(function(resources){
+				window.resources = resources;
 
-				requirejs(["App"], function(App){
-					window.app = new App();
-					$postal.say("activity.inited", window.current);
+				requirejs(["unicycle", "postal", "Trident/Trident"], function(Unicycle, postal, Trident){
+					window.trident = new Trident();
+					window.postal = postal;
+					window.unicycle = new Unicycle();
+
+					requirejs(["App"], function(App){
+						window.app = new App();
+						$postal.say("activity.inited", window.current);
+					});
 				});
-			});
+			});			
 		});
-
-
-		
 	});	
 });
