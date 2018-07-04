@@ -16,14 +16,15 @@
     "unicycle": "git://github.com/sanyabeast/unicycle.git",
     "jsterm": "git://github.com/sanyabeast/jsterm.git",
     "dollaclass": "git://github.com/sanyabeast/dollaclass.git",
-    "quire": "git://github.com/sanyabeast/quire.git"
+    "quire": "git://github.com/sanyabeast/quire.git",
+    "vue" : "latest",
+    "vuex" : "latest"
   },
   "devDependencies" : {
   	"jsonfile" : "latest",
   	"fs-extra" : "latest",
   	"colors" : "latest",
   	"rimraf" : "latest",
-  	"vue" : "latest",
-  	"vuex" : "latest"
+    "directory-tree" : "latest"
   }
 }

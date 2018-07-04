@@ -47,6 +47,11 @@ define([
 					resolve(object3D);
 				});
 			})
+		},
+		template : {
+			value : new Loader(function(assetDescription, resolve, reject){
+				
+			})
 		}
 	});
 

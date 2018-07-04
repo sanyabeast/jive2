@@ -1,0 +1,15 @@
+{
+  "images": {
+    "1.jpg": "apps\\trident\\res\\images\\1.jpg",
+    "2.jpg": "apps\\trident\\res\\images\\2.jpg",
+    "3.jpg": "apps\\trident\\res\\images\\3.jpg",
+    "4.jpg": "apps\\trident\\res\\images\\4.jpg",
+    "5.jpg": "apps\\trident\\res\\images\\5.jpg"
+  },
+  "object3D": {
+    "male02.obj": "apps\\trident\\res\\object3D\\male02.obj"
+  },
+  "sound": {
+    "test.mp3": "apps\\trident\\res\\sound\\test.mp3"
+  }
+}
