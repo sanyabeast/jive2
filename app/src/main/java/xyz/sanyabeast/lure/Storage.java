@@ -17,7 +17,7 @@ public class Storage {
     Context context;
     public Storage(Context c){
         context = c;
-        db = WaspFactory.openOrCreateDatabase(context.getFilesDir().getPath(),"jive","lSVR9FYuZY5IzWr82vfZ");
+        db = WaspFactory.openOrCreateDatabase(context.getFilesDir().getPath(),"lure","lSVR9FYuZY5IzWr82vfZ");
     }
 
     public String get(String scopeID, String key){

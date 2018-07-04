@@ -58,11 +58,24 @@ define([
 				this.modules.jsterm.connect();
 			}
 
-			if (this.env == "android"){
-				for (var k in window._android){
-					this.modules.get("jsterm").state.history.push(["android.", k, "()"].join(""));
+			this.modules.jsterm.onHistoryUpdated = function(history){
+				android.storageSet("core", "jsterm.history", JSON.stringify(history));
+			};
+
+			var jstermHistory = android.storageGet("core", "jsterm.history");
+
+			try {
+				if (Array.isArray(jstermHistory)){
+					this.modules.jsterm.putHistory(jstermHistory);					
 				}
-			}
+				console.log("jsterm history loaded");
+			} catch (err){}
+
+			// if (this.env == "android"){
+			// 	for (var k in window._android){
+			// 		this.modules.get("jsterm").state.history.push(["android.", k, "()"].join(""));
+			// 	}
+			// }
 
 			document.body.appendChild(this.modules.get("jsterm").element);
 
