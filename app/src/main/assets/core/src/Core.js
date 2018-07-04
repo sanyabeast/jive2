@@ -59,7 +59,7 @@ define([
 
 			this.createSubs();
 			if (this.env == "android"){
-				this.modules.jsterm.connect();
+				// this.modules.jsterm.connect();
 			}
 
 			this.modules.jsterm.onHistoryUpdated = function(history){

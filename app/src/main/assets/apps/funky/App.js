@@ -1,7 +1,8 @@
 "use strict";
 define("App", [
-		"tweener"
-	], function(tweener){
+		"tweener",
+		"matter"
+	], function(tweener, matter){
 
 	var App =  new $Class({ name : "App" }, {
 		$constructor : function(){
@@ -27,11 +28,47 @@ define("App", [
 				camera.updateProjectionMatrix();
 			});
 
+			this.stage.traverse(function(node){
+				// node.addEventListener("pointerdown", function(data){
+				// 	tweener.to(node.subject.scale, 0.2, {
+				// 		x : 2,
+				// 		y : 2,
+				// 		z : 2
+				// 	});
+				// });
+
+				// node.addEventListener("pointerup", function(data){
+				// 	tweener.to(node.subject.scale, 0.2, {
+				// 		x : 1,
+				// 		y : 1,
+				// 		z : 1
+				// 	});
+
+				// });
+
+				node.addEventListener("pointerdrag", function(delta){
+					this.select("matter matter-body", function(node){
+						var body = node.subject;
+						if (body.isStatic){
+							return;
+						}
+						delta.x = delta.x * 100;
+						delta.y = delta.y * 100;
+						matter.Body.setPosition(body, {
+							x : body.position.x + delta.x,
+							y : body.position.y + delta.y,
+						});
+						matter.Body.setVelocity(body, delta);
+					})
+				}.bind(node));
+			});
+
 			this.setupOrbitControls(camera, scene, renderer);
 
 			resources.sound["Bouncer 001"].play();
 		},
 		setupOrbitControls : function(camera, scene, renderer){
+			return;
 			var controls = new trident.THREE.OrbitControls(camera, renderer.domElement);
 			controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
 			controls.dampingFactor = 0.25;

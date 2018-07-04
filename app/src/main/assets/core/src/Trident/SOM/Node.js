@@ -359,7 +359,7 @@ define([
 			postal.listen(theme, callback);
 		},
 		dispatchEvent : function(eventName, data){
-			postal.say(["trident.node", this.uuid, eventName].join("."));
+			postal.say(["trident.node", this.uuid, eventName].join("."), data);
 		}
 	});
 

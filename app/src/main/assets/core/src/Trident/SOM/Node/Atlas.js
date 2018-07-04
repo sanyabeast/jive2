@@ -28,7 +28,6 @@ define([
 				},
 				"ancestor" : function(value, type, node, parent, attributes){
 					var result = parent.root.querySelector(value);
-					console.log(result);
 					return result;
 				},	
 				"node" : function(value, type, node, parent, attributes){
@@ -38,6 +37,7 @@ define([
 					var result;
 
 					try {
+						console.log(attributes[value]);
 						result = eval(attributes[value]);
 					} catch (err){
 						console.warn("Failed to finish `global` directive");
@@ -289,6 +289,7 @@ define([
 						return unicycle.addTask(function(){
 							parent.subject.position.x = body.position.x;
 							parent.subject.position.y = body.position.y;
+							parent.subject.rotation.z = body.angle;
 						});	
 						console.log(arguments);
 
