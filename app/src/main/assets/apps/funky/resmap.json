@@ -1,0 +1,81 @@
+{
+  "images": {
+    "1.jpg": "res\\images\\1.jpg",
+    "2.jpg": "res\\images\\2.jpg",
+    "3.jpg": "res\\images\\3.jpg",
+    "4.jpg": "res\\images\\4.jpg",
+    "5.jpg": "res\\images\\5.jpg"
+  },
+  "object3D": {
+    "male02.obj": "res\\object3D\\male02.obj"
+  },
+  "shaders": {
+    "frag.color.xml": "res\\shaders\\frag.color.xml",
+    "vert.default.xml": "res\\shaders\\vert.default.xml",
+    "vert.line2D.xml": "res\\shaders\\vert.line2D.xml",
+    "vert.unscale.xml": "res\\shaders\\vert.unscale.xml"
+  },
+  "sound": {
+    "Arcade Echo FX 001.ogg": "res\\sound\\Arcade Echo FX 001.ogg",
+    "Blip 001.ogg": "res\\sound\\Blip 001.ogg",
+    "Blip 002.ogg": "res\\sound\\Blip 002.ogg",
+    "Blip 003.ogg": "res\\sound\\Blip 003.ogg",
+    "Blip 004.ogg": "res\\sound\\Blip 004.ogg",
+    "Bouncer 001.ogg": "res\\sound\\Bouncer 001.ogg",
+    "Bouncer 002.ogg": "res\\sound\\Bouncer 002.ogg",
+    "Bouncer 003.ogg": "res\\sound\\Bouncer 003.ogg",
+    "Creature 001.ogg": "res\\sound\\Creature 001.ogg",
+    "Creature 002.ogg": "res\\sound\\Creature 002.ogg",
+    "Effect 001.ogg": "res\\sound\\Effect 001.ogg",
+    "Effect 002.ogg": "res\\sound\\Effect 002.ogg",
+    "Effect 003.ogg": "res\\sound\\Effect 003.ogg",
+    "Engine Bass 001.ogg": "res\\sound\\Engine Bass 001.ogg",
+    "Jump 001.ogg": "res\\sound\\Jump 001.ogg",
+    "Jump 002.ogg": "res\\sound\\Jump 002.ogg",
+    "Jump 003.ogg": "res\\sound\\Jump 003.ogg",
+    "Jump 004.ogg": "res\\sound\\Jump 004.ogg",
+    "Kick 001.ogg": "res\\sound\\Kick 001.ogg",
+    "Kick 002.ogg": "res\\sound\\Kick 002.ogg",
+    "Lift Off FX 001.ogg": "res\\sound\\Lift Off FX 001.ogg",
+    "Lift Off FX 002.ogg": "res\\sound\\Lift Off FX 002.ogg",
+    "Lift Off FX 003.ogg": "res\\sound\\Lift Off FX 003.ogg",
+    "Lift Off FX 004.ogg": "res\\sound\\Lift Off FX 004.ogg",
+    "Machine Blip 001.ogg": "res\\sound\\Machine Blip 001.ogg",
+    "Noise 001.ogg": "res\\sound\\Noise 001.ogg",
+    "Noise 002.ogg": "res\\sound\\Noise 002.ogg",
+    "Noise 003.ogg": "res\\sound\\Noise 003.ogg",
+    "Noise 004.ogg": "res\\sound\\Noise 004.ogg",
+    "Phat Retro Bass 001.ogg": "res\\sound\\Phat Retro Bass 001.ogg",
+    "Phat Retro Bass 002.ogg": "res\\sound\\Phat Retro Bass 002.ogg",
+    "Quick Bass 001.ogg": "res\\sound\\Quick Bass 001.ogg",
+    "Quick Bass 002.ogg": "res\\sound\\Quick Bass 002.ogg",
+    "Quick Bass 003.ogg": "res\\sound\\Quick Bass 003.ogg",
+    "Red Alert FX 001.ogg": "res\\sound\\Red Alert FX 001.ogg",
+    "Robot Talk 001.ogg": "res\\sound\\Robot Talk 001.ogg",
+    "Robot Talk 002.ogg": "res\\sound\\Robot Talk 002.ogg",
+    "Robot Talk 003.ogg": "res\\sound\\Robot Talk 003.ogg",
+    "Robot Talk 004.ogg": "res\\sound\\Robot Talk 004.ogg",
+    "Snare 001.ogg": "res\\sound\\Snare 001.ogg",
+    "Snare 002.ogg": "res\\sound\\Snare 002.ogg",
+    "Snare 003.ogg": "res\\sound\\Snare 003.ogg",
+    "Snare 004.ogg": "res\\sound\\Snare 004.ogg",
+    "Stutter Blip 001.ogg": "res\\sound\\Stutter Blip 001.ogg",
+    "Synth 001.ogg": "res\\sound\\Synth 001.ogg",
+    "Zap FX 001.ogg": "res\\sound\\Zap FX 001.ogg",
+    "Zap FX 002.ogg": "res\\sound\\Zap FX 002.ogg",
+    "Zap FX 003.ogg": "res\\sound\\Zap FX 003.ogg",
+    "Zap FX 004.ogg": "res\\sound\\Zap FX 004.ogg",
+    "Zap FX 005.ogg": "res\\sound\\Zap FX 005.ogg",
+    "Zap FX 006.ogg": "res\\sound\\Zap FX 006.ogg",
+    "Zap FX 007.ogg": "res\\sound\\Zap FX 007.ogg",
+    "Zoom Down FX 001.ogg": "res\\sound\\Zoom Down FX 001.ogg"
+  },
+  "templates": {
+    "test.xml": "res\\templates\\test.xml"
+  },
+  "textures": {
+    "sprite.jpg": "res\\textures\\sprite.jpg",
+    "sprite0.png": "res\\textures\\sprite0.png",
+    "sprite1.png": "res\\textures\\sprite1.png"
+  }
+}

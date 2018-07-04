@@ -1,0 +1,15 @@
+<uniforms>
+	<item type="vec2"   name="navScale"></item>
+</uniforms>
+<program name="default" type="procedure">
+	vec4 default() {
+	    vec4 v = vec4(position, 1.0);
+	    
+	    v.x = v.x - 100;
+	    v.y = v.y - 100;
+
+	    position = modelViewMatrix * v;
+	}
+</program>
+
+

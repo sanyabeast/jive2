@@ -8,8 +8,6 @@ define([
 		"superagent"
 	], function(Loader, Howler, THREE, OBJLoader, Vue, superagent){
 
-	console.log(window);
-
 	var Loaders = new $Class({ name : "Loaders", namespace : "Core.R" }, {
 		$constructor : function(){},
 		images : {
@@ -38,6 +36,8 @@ define([
 						reject(err)
 					}
 				});
+			}, {
+				cropExtension : true
 			})
 		},
 		object3D : {
@@ -67,7 +67,6 @@ define([
 					console.log(err);
 					reject(err);
 				})
-				console.log(assetDescription);
 			}, {
 				cropExtension : true
 			})
@@ -108,6 +107,23 @@ define([
 					console.log(err);
 					reject(err);
 				});
+			})
+		},
+		shaders : {
+			value : new Loader(function(assetDescription, resolve, reject){
+				var shader = document.createElement("shader");
+				superagent.get(assetDescription).then(function(response){
+					shader.innerHTML = response.text;
+					resolve({
+						shader : shader,
+						xml : response.text
+					})
+				}).catch(function(err){
+					console.log(err);
+					reject(err);
+				})
+			}, {
+				cropExtension : true
 			})
 		}
 	});

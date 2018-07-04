@@ -62,7 +62,6 @@ define(function(){
 			}.bind(this));
 		},
 		getUrlLevel : function(url){
-			console.log(url);
 			return url.split("/").length - 1;
 		}
 	});

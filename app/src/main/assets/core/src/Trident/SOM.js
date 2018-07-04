@@ -17,20 +17,22 @@ define([
 			div.remove();
 			return result;
 		},
-		make : function(data){
-			var dom;
-
-			if (typeof data == "string"){
-				dom = this.parseHTML(data);
+		make : function(template, data){
+			if (typeof template, data == "string"){
+				template = this.parseHTML(template, data);
 			} else {
-				dom = data;
+				template = template;
 			}
 
+			template = this.preprocessTemplate(template, data);
 
-
-			return new Node(dom, true);
+			return new Node(template, true, data);
 		},
-
+		preprocessTemplate : function(template, data){
+			data = data || {};
+			console.log(template, data);
+			return template;
+		}
 	});
 
 	return SceneObjectModel;

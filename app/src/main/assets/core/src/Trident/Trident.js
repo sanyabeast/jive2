@@ -14,8 +14,8 @@ define([
 		setGlobalContext : function(globalContext){
 			this.som.setGlobalContext(globalContext);
 		},
-		buildStage : function(data){
-			return this.som.make(data);
+		buildStage : function(template, data){
+			return this.som.make(template, data);
 		},
 		setupEventsHandling : function(stage, throttle){
 			var throttle = throttle || (1000/60);
