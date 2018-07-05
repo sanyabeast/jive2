@@ -30,16 +30,44 @@
             <material class="default-shady-material" type="lambert" color="0x2d2d2d" side="THREE.DoubleSide"></material>
             <material class="default-phong-material" type="lambert" color="0xFFFFFF" side="THREE.DoubleSide"></material>
             <material class="default-phong-material-bg" type="phong" color="0x270674"></material>
+            <shader-material
+                class="rain-material"
+                uniforms="shader-uniforms"
+                fragment="polyshader.fragment"
+                vertex="polyshader.vertex"
+                transparent="true">
+                <polyshader
+                    type="vertex"
+                    class="vertex"
+                    shaderxml="resources.shaders['vert.funky'].shader"
+                ></polyshader>
+                <polyshader
+                    type="fragment"
+                    class="fragment"
+                    shaderxml="resources.shaders['frag.rain'].shader"
+                ></polyshader>
+                <shader-uniforms
+                    vertex="polyshader.vertex"
+                    fragment="polyshader.fragment"
+                    custom="object">
+                    <object
+                        color="0xFFFFFF"
+                        opacity="1"
+                    >
+                    </object>
+                </shader-uniforms>
+            </shader-material>
+
             <position x="0"></position>
 
             <mesh 
                 geometry="geometry" 
-                material="material"
+                material="shader-material"
                 class="background"
                 receive-shadow="false">
                 <position z="-254" x="0" y="0"></position>
-                <geometry type="plane" width="5000" height="5000" segments="1"></geometry>
-                <link source=".default-phong-material-bg"></link>
+                <geometry type="plane" width="500" height="500" segments="1"></geometry>
+                <link source=".rain-material"></link>
             </mesh>
 
             <!-- <mesh 

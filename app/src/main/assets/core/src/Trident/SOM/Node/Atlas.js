@@ -235,7 +235,7 @@ define([
 
 						return new THREE.ShaderMaterial(options);
 					},
-					constructArgs : [" { uniforms=child::uniforms, vertexShader=child::vertex, fragmentShader=child::fragment } "]
+					constructArgs : [" { uniforms=child::uniforms, vertexShader=child::vertex, fragmentShader=child::fragment, transparent } "]
 				},
 				"shader-uniforms" : {
 					childFirst : true,
