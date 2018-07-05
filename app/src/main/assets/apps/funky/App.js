@@ -1,8 +1,9 @@
 "use strict";
 define("App", [
 		"tweener",
-		"matter"
-	], function(tweener, matter){
+		"matter",
+		"Trident/Tools/PolyShader"
+	], function(tweener, matter, PolyShader){
 
 	var App =  new $Class({ name : "App" }, {
 		$constructor : function(){
@@ -64,11 +65,12 @@ define("App", [
 			});
 
 			this.setupOrbitControls(camera, scene, renderer);
+			this.setupCommonUniforms();
 
 			resources.sound["Bouncer 001"].play();
 		},
 		setupOrbitControls : function(camera, scene, renderer){
-			return;
+			// return;
 			var controls = new trident.THREE.OrbitControls(camera, renderer.domElement);
 			controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
 			controls.dampingFactor = 0.25;
@@ -76,7 +78,7 @@ define("App", [
 			controls.screenSpacePanning = false;
 
 			controls.minDistance = 1;
-			controls.maxDistance = 500
+			controls.maxDistance = 1000
 
 			window.controls = controls;
 			window.camera = camera;
@@ -91,6 +93,11 @@ define("App", [
 				controls.update();
 			});
 
+		},
+		setupCommonUniforms : function(){
+			unicycle.addTask(function(){
+				PolyShader.common.time+=0.01;
+			});
 		}
 	});
 

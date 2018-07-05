@@ -2,17 +2,26 @@
 define([
 		"three",
 		"Trident/SOM/Node/AtlasCore",
+		"Trident/Tools/PolyShader",
 		"matter",
-	], function(THREE, AtlasCore, matter){
+	], function(THREE, AtlasCore, PolyShader, matter){
 
 
 	var Atlas = new $Class({ name : "Atlas", namespace : "Trident.SOM.Node", extends : [AtlasCore] }, {
+		AtlasCore : {
+			static : true,
+			value : AtlasCore
+		},
 		directives : {
+			static : true,
 			value : {
 				"child" : function(value, type, node, parent, attributes){
-					var childNode = node.selectFirst(value, true);
+					var childNode = node.selectFirst(attributes[value], true);
 					return childNode ? childNode.subject : null;
 				},
+				"sibl" : function(value, type, node, parent, attributes){
+					return parent.selectFirst(attributes[value]);
+				},	
 				"int" : function(value, type, node, parent, attributes){
 					if (typeof attributes[value] == "undefined") return;
 					var value = window.parseInt(attributes[value]) || 0;
@@ -26,14 +35,14 @@ define([
 				"parent" : function(value, type, node, parent, attributes){
 					return parent;
 				},
-				"ancestor" : function(value, type, node, parent, attributes){
-					var result = parent.root.querySelector(value);
+				"select" : function(value, type, node, parent, attributes){
+					var result = parent.root.querySelector(attributes[value]);
 					return result;
 				},	
 				"node" : function(value, type, node, parent, attributes){
 					return node;
 				},
-				"global" : function(value, type, node, parent, attributes){
+				"eval" : function(value, type, node, parent, attributes){
 					var result;
 
 					try {
@@ -45,10 +54,31 @@ define([
 
 					return result;
 				},
+				select_dom : function(value, type, node, parent, attributes){
+					var selector = attributes[value];
+					var element = document.querySelector(selector);
+					return element;
+				},
+				"node" : function(value, type, node){
+					return node;
+				},
+				"attributes" : function(value, type, node, parent, attributes){
+					return attributes;
+				}
 			}
 		},
 		descriptions : {
+			static : true,
 			value : {
+				/*common*/
+				"object" : {
+					source : "factory",
+					construct : function(attributes){
+						return attributes;
+					},
+					constructArgs : ["attributes::"]
+
+				},
 				"position" : {
 					source : "property",
 					name : "position",
@@ -145,7 +175,7 @@ define([
 						"phong" : THREE.MeshPhongMaterial,
 						"toon" : THREE.MeshToonMaterial,
 						"shadow" : THREE.ShadowMaterial,
-						"sprite" : THREE.SpriteMaterial
+						"sprite" : THREE.SpriteMaterial,
 					},
 					constructArgs : {
 						"lambert" 	: ["{ int::color, float::opacity, transparent, int::side }"],
@@ -156,16 +186,55 @@ define([
 						"sprite"  	: ["{ map=child::texture, int::color, float::opacity, transparent, int::side }"],
 					}
 				},
+				"shader-material" : {
+					childFirst : true,
+					source : "factory",
+					construct : function(options){
+
+						options.fragmentShader = options.fragmentShader.shaderCode;
+						options.vertexShader = options.vertexShader.shaderCode;
+						options.uniforms = options.uniforms;
+
+						return new THREE.ShaderMaterial(options);
+					},
+					constructArgs : [" { uniforms=child::uniforms, vertexShader=child::vertex, fragmentShader=child::fragment } "]
+				},
+				"shader-uniforms" : {
+					childFirst : true,
+					source : "factory",
+					construct : function(vertex, fragment, custom){
+						var uniforms = {};
+
+						vertex = vertex.subject;
+						fragment = fragment.subject;
+
+						uniforms = fragment.collectUniforms(uniforms, custom, true);
+						uniforms = vertex.collectUniforms(uniforms, custom, true);
+
+						console.log(uniforms, fragment);
+
+						return uniforms;
+					},
+					constructArgs : ["sibl::vertex", "sibl::fragment", "child::custom"]
+				},
+				"polyshader" : {
+					source : "constructor",
+					construct : function(type, shader){
+						var polyshader = new PolyShader(type, shader);
+						return polyshader;
+					},
+					constructArgs : ["type", "eval::shaderxml"]
+				},
 				"geometry" : {
 					source : "constructor",
 					construct : {
-						"sphere" : THREE.SphereGeometry,
-						"box" : THREE.BoxGeometry,
-						"circle" : THREE.CircleGeometry,
-						"cylinder" : THREE.CylinderGeometry,
-						"cone" : THREE.ConeGeometry,
-						"ring" : THREE.RingGeometry,
-						"plane" : THREE.PlaneGeometry
+						"sphere" : THREE.SphereBufferGeometry,
+						"box" : THREE.BoxBufferGeometry,
+						"circle" : THREE.CircleBufferGeometry,
+						"cylinder" : THREE.CylinderBufferGeometry,
+						"cone" : THREE.ConeBufferGeometry,
+						"ring" : THREE.RingBufferGeometry,
+						"plane" : THREE.PlaneBufferGeometry
 					},
 					constructArgs : {
 						"sphere" : [
@@ -229,7 +298,7 @@ define([
 					},
 					constructArgs : {
 						"ready" : ["name"],
-						"load" : ["global::image", "mapping", "wrapS", "wrapT", "magFilter", "minFilter", "format", "type", "anisotrpy", "encoding"]
+						"load" : ["eval::image", "mapping", "wrapS", "wrapT", "magFilter", "minFilter", "format", "type", "anisotrpy", "encoding"]
 					}
 				},
 				"sprite" : {
@@ -255,7 +324,7 @@ define([
 					construct : function(engine){ 
 						return engine.subject.world; 
 					},
-					constructArgs : ["ancestor::matter-engine"]
+					constructArgs : ["select::engine"]
 				},
 				"matter-gravity" : {
 					source : "property",
@@ -294,7 +363,7 @@ define([
 						console.log(arguments);
 
 					},
-					constructArgs : ["parent::", "child::matter-body", "ancestor::matter-engine"]
+					constructArgs : ["parent::", "child::body", "select::engine"]
 				},
 				"matter-body" : {
 					source : "factory",
@@ -310,6 +379,24 @@ define([
 						"rectangle" : ["x", "y", "width", "height", "{ isStatic=static }"],
 						"circle" : ["x", "y", "radius", "{  }", "maxSides"]
 					}
+				},
+				"matter-mouse" : {
+					source : "factory",
+					construct : function(element){
+						return matter.Mouse.create(element);
+					},
+					constructArgs : ["select_dom::element"]
+				},
+				"matter-mouse-constraint" : {
+					source : "factory",
+					construct : function(engine, options){
+						options.mouse = options.mouse.subject;
+
+						console.log(engine, options);
+
+						return matter.MouseConstraint.create(engine.subject, options);
+					},
+					constructArgs : ["select::engine", "{ mouse=select::mouse, constraint={} }"]
 				}
 			}
 		},

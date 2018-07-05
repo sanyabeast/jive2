@@ -2,10 +2,12 @@
 define([
 		"three",
 		"Trident/SOM",
-	], function(THREE, SOM){
+		"Trident/Tools/PolyShader"
+	], function(THREE, SOM, PolyShader){
 
 	var Trident = new $Class({ name : "Trident", namespace : "Trident" }, {
 		SOM : { value : SOM, static : true },
+		PolyShader : PolyShader,
 		$constructor : function(globalContext){
 			this.som = new SOM();
 			this.globalContext = globalContext;
@@ -128,11 +130,9 @@ define([
 				if (target){
 					targetUUID = target.uuid;
 
-					if (lastEventType == "over"){
-						if (target.interaction.hovered !== true){
-							target.interaction.hovered = true;
-							target.dispatchEvent("pointerover", target);
-						}
+					if (lastEventType == "move" && target.interaction.hovered !== true){
+						target.interaction.hovered = true;
+						target.dispatchEvent("pointerover", target);
 					} else if (lastEventType == "down"){
 						if (target.interaction.captured !== true){
 							target.interaction.hovered = target.interaction.captured = true;

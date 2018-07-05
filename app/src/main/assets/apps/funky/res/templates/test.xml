@@ -2,12 +2,12 @@
     <scene>
         <!-- Matter -->
         <matter-engine></matter-engine>
-        <matter-world>
+        <matter-world engine="matter-engine">
             <matter-gravity y="-1">
             </matter-gravity>
         </matter-world>
         <!-- !Matter -->
-        <camera type="perspective" fov="45" aspect="{ window.innerWidth / window.innerHeight }" near="1" far="1000">
+        <camera type="perspective" fov="45" aspect="{ window.innerWidth / window.innerHeight }" near="1" far="5000">
             <position x="0.0206593961445023" y="0.0853731858682841" z="200">
             </position>
         </camera>
@@ -20,78 +20,187 @@
         </light>
         <group>
             <material class="default-lamber-material" type="lambert" color="0xff9800"></material>
-            <material class="default-lamber-material-purp" type="lambert" color="0x9c27b0"></material>
+            <material class="default-lamber-material-purp" type="lambert" color="0x03a9f4"></material>
+            <shader-material
+            	class="club-material"
+            	uniforms="shader-uniforms"
+            	fragment="polyshader.fragment"
+            	vertex="polyshader.vertex"
+            >
+            	<polyshader
+            		type="vertex"
+            		class="vertex"
+            		shaderxml="resources.shaders['vert.funky'].shader"
+            	></polyshader>
+            	<polyshader
+            		type="fragment"
+            		class="fragment"
+            		shaderxml="resources.shaders['frag.club'].shader"
+            	></polyshader>
+            	<shader-uniforms
+            		vertex="polyshader.vertex"
+            		fragment="polyshader.fragment"
+            		custom="object"
+            	>
+            		<object
+            			color="0xFFFFFF"
+            			opacity="1"
+            		>
+            		</object>
+            	</shader-uniforms>
+            </shader-material>
+            <shader-material
+            	class="rain-material"
+            	uniforms="shader-uniforms"
+            	fragment="polyshader.fragment"
+            	vertex="polyshader.vertex"
+            >
+            	<polyshader
+            		type="vertex"
+            		class="vertex"
+            		shaderxml="resources.shaders['vert.funky'].shader"
+            	></polyshader>
+            	<polyshader
+            		type="fragment"
+            		class="fragment"
+            		shaderxml="resources.shaders['frag.rain'].shader"
+            	></polyshader>
+            	<shader-uniforms
+            		vertex="polyshader.vertex"
+            		fragment="polyshader.fragment"
+            		custom="object"
+            	>
+            		<object
+            			color="0xFFFFFF"
+            			opacity="1"
+            		>
+            		</object>
+            	</shader-uniforms>
+            </shader-material>
 
             <position x="-50"></position>
 
-            <mesh class="test-plane-mesh">
+            <mesh geometry="geometry" material="shader-material" class="test-plane-mesh">
                 <position z="-300" x="0" y="-100"></position>
                 <rotation x="{-Math.PI / 2}">
                 </rotation>
                 <geometry type="plane" width="1800" height="1800" segments="1"></geometry>
-                <material type="lambert" color="0x005804" side="global::THREE.DoubleSide"></material>
-                <matter>
+                <shader-material
+	            	class="club-material"
+	            	uniforms="shader-uniforms"
+	            	fragment="polyshader.fragment"
+	            	vertex="polyshader.vertex"
+	            >
+	            	<polyshader
+	            		type="vertex"
+	            		class="vertex"
+	            		shaderxml="resources.shaders['vert.funky'].shader"
+	            	></polyshader>
+	            	<polyshader
+	            		type="fragment"
+	            		class="fragment"
+	            		shaderxml="resources.shaders['frag.club'].shader"
+	            	></polyshader>
+	            	<shader-uniforms
+	            		vertex="polyshader.vertex"
+	            		fragment="polyshader.fragment"
+	            		custom="object"
+	            	>
+	            		<object
+	            			color="0xFFFFFF"
+	            			opacity="1"
+	            		>
+	            		</object>
+	            	</shader-uniforms>
+	            </shader-material>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="rectangle" x="0" y="0" width="1800" height="20" static="true">
                         <matter-position y="-50"></matter-position>
                     </matter-body>
                 </matter>
             </mesh>
 
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="sphere" radius="20" segments="48"></geometry>
-                <link source=".default-lamber-material"></link>
-                <matter>
+                <link source=".club-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="circle" x="0" y="30" radius="20">
                     </matter-body>
                 </matter>
             </mesh>
 
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="sphere" radius="10" segments="48"></geometry>
-                <link source=".default-lamber-material"></link>
-                <matter>
+                <link source=".club-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="circle" x="-30" y="30" radius="10">
                     </matter-body>
                 </matter>
             </mesh>
 
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="sphere" radius="5" segments="48"></geometry>
-                <link source=".default-lamber-material"></link>
-                <matter>
+                <link source=".club-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="circle" x="-60" y="30" radius="5">
                     </matter-body>
                 </matter>
             </mesh>
 
-            <mesh>
+            <mesh geometry="geometry" material="shader-material" class="shader-mesh">
                 <position z="-300" x="30"></position>
-                <geometry type="sphere" radius="5" segments="48"></geometry>
-                <link source=".default-lamber-material"></link>
-                <matter>
-                    <matter-body type="circle" x="-60" y="40" radius="5">
+                <geometry type="sphere" radius="20" segments="48"></geometry>
+                <shader-material
+                	uniforms="shader-uniforms"
+                	fragment="polyshader.fragment"
+                	vertex="polyshader.vertex"
+                >
+                	<polyshader
+                		type="vertex"
+                		class="vertex"
+                		shaderxml="resources.shaders['vert.funky'].shader"
+                	></polyshader>
+                	<polyshader
+                		type="fragment"
+                		class="fragment"
+                		shaderxml="resources.shaders['frag.funky'].shader"
+                	></polyshader>
+                	<shader-uniforms
+                		vertex="polyshader.vertex"
+                		fragment="polyshader.fragment"
+                		custom="object"
+                	>
+                		<object
+                			color="0xFFFFFF"
+                			opacity="1"
+                		>
+                		</object>
+                	</shader-uniforms>
+                </shader-material>
+                <matter body="matter-body" engine="matter-engine">
+                    <matter-body type="circle" x="-60" y="40" radius="20">
                     </matter-body>
                 </matter>
             </mesh>
 
-            <mesh>
+            <mesh geometry="geometry" material="material">
                 <position z="-300" x="30"></position>
                 <geometry type="sphere" radius="5" segments="48"></geometry>
                 <link source=".default-lamber-material"></link>
-                <matter>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="circle" x="-60" y="50" radius="5">
                     </matter-body>
                 </matter>
             </mesh>
 
-            <mesh>
+            <mesh geometry="geometry" material="material">
                 <position z="-300" x="30"></position>
                 <geometry type="sphere" radius="5" segments="48"></geometry>
                 <link source=".default-lamber-material"></link>
-                <matter>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="circle" x="-60" y="60" radius="5">
                     </matter-body>
                 </matter>
@@ -102,91 +211,91 @@
             <!--  -->
             
 
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="sphere" radius="18" segments="48"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="circle" x="0" y="80" radius="18">
                     </matter-body>
                 </matter>
             </mesh>
 
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="sphere" radius="10" segments="48"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="circle" x="30" y="30" radius="10">
                     </matter-body>
                 </matter>
             </mesh>
 
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="sphere" radius="5" segments="48"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="circle" x="60" y="30" radius="5">
                     </matter-body>
                 </matter>
             </mesh>
 
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="sphere" radius="5" segments="48"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="circle" x="60" y="40" radius="5">
                     </matter-body>
                 </matter>
             </mesh>
 
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="sphere" radius="5" segments="48"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="circle" x="60" y="50" radius="5">
                     </matter-body>
                 </matter>
             </mesh>
 
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="sphere" radius="5" segments="48"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="circle" x="60" y="60" radius="5">
                     </matter-body>
                 </matter>
             </mesh>
 
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="box" width="5" height="10"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="rectangle" x="40" y="70" width="5" height="10">
                     </matter-body>
                 </matter>
             </mesh>
 
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="box" width="25" height="20"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="rectangle" x="10" y="150" width="25" height="20">
                     </matter-body>
                 </matter>
             </mesh>
 
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="box" width="25" height="20"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="rectangle" x="-40" y="90" width="15" height="30">
                     </matter-body>
                 </matter>
@@ -194,110 +303,110 @@
 
             <!--  -->
 
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="box" width="5" height="5"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="rectangle" x="0" y="160" width="5" height="5">
                     </matter-body>
                 </matter>
             </mesh>
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="box" width="5" height="5"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="rectangle" x="0" y="160" width="5" height="5">
                     </matter-body>
                 </matter>
             </mesh>
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="box" width="5" height="5"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="rectangle" x="0" y="160" width="5" height="5">
                     </matter-body>
                 </matter>
             </mesh>
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="box" width="5" height="5"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="rectangle" x="0" y="160" width="5" height="5">
                     </matter-body>
                 </matter>
             </mesh>
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="box" width="5" height="5"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="rectangle" x="0" y="160" width="5" height="5">
                     </matter-body>
                 </matter>
             </mesh>
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="box" width="5" height="5"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="rectangle" x="10" y="160" width="5" height="5">
                     </matter-body>
                 </matter>
             </mesh>
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="box" width="5" height="5"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="rectangle" x="20" y="160" width="5" height="5">
                     </matter-body>
                 </matter>
             </mesh>
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="box" width="5" height="5"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="rectangle" x="30" y="160" width="5" height="5">
                     </matter-body>
                 </matter>
             </mesh>
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="box" width="5" height="5"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="rectangle" x="40" y="160" width="5" height="5">
                     </matter-body>
                 </matter>
             </mesh>
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="box" width="5" height="5"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="rectangle" x="50" y="160" width="5" height="5">
                     </matter-body>
                 </matter>
             </mesh>
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="box" width="5" height="5"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="rectangle" x="60" y="160" width="5" height="5">
                     </matter-body>
                 </matter>
             </mesh>
-            <mesh>
+            <mesh geometry="geometry" material="shader-material">
                 <position z="-300" x="30"></position>
                 <geometry type="box" width="5" height="5"></geometry>
-                <link source=".default-lamber-material-purp"></link>
-                <matter>
+                <link source=".rain-material"></link>
+                <matter body="matter-body" engine="matter-engine">
                     <matter-body type="rectangle" x="70" y="160" width="5" height="5">
                     </matter-body>
                 </matter>

@@ -4,6 +4,10 @@ define([
 	], function(Node){
 
 	var SceneObjectModel = new $Class({ name : "SOM", namespace : "Trident" }, {
+		Node : {
+			static : true,
+			value : Node
+		},
 		$constructor : function(){
 
 		},

@@ -10,8 +10,12 @@
     "male02.obj": "res\\object3D\\male02.obj"
   },
   "shaders": {
+    "frag.club.xml": "res\\shaders\\frag.club.xml",
     "frag.color.xml": "res\\shaders\\frag.color.xml",
+    "frag.funky.xml": "res\\shaders\\frag.funky.xml",
+    "frag.rain.xml": "res\\shaders\\frag.rain.xml",
     "vert.default.xml": "res\\shaders\\vert.default.xml",
+    "vert.funky.xml": "res\\shaders\\vert.funky.xml",
     "vert.line2D.xml": "res\\shaders\\vert.line2D.xml",
     "vert.unscale.xml": "res\\shaders\\vert.unscale.xml"
   },

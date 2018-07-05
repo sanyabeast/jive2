@@ -5,10 +5,14 @@ define([
 	], function(Atlas, postal){
 
 	var TridentNode = new $Class({ name : "Node", namespace : "Trident.SOM" }, {
+		Atlas : {
+			static : true,
+			value : Atlas
+		},
 		$constructor : function(dom, isRoot){
 			var _this = this;
 
-			this.atlas = new Atlas();
+			this.atlas = Atlas;
 			this.state = {
 				prevTagName : "",
 				prevAttrsStamp : "",
