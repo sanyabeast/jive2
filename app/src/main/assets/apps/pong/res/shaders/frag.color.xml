@@ -1,0 +1,10 @@
+<uniforms>
+	<item type="vec3"  name="color"></item>
+	<item type="float" name="opacity"></item>
+</uniforms>
+<program>
+	void main(){
+		vec4 c = vec4(color, opacity);
+		gl_FragColor = c;
+	}
+</program>

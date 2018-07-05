@@ -1,0 +1,66 @@
+<renderer 
+    type="webgl"  
+    width="{ window.innerWidth * window.devicePixelRatio }" 
+    height="{ window.innerHeight * window.devicePixelRatio }" 
+    antialias="true">
+    <renderer-shadowmap enabled="true" type="THREE.PCFSoftShadowMap"></renderer-shadowmap>
+    <scene>
+        <!-- Matter -->
+        <!-- !Matter -->
+        <camera type="perspective" fov="45" aspect="{ window.innerWidth / window.innerHeight }" near="1" far="50000">
+            <position x="0" y="0" z="200">
+            </position>
+        </camera>
+        <!-- <light 
+            type="point" 
+            color="0xFFFFFF" 
+            intensity="2"
+            cast-shadow="true">
+            <position x="0" y="0" z="-200"> </position>
+        </light> -->
+        <light type="spot" color="0xFFFFFF" cast-shadow="true" shadowcamera-visible="true">
+            <position x="0" y="0" z="130">
+            </position>
+            <light-shadow>
+                <light-shadow-map size="4096"></light-shadow-map>
+                <light-shadow-camera near="0.5" far="1000"></light-shadow-camera>
+            </light-shadow>
+        </light>
+        <group>
+            <material class="default-phong-material" type="lambert" color="0xFFFFFF" side="THREE.DoubleSide"></material>
+            <material class="default-phong-material-bg" type="phong" color="0xe91e63"></material>
+            <position x="0"></position>
+
+            <mesh 
+                geometry="geometry" 
+                material="material"
+                class="background"
+                receive-shadow="true">
+                <position z="-300" x="0" y="0"></position>
+                <geometry type="plane" width="5000" height="5000" segments="1"></geometry>
+                <link source=".default-phong-material-bg"></link>
+            </mesh>
+
+            <mesh 
+                geometry="geometry" 
+                material="material"
+                cast-shadow="true"
+                receive-shadow="false">
+                <position z="-250" x="0" y="0"></position>
+                <geometry type="ring" inner-radius="74" outer-radius="80" segments="64"></geometry>
+                <link source=".default-phong-material"></link>
+            </mesh>
+
+             <mesh 
+                class="ball"
+                geometry="geometry" 
+                material="material"
+                cast-shadow="true"
+                receive-shadow="false">
+                <position z="-250" x="0" y="0"></position>
+                <geometry type="circle" radius="5" segments="48"></geometry>
+                <link source=".default-phong-material"></link>
+            </mesh>
+        </group>
+    </scene>
+</renderer>

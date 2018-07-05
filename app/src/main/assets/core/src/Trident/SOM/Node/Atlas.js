@@ -78,6 +78,27 @@ define([
 					constructArgs : ["attributes::"]
 
 				},
+				/*shadowing*/
+				"light-shadow" : {
+					source : "property",
+					name : "shadow",
+				},
+				"light-shadow-map" : {
+					source : "property",
+					name : "mapSize",
+					members : {
+						width 	: { type : "property", value : "width|size" },
+						height 	: { type : "property", value : "height|size" },
+					}
+				},
+				"light-shadow-camera" : {
+					source : "property",
+					name : "camera",
+					members : {
+						near 	: { type : "property", value : "near" },
+						far 	: { type : "property", value : "far" },
+					}
+				},
 				"position" : {
 					source : "property",
 					name : "position",
@@ -125,6 +146,14 @@ define([
 						setSize : { type : "method", args : ["width", "height"] }
 					}
 				},
+				"renderer-shadowmap" : {
+					source : "property",
+					name : "shadowMap",
+					members : {
+						enabled : { type : "property", value : "enabled" },
+						type 	: { type : "property", value : "eval::type" },
+					}
+				},	
 				"scene" : {
 					source : "constructor",
 					construct : THREE.Scene,
@@ -144,12 +173,18 @@ define([
 					construct : {
 						"point" : THREE.PointLight,
 						"directional" : THREE.DirectionalLight,
-						"ambient" : THREE.AmbientLight
+						"ambient" : THREE.AmbientLight,
+						"spot" : THREE.SpotLight
 					},
 					constructArgs : {
 						"point" : ["int::color", "float::intensity", "distance", "decay"],
 						"directional" : ["int::color", "float::intensity"],
-						"ambient" : ["int::color", "float::intensity"]
+						"ambient" : ["int::color", "float::intensity"],
+						"spot" : ["int::color", "float::intensity"],
+					},
+					members : {
+						"castShadow" : { type : "property", value : "cast-shadow" },
+						"shadowCameraVisible" : { type : "property", value : "shadowcamera-visible" }
 					},
 					link : "parent.add(child)",
 				},
@@ -164,6 +199,10 @@ define([
 					construct : THREE.Mesh,
 					constructArgs : ["child::geometry", "child::material"],
 					link : "parent.add(child)",
+					members : {
+						"castShadow" 	: { type : "property", value : "cast-shadow" },
+						"receiveShadow" : { type : "property", value : "receive-shadow" },
+					}
 				},
 				"material" : {
 					childFirst : true,
@@ -177,12 +216,12 @@ define([
 						"sprite" : THREE.SpriteMaterial,
 					},
 					constructArgs : {
-						"lambert" 	: ["{ int::color, float::opacity, transparent, int::side }"],
-						"normal"  	: ["{ float::opacity, transparent, int::side }"],
-						"phong"  	: ["{ int::color, float::opacity, transparent, int::side }"],
-						"toon"  	: ["{ int::color, float::opacity, transparent, int::side }"],
-						"shadow"  	: ["{ int::color, float::opacity, transparent, int::side }"],
-						"sprite"  	: ["{ map=child::texture, int::color, float::opacity, transparent, int::side }"],
+						"lambert" 	: ["{ int::color, float::opacity, transparent, eval::side }"],
+						"normal"  	: ["{ float::opacity, transparent, eval::side }"],
+						"phong"  	: ["{ int::color, float::opacity, transparent, eval::side }"],
+						"toon"  	: ["{ int::color, float::opacity, transparent, eval::side }"],
+						"shadow"  	: ["{ int::color, float::opacity, transparent, eval::side }"],
+						"sprite"  	: ["{ map=child::texture, int::color, float::opacity, transparent, eval::side }"],
 					}
 				},
 				"shader-material" : {
@@ -232,7 +271,8 @@ define([
 						"cylinder" : THREE.CylinderBufferGeometry,
 						"cone" : THREE.ConeBufferGeometry,
 						"ring" : THREE.RingBufferGeometry,
-						"plane" : THREE.PlaneBufferGeometry
+						"plane" : THREE.PlaneBufferGeometry,
+						"torus" : THREE.TorusGeometry
 					},
 					constructArgs : {
 						"sphere" : [
@@ -280,7 +320,8 @@ define([
 							"theta-start", 
 							"theta-length"
 						],
-						"plane" : ["width", "height", "widthSegments|segments", "height-segments|segments"]
+						"plane" : ["width", "height", "widthSegments|segments", "height-segments|segments"],
+						"torus" : ["radius", "tube", "radial-segments|segments", "tubular-segments|segments", "arc"]
 					}
 				},
 				"texture" : {

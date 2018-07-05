@@ -1,0 +1,10 @@
+<uniforms>
+</uniforms>
+<program>
+	void main() {
+	    vec4 pos = modelViewMatrix * vec4(position, 1.0);
+	    gl_Position = projectionMatrix * pos;
+	}
+</program>
+
+

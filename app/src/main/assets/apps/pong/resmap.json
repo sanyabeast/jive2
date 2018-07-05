@@ -1,0 +1,34 @@
+{
+  "images": {
+    "1.jpg": "res\\images\\1.jpg",
+    "2.jpg": "res\\images\\2.jpg",
+    "3.jpg": "res\\images\\3.jpg",
+    "4.jpg": "res\\images\\4.jpg",
+    "5.jpg": "res\\images\\5.jpg"
+  },
+  "object3D": {
+    "male02.obj": "res\\object3D\\male02.obj"
+  },
+  "shaders": {
+    "frag.club.xml": "res\\shaders\\frag.club.xml",
+    "frag.color.xml": "res\\shaders\\frag.color.xml",
+    "frag.funky.xml": "res\\shaders\\frag.funky.xml",
+    "frag.rain.xml": "res\\shaders\\frag.rain.xml",
+    "vert.default.xml": "res\\shaders\\vert.default.xml",
+    "vert.funky.xml": "res\\shaders\\vert.funky.xml",
+    "vert.line2D.xml": "res\\shaders\\vert.line2D.xml",
+    "vert.unscale.xml": "res\\shaders\\vert.unscale.xml"
+  },
+  "sound": {
+    "Bouncer 001.ogg": "res\\sound\\Bouncer 001.ogg",
+    "Jump 001.ogg": "res\\sound\\Jump 001.ogg"
+  },
+  "templates": {
+    "test.xml": "res\\templates\\test.xml"
+  },
+  "textures": {
+    "sprite.jpg": "res\\textures\\sprite.jpg",
+    "sprite0.png": "res\\textures\\sprite0.png",
+    "sprite1.png": "res\\textures\\sprite1.png"
+  }
+}

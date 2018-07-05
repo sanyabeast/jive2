@@ -1,0 +1,17 @@
+<uniforms>
+	<item type="vec2"   name="unscale"></item>
+	<item type="vec2"   name="renderScale"></item>
+</uniforms>
+<program name="unscaleVec">
+	vec4 unscaleVec() {
+	    vec4 v = vec4(position, 1.0);
+	    
+	    if (unscale.x > 0.5) v.x = v.x * renderScale.x;
+	    if (unscale.y > 0.5) v.y = v.y * renderScale.y;
+
+	    vec4 position = modelViewMatrix * v;
+	    return(projectionMatrix * position);
+	}
+</program>
+
+
