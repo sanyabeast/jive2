@@ -27,8 +27,9 @@
             </light-shadow>
         </light>
         <group>
+            <material class="default-shady-material" type="lambert" color="0x2d2d2d" side="THREE.DoubleSide"></material>
             <material class="default-phong-material" type="lambert" color="0xFFFFFF" side="THREE.DoubleSide"></material>
-            <material class="default-phong-material-bg" type="phong" color="0xe91e63"></material>
+            <material class="default-phong-material-bg" type="phong" color="0x270674"></material>
             <position x="0"></position>
 
             <mesh 
@@ -36,18 +37,41 @@
                 material="material"
                 class="background"
                 receive-shadow="false">
-                <position z="-300" x="0" y="0"></position>
+                <position z="-254" x="0" y="0"></position>
                 <geometry type="plane" width="5000" height="5000" segments="1"></geometry>
                 <link source=".default-phong-material-bg"></link>
             </mesh>
 
+            <!-- <mesh 
+                class="field-ring shadow"
+                geometry="geometry" 
+                material="material"
+                cast-shadow="false"
+                receive-shadow="false">
+                <position z="-253" x="0" y="0"></position>
+                <geometry type="ring" inner-radius="78" outer-radius="80" segments="64"></geometry>
+                <link source=".default-shady-material"></link>
+            </mesh> -->
+
             <mesh 
+                class="field-ring body"
                 geometry="geometry" 
                 material="material"
                 cast-shadow="false"
                 receive-shadow="false">
                 <position z="-250" x="0" y="0"></position>
-                <geometry type="ring" inner-radius="74" outer-radius="80" segments="64"></geometry>
+                <geometry type="ring" inner-radius="79" outer-radius="80" segments="96"></geometry>
+                <link source=".default-phong-material"></link>
+            </mesh>
+
+            <mesh 
+                class="racket body"
+                geometry="geometry" 
+                material="material"
+                cast-shadow="false"
+                receive-shadow="false">
+                <position z="-250" x="0" y="0"></position>
+                <geometry type="ring" inner-radius="75" outer-radius="78" segments="96" theta-start="0" theta-length="{ Math.PI / 6 }"></geometry>
                 <link source=".default-phong-material"></link>
             </mesh>
 

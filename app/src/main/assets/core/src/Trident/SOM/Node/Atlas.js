@@ -315,8 +315,8 @@ define([
 						"ring" : [
 							"inner-radius|radius", 
 							"outer-radius|radius", 
-							"thetaSegments|segments", 
-							"phiSegments|segments", 
+							"theta-segments|segments", 
+							"phi-segments|segments", 
 							"theta-start", 
 							"theta-length"
 						],

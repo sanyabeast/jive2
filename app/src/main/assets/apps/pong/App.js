@@ -2,8 +2,11 @@
 define("App", [
 		"tweener",
 		"matter",
-		"Trident/Tools/PolyShader"
-	], function(tweener, matter, PolyShader){
+		"Trident/Tools/PolyShader",
+		"bezierEasing"
+	], function(tweener, matter, PolyShader, BezierEasing){
+
+	console.log(BezierEasing);
 
 	var App =  new $Class({ name : "App" }, {
 		$constructor : function(){
@@ -29,45 +32,27 @@ define("App", [
 				camera.updateProjectionMatrix();
 			});
 
-			this.stage.select("light", function(n){
-				tweener.fromTo(n.subject.position, 2, {
-					z : 10,
-				}, {
-					z : 300,
-					repeat : -1,
-					yoyo : true,
-					ease : "easeInOutQuad"
-				})
+			var bezier = BezierEasing(0.85, 0.04, 1, 1);
 
-				tweener.fromTo(n.subject.rotation, 2, {
+			this.stage.select(".racket", function(n){
+				tweener.fromTo(n.subject.rotation, 5, {
 					z : 0,
 				}, {
-					z : Math.PI / 2,
+					z : 1 * Math.PI,
 					repeat : -1,
 					yoyo : true,
-					ease : "easeInOutQuad"
-				})
-			});	
-
-			this.stage.select("light", function(n){
-				tweener.fromTo(n.subject.position, 2, {
-					z : 10,
-				}, {
-					z : 300,
-					repeat : -1,
-					yoyo : true,
-					ease : "easeInOutQuad"
+					ease : function(t){ return bezier(t) }
 				})
 			});	
 
 			this.stage.select(".ball", function(n){
-				tweener.fromTo(n.subject.position, 1, {
+				tweener.fromTo(n.subject.position, 1.2, {
 					x : -70,
 				}, {
 					x : 70,
 					repeat : -1,
 					yoyo : true,
-					ease : "easeInQuad"
+					ease : "easeInOutBack"
 				})
 			});	
 

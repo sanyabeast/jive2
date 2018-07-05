@@ -17,6 +17,7 @@
     "jsterm": "git://github.com/sanyabeast/jsterm.git",
     "dollaclass": "git://github.com/sanyabeast/dollaclass.git",
     "quire": "git://github.com/sanyabeast/quire.git",
+    "bezier-easing": "git://github.com/sanyabeast/bezier-easing.git",
     "vue" : "latest",
     "vuex" : "latest",
     "matter-js" : "latest"
