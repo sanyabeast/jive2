@@ -46,7 +46,6 @@ define([
 					var result;
 
 					try {
-						console.log(attributes[value]);
 						result = eval(attributes[value]);
 					} catch (err){
 						console.warn("Failed to finish `global` directive");
@@ -211,7 +210,6 @@ define([
 						uniforms = fragment.collectUniforms(uniforms, custom, true);
 						uniforms = vertex.collectUniforms(uniforms, custom, true);
 
-						console.log(uniforms, fragment);
 
 						return uniforms;
 					},
@@ -360,7 +358,6 @@ define([
 							parent.subject.position.y = body.position.y;
 							parent.subject.rotation.z = body.angle;
 						});	
-						console.log(arguments);
 
 					},
 					constructArgs : ["parent::", "child::body", "select::engine"]

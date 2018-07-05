@@ -34,7 +34,6 @@ define([
 		},
 		preprocessTemplate : function(template, data){
 			data = data || {};
-			console.log(template, data);
 			return template;
 		}
 	});

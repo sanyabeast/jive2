@@ -8,7 +8,7 @@
         </matter-world>
         <!-- !Matter -->
         <camera type="perspective" fov="45" aspect="{ window.innerWidth / window.innerHeight }" near="1" far="5000">
-            <position x="0.0206593961445023" y="0.0853731858682841" z="200">
+            <position x="-10" y="0.0853731858682841" z="200">
             </position>
         </camera>
         <light type="point" color="0xFFFFFF" intensity="2">
@@ -25,13 +25,11 @@
             	class="club-material"
             	uniforms="shader-uniforms"
             	fragment="polyshader.fragment"
-            	vertex="polyshader.vertex"
-            >
+            	vertex="polyshader.vertex">
             	<polyshader
             		type="vertex"
             		class="vertex"
-            		shaderxml="resources.shaders['vert.funky'].shader"
-            	></polyshader>
+            		shaderxml="resources.shaders['vert.funky'].shader"></polyshader>
             	<polyshader
             		type="fragment"
             		class="fragment"
@@ -40,8 +38,7 @@
             	<shader-uniforms
             		vertex="polyshader.vertex"
             		fragment="polyshader.fragment"
-            		custom="object"
-            	>
+            		custom="object">
             		<object
             			color="0xFFFFFF"
             			opacity="1"
@@ -53,8 +50,7 @@
             	class="rain-material"
             	uniforms="shader-uniforms"
             	fragment="polyshader.fragment"
-            	vertex="polyshader.vertex"
-            >
+            	vertex="polyshader.vertex">
             	<polyshader
             		type="vertex"
             		class="vertex"
@@ -68,8 +64,7 @@
             	<shader-uniforms
             		vertex="polyshader.vertex"
             		fragment="polyshader.fragment"
-            		custom="object"
-            	>
+            		custom="object">
             		<object
             			color="0xFFFFFF"
             			opacity="1"
@@ -78,7 +73,7 @@
             	</shader-uniforms>
             </shader-material>
 
-            <position x="-50"></position>
+            <position x="0"></position>
 
             <mesh geometry="geometry" material="shader-material" class="test-plane-mesh">
                 <position z="-300" x="0" y="-100"></position>
