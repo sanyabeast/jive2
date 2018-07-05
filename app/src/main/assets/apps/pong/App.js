@@ -67,7 +67,7 @@ define("App", [
 					x : 70,
 					repeat : -1,
 					yoyo : true,
-					ease : "easeInCubic"
+					ease : "easeInQuad"
 				})
 			});	
 
