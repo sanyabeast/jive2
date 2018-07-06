@@ -59,12 +59,19 @@ define([
 				},
 				reset : {
 					value : function(){
+						for (var a = 0; a < this.onDieCallbacks.length; a++){
+							this.onDieCallbacks[a]();
+						}
+
 						this.params = null;
 						this.sourceActivityName = null;
 						this.src = "javascript:";
 						this.active = false;
 					}
 				},
+				onDieCallbacks : {
+					value : [],
+				}
 			});
 		}
 	});

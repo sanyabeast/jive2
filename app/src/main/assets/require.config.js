@@ -5,6 +5,14 @@ define(function(){
 
 		this.paths = {
 			requireConfig   : "require.config",
+			/*vendor libs*/
+			OBJLoader		: "core/libs/OBJLoader",
+			/*local libs*/
+			Trident		    : "core/src/Trident",
+			Interactor		: "core/src/Interactor",
+			ResLoader 		: "core/src/ResLoader",
+			tweeny			: "core/src/Tweeny",
+			/*node_modules*/
 			postal 			: "node_modules/postal/postal",
 			todo 			: "node_modules/todojs/todo",
 			jsterm 			: "node_modules/jsterm/jsterm",
@@ -21,10 +29,7 @@ define(function(){
 			vuex			: "node_modules/vuex/dist/vuex.min",
 			bezierEasing	: "node_modules/bezier-easing/src/index",
 			matter 			: "node_modules/matter-js/build/matter.min",
-			Trident		    : "core/src/Trident",
-			OBJLoader		: "core/libs/OBJLoader",
-			ResLoader 		: "core/src/ResLoader",
-			tweeny			: "core/src/Tweeny"
+			zingtouch       : "node_modules/zingtouch/dist/zingtouch.min"
 		};
 
 		this.baseUrl = "core/src/";

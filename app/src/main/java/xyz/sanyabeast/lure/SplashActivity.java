@@ -3,6 +3,7 @@ package xyz.sanyabeast.lure;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 /**
  * Created by sanyabeast on 23.04.2018.
@@ -18,4 +19,5 @@ public class SplashActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 }

@@ -11,7 +11,7 @@ define([
 		"todo",
 		"jsterm",
 		"superagent",
-		"matter"
+		"matter",
 	], function(
 		  ResLoader
 		, TokensCollection
@@ -24,10 +24,10 @@ define([
 		, todo
 		, JSTerm
 		, superagent
-		, matter){
+		, matter
+		){
 
 	window.matter = matter;
-
 	window.TokensCollection = TokensCollection;
 
 	/*Jive2Core*/

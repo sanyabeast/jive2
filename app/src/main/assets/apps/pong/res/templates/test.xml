@@ -109,6 +109,17 @@
                 <geometry type="circle" radius="5" segments="48"></geometry>
                 <link source=".default-phong-material"></link>
             </mesh>
+
+            <mesh 
+                class="man"
+                geometry="geometry" 
+                material="material"
+                cast-shadow="false"
+                receive-shadow="false">
+                <position z="-250" x="0" y="0"></position>
+                <geometry type="circle" radius="10" segments="16"></geometry>
+                <link source=".default-phong-material"></link>
+            </mesh>
         </group>
     </scene>
 </renderer>

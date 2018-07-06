@@ -28,7 +28,7 @@ define("App", [
 				renderer.render(scene, camera);
 			});
 
-			trident.setupEventsHandling(this.stage);
+			// trident.setupEventsHandling(this.stage);
 
 
 			window.addEventListener("resize", function(){
@@ -39,7 +39,13 @@ define("App", [
 
 			var bezier = BezierEasing(0.85, 0.04, 1, 1);
 
+			tweeny.addPreset("jump", 0, 10, 0.2, function(t){ return ((t *= 2) < 1 ? t * t * ((2.5 + 1) * t - 2.5) : (t -= 2) * t * ((2.5 + 1) * t + 2.5) + 2) / 2; });
+
 			this.stage.select(".racket", function(n){
+				// tweeny.runPreset("racket", function(v){
+				// 	n.subject.rotation.z = v;
+				// }.bind(this), 0, 2 * Math.PI);
+
 				tweener.fromTo(n.subject.rotation, 5, {
 					z : 0,
 				}, {
@@ -47,8 +53,44 @@ define("App", [
 					repeat : -1,
 					yoyo : true,
 					ease : function(t){ return bezier(t) }
-				})
+				});
+
 			});	
+
+			this.stage.select(".man", function(node){
+				zingtouch.bind(document.body, "swipe", function(evt){
+					var direction = evt.detail.data[0].currentDirection;
+					if (direction < 125 && direction > 45) direction = "up";
+					else if (direction > 225  && direction < 315) direction = "down";
+					else if (direction < 225 && direction > 135) direction = "left";
+					else  direction = "right";
+
+					switch(direction){
+						case "left":
+							tweeny.runPreset("jump", function(value){
+								node.subject.position.x = value;
+							}, node.subject.position.x, node.subject.position.x - 20)
+						break;	
+						case "right":
+							tweeny.runPreset("jump", function(value){
+								node.subject.position.x = value;
+							}, node.subject.position.x, node.subject.position.x + 20)
+						break;	
+						case "up":
+							tweeny.runPreset("jump", function(value){
+								node.subject.position.y = value;
+							}, node.subject.position.y, node.subject.position.y + 20)
+						break;	
+						case "down":
+							tweeny.runPreset("jump", function(value){
+								node.subject.position.y = value;
+							}, node.subject.position.y, node.subject.position.y - 20)
+						break;	
+					}
+
+					console.log(direction);
+				})
+			});
 
 			this.stage.select(".ball", function(n){
 				tweener.fromTo(n.subject.position, 1.2, {
@@ -96,7 +138,7 @@ define("App", [
 				}.bind(node));
 			});
 
-			this.setupOrbitControls(camera, scene, renderer);
+			// this.setupOrbitControls(camera, scene, renderer);
 			this.setupCommonUniforms();
 
 			resources.sound["Bouncer 001"].play();

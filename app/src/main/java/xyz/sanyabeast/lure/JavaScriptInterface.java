@@ -200,14 +200,17 @@ public class JavaScriptInterface {
     @JavascriptInterface
     public void uiNotify(String title, String content){
         rootActivity.mUITools.notify(title, content);
-
-
     }
 
     @JavascriptInterface
     public void uiSetNavBarVisible(String isVisible){
         Log.d(TAG, isVisible);
         rootActivity.mUITools.setNavBarVisible(isVisible.equals("true"));
+    }
+
+    @JavascriptInterface
+    public void uiSetKeepingScreenAwake(String keep){
+        rootActivity.mUITools.setKeepingScreenAwake(keep.equals("true"));
     }
 
 }

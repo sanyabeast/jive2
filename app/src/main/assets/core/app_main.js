@@ -1,8 +1,9 @@
 setTimeout(function(){
 	requirejs.config(window.requireConfig);
 
-	requirejs(["dollaclass", "lodash", "three", "threeOrbit", "vue", "vuex", "postal"], function($Class, _, THREE, OrbitControls, Vue, Vuex, postal){
+	requirejs(["dollaclass", "lodash", "three", "threeOrbit", "vue", "vuex", "postal", "zingtouch"], function($Class, _, THREE, OrbitControls, Vue, Vuex, postal, zingtouch){
 		window.postal = postal;
+		window.zingtouch =  new ZingTouch.Region(document.body, false, true);
 
 		window.Vue = Vue;
 		window.Vuex = Vuex;

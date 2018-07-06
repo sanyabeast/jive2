@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.google.android.gms.common.api.ApiException;
 
@@ -33,12 +36,23 @@ public class RootActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
 
         mUITools = new UITools(this);
+        mUITools.hideNavigation();
+
         mAdsManager = new AdsManager(this);
         mStorage = new Storage(this);
         mGoogleServicesManager = new GoogleServicesManager(this);
         mWebViewManager = new WebViewManager(this);
         mWebViewManager.open("file:///android_asset/index.html");
         mWebViewManager.set("activity", mWebViewManager);
+
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            mUITools.hideNavigation();
+        }
     }
 
     @Override
@@ -90,6 +104,34 @@ public class RootActivity extends FragmentActivity {
 
     public void runOnMainUIThread(Runnable runnable){
         new Handler(Looper.getMainLooper()).post(runnable);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        mWebViewManager.log(event);
+
+        int action = MotionEventCompat.getActionMasked(event);
+
+        switch(action) {
+            case (MotionEvent.ACTION_DOWN) :
+                Log.d(TAG,"Action was DOWN");
+                return true;
+            case (MotionEvent.ACTION_MOVE) :
+                Log.d(TAG,"Action was MOVE");
+                return true;
+            case (MotionEvent.ACTION_UP) :
+                Log.d(TAG,"Action was UP");
+                return true;
+            case (MotionEvent.ACTION_CANCEL) :
+                Log.d(TAG,"Action was CANCEL");
+                return true;
+            case (MotionEvent.ACTION_OUTSIDE) :
+                Log.d(TAG,"Movement occurred outside bounds " +
+                        "of current screen element");
+                return true;
+            default :
+                return super.onTouchEvent(event);
+        }
     }
 
 
