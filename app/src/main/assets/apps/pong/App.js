@@ -68,22 +68,22 @@ define("App", [
 
 					switch(direction){
 						case "left":
-							tweeny.runPreset("jump", function(value){
+							tweeny.runPreset("jump", "man-jump", function(value){
 								node.subject.position.x = value;
 							}, node.subject.position.x, node.subject.position.x - 20)
 						break;	
 						case "right":
-							tweeny.runPreset("jump", function(value){
+							tweeny.runPreset("jump", "man-jump", function(value){
 								node.subject.position.x = value;
 							}, node.subject.position.x, node.subject.position.x + 20)
 						break;	
 						case "up":
-							tweeny.runPreset("jump", function(value){
+							tweeny.runPreset("jump", "man-jump", function(value){
 								node.subject.position.y = value;
 							}, node.subject.position.y, node.subject.position.y + 20)
 						break;	
 						case "down":
-							tweeny.runPreset("jump", function(value){
+							tweeny.runPreset("jump", "man-jump", function(value){
 								node.subject.position.y = value;
 							}, node.subject.position.y, node.subject.position.y - 20)
 						break;	
@@ -100,12 +100,12 @@ define("App", [
 					
 					switch (direction){
 						case "left":
-							tweeny.runPreset("jumpy", function(value){
+							tweeny.runPreset("jumpy", "superman-jump", function(value){
 								node.subject.position.x = value;
 							}, node.subject.position.x, node.subject.position.x - 40)
 						break;	
 						case "right":
-							tweeny.runPreset("jumpy", function(value){
+							tweeny.runPreset("jumpy", "superman-jump", function(value){
 								node.subject.position.x = value;
 							}, node.subject.position.x, node.subject.position.x + 40)
 						break;

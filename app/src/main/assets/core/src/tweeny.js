@@ -29,7 +29,7 @@ define(function(){
 				easing : easing
 			};
 		},
-		runPreset : function(name, callback, fromValue, toValue, duration, easing){
+		runPreset : function(name, id, callback, fromValue, toValue, duration, easing){
 			var preset = this.presets[name];
 
 			fromValue 	= typeof fromValue 	== "number" 	? fromValue : preset.fromValue;
@@ -37,7 +37,7 @@ define(function(){
 			duration 	= typeof duration 	== "number" 	? duration 	: preset.duration;
 			easing      = typeof easing		== "function"	? easing    : preset.easing;
 
-			return this.run(fromValue, toValue, duration, callback, easing);
+			return this.run(id, fromValue, toValue, duration, callback, easing);
 		},
 		tick : function(){
 			var task;
@@ -70,9 +70,9 @@ define(function(){
 				task.callback(currentValue, state);
 			}
 		},
-		run : function(fromValue, toValue, duration, callback, easing){
+		run : function(id, fromValue, toValue, duration, callback, easing){
 			return new Promise(function(resolve, reject){
-				var id = (this.counter++).toString();
+				id = id || (this.counter++).toString();
 				duration = duration * 1000;
 
 				this.tasks[id] = {
