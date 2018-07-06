@@ -3,8 +3,13 @@ define("App", [
 		"tweener",
 		"matter",
 		"Trident/Tools/PolyShader",
-		"bezierEasing"
-	], function(tweener, matter, PolyShader, BezierEasing){
+		"bezierEasing",
+		"tweeny"
+	], function(tweener, matter, PolyShader, BezierEasing, tweeny){
+
+	window.tweeny = tweeny;
+
+	unicycle.addTask(tweeny.tick);
 
 	console.log(BezierEasing);
 
