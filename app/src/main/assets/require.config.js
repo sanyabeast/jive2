@@ -4,6 +4,7 @@ define(function(){
 		this.level = 2;
 
 		this.paths = {
+			core			: "core/src",
 			requireConfig   : "require.config",
 			/*vendor libs*/
 			OBJLoader		: "core/libs/OBJLoader",
@@ -11,7 +12,6 @@ define(function(){
 			Trident		    : "core/src/Trident",
 			Interactor		: "core/src/Interactor",
 			ResLoader 		: "core/src/ResLoader",
-			tweeny			: "core/src/Tweeny",
 			/*node_modules*/
 			postal 			: "node_modules/postal/postal",
 			todo 			: "node_modules/todojs/todo",

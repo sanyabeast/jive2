@@ -1,0 +1,30 @@
+<uniforms>\
+	<item type="vec2"  name="resolution"></item>
+	<item type="float" name="time"></item>
+</uniforms>
+<program>
+	
+	void main(){
+		vec2 st = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);
+
+		vec2 p = st * 5.;
+		p = mod(p, 2.);
+		
+		p.x += .1 * sin(2.5 * st.x + 4.*time);
+		p.y += .2 * cos(2.5 * st.y + 5.*time);
+		
+		float r = .5;
+		float l = length(p - vec2(1.));
+		float d = abs(l - r);
+		
+		float fr = 50. + 40. * sin(3.14*time + st.x);
+		float fg = 50. + 40. * sin(5.27*time + st.y);
+		float fb = 50. + 40. * sin(7.35*time);
+
+		vec3 color = vec3(1. / (fr * d), 1. / (fg * d), 1. / (fb * d));
+		color = color*smoothstep(.4, .5, color);
+		
+		gl_FragColor = vec4(color, 1.0);	
+	}
+
+</program>

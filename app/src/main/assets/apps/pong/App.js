@@ -4,12 +4,12 @@ define("App", [
 		"matter",
 		"Trident/Tools/PolyShader",
 		"bezierEasing",
-		"tweeny"
-	], function(tweener, matter, PolyShader, BezierEasing, tweeny){
+		"core/Tools/Tweeny"
+	], function(tweener, matter, PolyShader, BezierEasing, Tweeny){
 
-	window.tweeny = tweeny;
+	window.Tweeny = Tweeny;
 
-	unicycle.addTask(tweeny.tick);
+	unicycle.addTask(Tweeny.tick);
 
 	console.log(BezierEasing);
 
@@ -39,11 +39,11 @@ define("App", [
 
 			var bezier = BezierEasing(0.85, 0.04, 1, 1);
 
-			tweeny.addPreset("jump", 0, 10, 0.22, function(t){ return ((t *= 2) < 1 ? t * t * ((2.5 + 1) * t - 2.5) : (t -= 2) * t * ((2.5 + 1) * t + 2.5) + 2) / 2; });
-			tweeny.addPreset("jumpy", 0, 10, 0.3, function(t){ return ((t *= 2) < 1 ? t * t * ((1.5 + 1) * t - 1.5) : (t -= 2) * t * ((1.5 + 1) * t + 1.5) + 2) / 2; });
+			Tweeny.addPreset("jump", 0, 10, 0.22, function(t){ return ((t *= 2) < 1 ? t * t * ((2.5 + 1) * t - 2.5) : (t -= 2) * t * ((2.5 + 1) * t + 2.5) + 2) / 2; });
+			Tweeny.addPreset("jumpy", 0, 10, 0.3, function(t){ return ((t *= 2) < 1 ? t * t * ((1.5 + 1) * t - 1.5) : (t -= 2) * t * ((1.5 + 1) * t + 1.5) + 2) / 2; });
 
 			this.stage.select(".racket", function(n){
-				// tweeny.runPreset("racket", function(v){
+				// Tweeny.runPreset("racket", function(v){
 				// 	n.subject.rotation.z = v;
 				// }.bind(this), 0, 2 * Math.PI);
 
@@ -68,22 +68,22 @@ define("App", [
 
 					switch(direction){
 						case "left":
-							tweeny.runPreset("jump", "man-jump", function(value){
+							Tweeny.runPreset("jump", "man-jump", function(value){
 								node.subject.position.x = value;
 							}, node.subject.position.x, node.subject.position.x - 20)
 						break;	
 						case "right":
-							tweeny.runPreset("jump", "man-jump", function(value){
+							Tweeny.runPreset("jump", "man-jump", function(value){
 								node.subject.position.x = value;
 							}, node.subject.position.x, node.subject.position.x + 20)
 						break;	
 						case "up":
-							tweeny.runPreset("jump", "man-jump", function(value){
+							Tweeny.runPreset("jump", "man-jump", function(value){
 								node.subject.position.y = value;
 							}, node.subject.position.y, node.subject.position.y + 20)
 						break;	
 						case "down":
-							tweeny.runPreset("jump", "man-jump", function(value){
+							Tweeny.runPreset("jump", "man-jump", function(value){
 								node.subject.position.y = value;
 							}, node.subject.position.y, node.subject.position.y - 20)
 						break;	
@@ -100,12 +100,12 @@ define("App", [
 					
 					switch (direction){
 						case "left":
-							tweeny.runPreset("jumpy", "superman-jump", function(value){
+							Tweeny.runPreset("jumpy", "superman-jump", function(value){
 								node.subject.position.x = value;
 							}, node.subject.position.x, node.subject.position.x - 40)
 						break;	
 						case "right":
-							tweeny.runPreset("jumpy", "superman-jump", function(value){
+							Tweeny.runPreset("jumpy", "superman-jump", function(value){
 								node.subject.position.x = value;
 							}, node.subject.position.x, node.subject.position.x + 40)
 						break;
