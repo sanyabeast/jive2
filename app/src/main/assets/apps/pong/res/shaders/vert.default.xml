@@ -1,10 +1,11 @@
-<uniforms>
-</uniforms>
+<varyings>
+	<item type="vec2" name="vUv"></item>
+</varyings>
 <program>
-	void main() {
-	    vec4 pos = modelViewMatrix * vec4(position, 1.0);
-	    gl_Position = projectionMatrix * pos;
+	void main(){
+		vUv = uv;
+		vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+		gl_Position = projectionMatrix * mvPosition;
 	}
 </program>
-
 

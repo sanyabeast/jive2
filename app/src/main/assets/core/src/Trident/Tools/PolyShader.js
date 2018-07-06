@@ -80,8 +80,16 @@ define([
 				this.$select(uniformsNode, "item", function(item){
 					var name = item.getAttribute("name");
 					var type = item.getAttribute("type");
+					var defaultValue = item.getAttribute("default");
 
-					uniforms[name] = type;
+					try {
+						defaultValue = JSON.parse(defaultValue);
+					} catch (err){}
+
+					uniforms[name] = {
+						type : type,
+						defaultValue : defaultValue
+					};
 				})
 			});
 
@@ -121,10 +129,10 @@ define([
 			var common = this.common;
 			var _this = this;
 
-			_.forEach(this.uniforms, function(type, name){
+			_.forEach(this.uniforms, function(info, name){
 				if (custom && custom[name]){
 					uniformsContainer[name] = {
-						value : this.$normalizeValue(type, custom[name])
+						value : this.$normalizeValue(info.type, custom[name])
 					};
 				} else if (common[name]){
 					uniformsContainer[name] = {
@@ -134,12 +142,21 @@ define([
 					};
 				} else {
 					if (useDefault){
-						uniformsContainer[name] = {
-							value : this.$getDefaultValueFor(type, name)
-						};
+
+						if (info.defaultValue){
+							uniformsContainer[name] = {
+								value : this.$normalizeValue(info.type, info.defaultValue)
+							};
+						} else {
+							uniformsContainer[name] = {
+								value : this.$getDefaultValueFor(info.type, name)
+							};
+						}
+
+						
 					}
 				}
-			});
+			}.bind(this));
 
 			return uniformsContainer;
 		},
@@ -148,16 +165,19 @@ define([
 			value : {
 				time : 1,
 				resolution : new THREE.Vector2(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio),
-				mouse : new THREE.Vector2(0, 0)
+				mouse : new THREE.Vector2(0, 0),
+				pixelRatio : window.devicePixelRatio
 			}
 		}
 	});
 
 	window.addEventListener("resize", function(){
-		PolyShader.common.resolution.x = window.innerWidth * window.devicePixelRatio;
-		PolyShader.common.resolution.y = window.innerHeight * window.devicePixelRatio;
+		PolyShader.common.resolution.x = (window.innerWidth * window.devicePixelRatio);
+		PolyShader.common.resolution.y = (window.innerHeight * window.devicePixelRatio);
 	});
 
+
+	console.log(1);
 
 	return PolyShader;
 
