@@ -23,7 +23,8 @@ define(function(){
 			matter 			: "node_modules/matter-js/build/matter.min",
 			Trident		    : "core/src/Trident",
 			OBJLoader		: "core/libs/OBJLoader",
-			ResLoader 		: "core/src/ResLoader"
+			ResLoader 		: "core/src/ResLoader",
+			tweeny			: "core/src/Tweeny"
 		};
 
 		this.baseUrl = "core/src/";
