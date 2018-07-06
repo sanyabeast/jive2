@@ -93,7 +93,7 @@
                 receive-shadow="false">
                 <position z="-254" x="0" y="0"></position>
                 <geometry type="plane" width="500" height="500" segments="1"></geometry>
-                <link source=".triangles-material"></link>
+                <link source=".rain-material"></link>
             </mesh>
 
             <!-- <mesh 
