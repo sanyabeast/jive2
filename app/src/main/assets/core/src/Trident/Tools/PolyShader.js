@@ -129,7 +129,7 @@ define([
 				} else if (common[k]){
 					uniformsContainer[k] = {
 						get value(){
-							return _this.$normalizeValue(_this.uniforms[k], common[k]);
+							return common[k];
 						}
 					};
 				} else {

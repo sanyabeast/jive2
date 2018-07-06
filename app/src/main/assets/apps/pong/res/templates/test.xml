@@ -21,10 +21,6 @@
         <light type="spot" color="0xFFFFFF" cast-shadow="false" shadowcamera-visible="true">
             <position x="0" y="0" z="130">
             </position>
-            <light-shadow>
-                <light-shadow-map size="1024"></light-shadow-map>
-                <light-shadow-camera near="0.5" far="1000"></light-shadow-camera>
-            </light-shadow>
         </light>
         <group>
             <material class="default-shady-material" type="lambert" color="0x2d2d2d" side="THREE.DoubleSide"></material>
