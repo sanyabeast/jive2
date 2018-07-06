@@ -2,7 +2,8 @@
     type="webgl"  
     width="{ window.innerWidth * window.devicePixelRatio }" 
     height="{ window.innerHeight * window.devicePixelRatio }" 
-    antialias="true">
+    antialias="true"
+    >
     <renderer-shadowmap enabled="true" type="THREE.PCFSoftShadowMap"></renderer-shadowmap>
     <scene>
         <!-- Matter -->
@@ -55,6 +56,34 @@
                 </shader-uniforms>
             </shader-material>
 
+            <shader-material
+                class="triangles-material"
+                uniforms="shader-uniforms"
+                fragment="polyshader.fragment"
+                vertex="polyshader.vertex"
+                transparent="true">
+                <polyshader
+                    type="vertex"
+                    class="vertex"
+                    shaderxml="resources.shaders['vert.funky'].shader"
+                ></polyshader>
+                <polyshader
+                    type="fragment"
+                    class="fragment"
+                    shaderxml="resources.shaders['frag.triangles'].shader"
+                ></polyshader>
+                <shader-uniforms
+                    vertex="polyshader.vertex"
+                    fragment="polyshader.fragment"
+                    custom="object">
+                    <object
+                        color="0xFFFFFF"
+                        opacity="1"
+                    >
+                    </object>
+                </shader-uniforms>
+            </shader-material>
+
             <position x="0"></position>
 
             <mesh 
@@ -64,7 +93,7 @@
                 receive-shadow="false">
                 <position z="-254" x="0" y="0"></position>
                 <geometry type="plane" width="500" height="500" segments="1"></geometry>
-                <link source=".rain-material"></link>
+                <link source=".triangles-material"></link>
             </mesh>
 
             <!-- <mesh 

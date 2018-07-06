@@ -121,35 +121,43 @@ define([
 			var common = this.common;
 			var _this = this;
 
-			for (var k in this.uniforms){
-				if (custom && custom[k]){
-					uniformsContainer[k] = {
-						value : this.$normalizeValue(this.uniforms[k], custom[k])
+			_.forEach(this.uniforms, function(type, name){
+				if (custom && custom[name]){
+					uniformsContainer[name] = {
+						value : this.$normalizeValue(type, custom[name])
 					};
-				} else if (common[k]){
-					uniformsContainer[k] = {
+				} else if (common[name]){
+					uniformsContainer[name] = {
 						get value(){
-							return common[k];
+							return common[name];
 						}
 					};
 				} else {
 					if (useDefault){
-						uniformsContainer[k] = {
-							value : this.$getDefaultValueFor(this.uniforms[k], k)
+						uniformsContainer[name] = {
+							value : this.$getDefaultValueFor(type, name)
 						};
 					}
 				}
-			}
+			});
 
 			return uniformsContainer;
 		},
 		common : {
 			static : true,
 			value : {
-				time : 1
+				time : 1,
+				resolution : new THREE.Vector2(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio),
+				mouse : new THREE.Vector2(0, 0)
 			}
 		}
 	});
+
+	window.addEventListener("resize", function(){
+		PolyShader.common.resolution.x = window.innerWidth * window.devicePixelRatio;
+		PolyShader.common.resolution.y = window.innerHeight * window.devicePixelRatio;
+	});
+
 
 	return PolyShader;
 

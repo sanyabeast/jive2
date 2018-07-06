@@ -139,7 +139,7 @@ define([
 						"canvas" : THREE.CanvasRenderer
 					},
 					constructArgs : {
-						"webgl" : ["{ antialias } "],
+						"webgl" : ["{ antialias, precision } "],
 						"canvas" : []
 					},
 					members : {
