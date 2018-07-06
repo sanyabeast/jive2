@@ -25,6 +25,7 @@
         <group>
             <material class="default-shady-material" type="lambert" color="0x2d2d2d" side="THREE.DoubleSide"></material>
             <material class="default-phong-material" type="lambert" color="0xFFFFFF" side="THREE.DoubleSide"></material>
+            <material class="default-phong-material-black" type="lambert" color="0x000000" side="THREE.DoubleSide"></material>
             <material class="default-phong-material-bg" type="phong" color="0x270674"></material>
             <shader-material
                 class="rain-material"
@@ -117,7 +118,18 @@
                 cast-shadow="false"
                 receive-shadow="false">
                 <position z="-250" x="0" y="0"></position>
-                <geometry type="circle" radius="10" segments="16"></geometry>
+                <geometry type="circle" radius="10" segments="32"></geometry>
+                <link source=".default-phong-material"></link>
+            </mesh>
+
+            <mesh 
+                class="superman"
+                geometry="geometry" 
+                material="material"
+                cast-shadow="false"
+                receive-shadow="false">
+                <position z="-250" x="0" y="30"></position>
+                <geometry type="ring" inner-radius="12" outer-radius="16" segments="32"></geometry>
                 <link source=".default-phong-material"></link>
             </mesh>
         </group>

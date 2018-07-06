@@ -39,7 +39,8 @@ define("App", [
 
 			var bezier = BezierEasing(0.85, 0.04, 1, 1);
 
-			tweeny.addPreset("jump", 0, 10, 0.2, function(t){ return ((t *= 2) < 1 ? t * t * ((2.5 + 1) * t - 2.5) : (t -= 2) * t * ((2.5 + 1) * t + 2.5) + 2) / 2; });
+			tweeny.addPreset("jump", 0, 10, 0.22, function(t){ return ((t *= 2) < 1 ? t * t * ((2.5 + 1) * t - 2.5) : (t -= 2) * t * ((2.5 + 1) * t + 2.5) + 2) / 2; });
+			tweeny.addPreset("jumpy", 0, 10, 0.3, function(t){ return ((t *= 2) < 1 ? t * t * ((1.5 + 1) * t - 1.5) : (t -= 2) * t * ((1.5 + 1) * t + 1.5) + 2) / 2; });
 
 			this.stage.select(".racket", function(n){
 				// tweeny.runPreset("racket", function(v){
@@ -89,6 +90,27 @@ define("App", [
 					}
 
 					console.log(direction);
+				})
+			});
+
+			this.stage.select(".superman", function(node){
+				zingtouch.bind(document.body, "tap", function(evt){
+					var direction = "left";
+					if (evt.detail.events[0].clientX > screen.availWidth / 2) direction = "right";
+					
+					switch (direction){
+						case "left":
+							tweeny.runPreset("jumpy", function(value){
+								node.subject.position.x = value;
+							}, node.subject.position.x, node.subject.position.x - 40)
+						break;	
+						case "right":
+							tweeny.runPreset("jumpy", function(value){
+								node.subject.position.x = value;
+							}, node.subject.position.x, node.subject.position.x + 40)
+						break;
+					}
+
 				})
 			});
 
