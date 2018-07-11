@@ -51,7 +51,7 @@ define([
 			this.modules.unicycle.start();
 
 			this.modules.with("prePatcher", function(prePatcher){
-				prePatcher.patch();
+				prePatcher.patch(window);
 			});
 
 

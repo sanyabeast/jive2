@@ -13,7 +13,9 @@ setTimeout(function(){
 		THREE.OrbitControls = OrbitControls(THREE);
 		window.THREE = THREE;
 
-		requirejs(["ResLoader/ResLoader"], function(ResLoader){
+		requirejs(["ResLoader/ResLoader", "PrePatcher"], function(ResLoader, PrePatcher){
+			new PrePatcher().patch(window);
+			
 			window.r = new ResLoader();
 			window.r.load().then(function(resources){
 				window.resources = resources;

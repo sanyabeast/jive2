@@ -12,6 +12,8 @@ define(function(){
 			Trident		    : "core/src/Trident",
 			Interactor		: "core/src/Interactor",
 			ResLoader 		: "core/src/ResLoader",
+			ToolChain		: "core/src/ToolChain",
+			PrePatcher		: "core/src/PrePatcher",
 			/*node_modules*/
 			postal 			: "node_modules/postal/postal",
 			todo 			: "node_modules/todojs/todo",

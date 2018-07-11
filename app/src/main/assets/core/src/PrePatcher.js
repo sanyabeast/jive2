@@ -4,7 +4,7 @@ define([
 	], function(tools){
 
 	var PrePatcher = new $Class({ name : "PrePatcher", namespace : "Core" }, {
-		patch : function(){
+		patch : function(window){
 			tools.defineProperties(window.Node.prototype, {
 				addChild : function(child){
 					this.appendChild(child);
@@ -16,6 +16,7 @@ define([
 							callback(elements, index, elements);
 						});
 					}
+					
 					return elements;
 				},
 				disconnect : function(){
@@ -23,16 +24,31 @@ define([
 						this._parentElement = this.parentElement;
 						this.parentElement.removeChild(this);
 					}
+
+					return this;
 				},
 				connect : function(){
 					if (this._parentElement){
 						this._parentElement.appendChild(this);
 						delete this._parentElement;
 					}
+
+					return this;
+				},
+				traverse : function(iteratee, parent){
+					iteratee(this, parent || null);
+
+					parent = this;
+
+					_.forEach(this.children, function(child, index){
+						child.traverse(iteratee, parent);
+					});
+
+					return this;
 				}
 			});	
 
-			tools.defineProperties(HTMLIFrameElement.prototype, {
+			tools.defineProperties(window.HTMLIFrameElement.prototype, {
 				window : {
 					get : function(){
 						return this.contentWindow;
