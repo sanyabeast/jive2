@@ -330,7 +330,6 @@ define([
 					source : "factory",
 					construct : {
 						"ready" : function(name){
-							console.log(window.resources.textures[name]);
 							return window.resources.textures[name];
 						},
 						"load" : function(image){

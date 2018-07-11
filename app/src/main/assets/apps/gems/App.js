@@ -13,7 +13,20 @@ define("App", [
 
 	var App =  new $Class({ name : "App" }, {
 		$constructor : function(){
-			this.stage = trident.buildStage(resources.templates.test.dom);
+			this.stage = trident.buildStage(resources.templates.test.dom, {
+				gems : [
+					[1, 2, 3, 4, 5, 1, 2, 3, 4, 5],
+					[1, 2, 3, 4, 5, 1, 2, 3, 4, 5],
+					[1, 2, 3, 4, 5, 1, 2, 3, 4, 5],
+					[1, 2, 3, 4, 5, 1, 2, 3, 4, 5],
+					[1, 2, 3, 4, 5, 1, 2, 3, 4, 5],
+					[1, 2, 3, 4, 5, 1, 2, 3, 4, 5],
+					[1, 2, 3, 4, 5, 1, 2, 3, 4, 5],
+					[1, 2, 3, 4, 5, 1, 2, 3, 4, 5],
+					[1, 2, 3, 4, 5, 1, 2, 3, 4, 5],
+					[1, 2, 3, 4, 5, 1, 2, 3, 4, 5],
+				]
+			});
 
 			var renderer = this.stage.subject;
 			var scene = this.stage.querySelector("scene").subject;
@@ -156,7 +169,7 @@ define("App", [
 				}.bind(node));
 			});
 
-			// this.setupOrbitControls(camera, scene, renderer);
+			this.setupOrbitControls(camera, scene, renderer);
 			this.setupCommonUniforms();
 
 			resources.sound["Bouncer 001"].play();

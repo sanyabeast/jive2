@@ -2,8 +2,9 @@
 define([
 		"three",
 		"Trident/SOM",
-		"Trident/Tools/PolyShader"
-	], function(THREE, SOM, PolyShader){
+		"Trident/Tools/PolyShader",
+		"Trident/TreePreProcessor",
+	], function(THREE, SOM, PolyShader, TreePreProcessor){
 
 	var Trident = new $Class({ name : "Trident", namespace : "Trident" }, {
 		SOM : { value : SOM, static : true },
@@ -11,12 +12,14 @@ define([
 		$constructor : function(globalContext){
 			this.som = new SOM();
 			this.globalContext = globalContext;
+			this.treePreProcessor = new TreePreProcessor();
 			// console.log(THREE);
 		},
 		setGlobalContext : function(globalContext){
 			this.som.setGlobalContext(globalContext);
 		},
 		buildStage : function(template, data){
+			template = this.treePreProcessor.process(template, data);
 			return this.som.make(template, data);
 		},
 		setupEventsHandling : function(stage, throttle){
