@@ -15,7 +15,7 @@ requirejs(["require.config.js"], function(RequireConfig){
 			THREE.OrbitControls = OrbitControls(THREE);
 			window.THREE = THREE;
 			window.core = new Core;
-			window.core.load("pong", {
+			window.core.load("gems", {
 				name : "Sasha"
 			});
 		});

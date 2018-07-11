@@ -1,0 +1,24 @@
+<uniforms>
+	<item type="float" name="time"></item>
+	<item type="vec2"  name="resolution"></item>
+	<item type="vec2"  name="mouse"></item>
+</uniforms>
+
+<varyings>
+	<item type="vec2" name="vUv"></item>
+</varyings>
+<program>
+	void main( void ) {
+		vec2 q = gl_FragCoord.xy / resolution.xy;
+		vec2 uv = -1.0 + 2.0 * q;
+		
+		vec3 colour = vec3(0.0);
+		
+		uv.x -= uv.y * 0.5 + time * 0.1;
+		
+		uv.x = fract(uv.x * 8.0);
+		colour = vec3(step(uv.x, 0.5), uv.y, 0.5);
+		
+		gl_FragColor = vec4(colour, 1.0);
+	}
+</program>

@@ -1,0 +1,580 @@
+<renderer 
+    type="webgl"  
+    width="{ window.innerWidth * window.devicePixelRatio }" 
+    height="{ window.innerHeight * window.devicePixelRatio }" 
+    antialias="true"
+    >
+    <renderer-shadowmap enabled="true" type="THREE.PCFSoftShadowMap"></renderer-shadowmap>
+    <scene>
+        <!-- Matter -->
+        <!-- !Matter -->
+        <camera type="perspective" fov="45" aspect="{ window.innerWidth / window.innerHeight }" near="1" far="50000">
+            <position x="0" y="0" z="200">
+            </position>
+        </camera>
+        <!-- <light 
+            type="point" 
+            color="0xFFFFFF" 
+            intensity="2"
+            cast-shadow="false">
+            <position x="0" y="0" z="-200"> </position>
+        </light> -->
+        <light type="spot" color="0xFFFFFF" cast-shadow="false" shadowcamera-visible="true">
+            <position x="0" y="0" z="130">
+            </position>
+        </light>
+        <group>
+            <material class="default-shady-material" type="lambert" color="0x2d2d2d" side="THREE.DoubleSide"></material>
+            <material class="default-phong-material" type="lambert" color="0xFFFFFF" side="THREE.DoubleSide"></material>
+            <material class="default-phong-material-black" type="lambert" color="0x000000" side="THREE.DoubleSide"></material>
+            <material class="default-phong-material-bg" type="phong" color="0x270674"></material>
+            
+            <!--Shader materials  -->
+
+            <shader-material class="rain-material"
+                uniforms="shader-uniforms"
+                fragment="polyshader.fragment"
+                vertex="polyshader.vertex"
+                transparent="true">
+                <polyshader
+                    type="vertex"
+                    class="vertex"
+                    shaderxml="resources.shaders['vert.funky'].shader"
+                ></polyshader>
+                <polyshader
+                    type="fragment"
+                    class="fragment"
+                    shaderxml="resources.shaders['frag.rain'].shader"
+                ></polyshader>
+                <shader-uniforms
+                    vertex="polyshader.vertex"
+                    fragment="polyshader.fragment"
+                    custom="object">
+                    <object
+                        color="0xFFFFFF"
+                        opacity="1"
+                    >
+                    </object>
+                </shader-uniforms>
+            </shader-material>
+
+            <shader-material class="triangles-material"
+                uniforms="shader-uniforms"
+                fragment="polyshader.fragment"
+                vertex="polyshader.vertex"
+                transparent="true">
+                <polyshader
+                    type="vertex"
+                    class="vertex"
+                    shaderxml="resources.shaders['vert.funky'].shader"
+                ></polyshader>
+                <polyshader
+                    type="fragment"
+                    class="fragment"
+                    shaderxml="resources.shaders['frag.triangles'].shader"
+                ></polyshader>
+                <shader-uniforms
+                    vertex="polyshader.vertex"
+                    fragment="polyshader.fragment"
+                    custom="object">
+                    <object
+                        color="0xFFFFFF"
+                        opacity="1"
+                    >
+                    </object>
+                </shader-uniforms>
+            </shader-material>
+
+            <shader-material class="smooth-waves-material"
+                uniforms="shader-uniforms"
+                fragment="polyshader.fragment"
+                vertex="polyshader.vertex"
+                transparent="true">
+                <polyshader
+                    type="vertex"
+                    class="vertex"
+                    shaderxml="resources.shaders['vert.default'].shader"
+                ></polyshader>
+                <polyshader
+                    type="fragment"
+                    class="fragment"
+                    shaderxml="resources.shaders['frag.smooth.waves'].shader"
+                ></polyshader>
+                <shader-uniforms
+                    vertex="polyshader.vertex"
+                    fragment="polyshader.fragment"
+                    custom="object">
+                    <object
+                        color="0xFFFFFF"
+                        opacity="1"
+                    >
+                    </object>
+                </shader-uniforms>
+            </shader-material>
+
+            <shader-material class="snow-material"
+                uniforms="shader-uniforms"
+                fragment="polyshader.fragment"
+                vertex="polyshader.vertex"
+                transparent="true">
+                <polyshader
+                    type="vertex"
+                    class="vertex"
+                    shaderxml="resources.shaders['vert.default'].shader"
+                ></polyshader>
+                <polyshader
+                    type="fragment"
+                    class="fragment"
+                    shaderxml="resources.shaders['frag.snow'].shader"
+                ></polyshader>
+                <shader-uniforms
+                    vertex="polyshader.vertex"
+                    fragment="polyshader.fragment"
+                    custom="object">
+                    <object
+                        color="0xFFFFFF"
+                        opacity="1"
+                    >
+                    </object>
+                </shader-uniforms>
+            </shader-material>
+
+            <shader-material class="mystic-material"
+                uniforms="shader-uniforms"
+                fragment="polyshader.fragment"
+                vertex="polyshader.vertex"
+                transparent="true">
+                <polyshader
+                    type="vertex"
+                    class="vertex"
+                    shaderxml="resources.shaders['vert.default'].shader"
+                ></polyshader>
+                <polyshader
+                    type="fragment"
+                    class="fragment"
+                    shaderxml="resources.shaders['frag.mystic'].shader"
+                ></polyshader>
+                <shader-uniforms
+                    vertex="polyshader.vertex"
+                    fragment="polyshader.fragment"
+                    custom="object">
+                    <object
+                        color="0xFFFFFF"
+                        opacity="1"
+                    >
+                    </object>
+                </shader-uniforms>
+            </shader-material>
+
+            <shader-material class="stripes-material"
+                uniforms="shader-uniforms"
+                fragment="polyshader.fragment"
+                vertex="polyshader.vertex"
+                transparent="true">
+                <polyshader
+                    type="vertex"
+                    class="vertex"
+                    shaderxml="resources.shaders['vert.default'].shader"
+                ></polyshader>
+                <polyshader
+                    type="fragment"
+                    class="fragment"
+                    shaderxml="resources.shaders['frag.stripes'].shader"
+                ></polyshader>
+                <shader-uniforms
+                    vertex="polyshader.vertex"
+                    fragment="polyshader.fragment"
+                    custom="object">
+                    <object
+                        color="0xFFFFFF"
+                        opacity="1"
+                    >
+                    </object>
+                </shader-uniforms>
+            </shader-material>
+
+            <shader-material class="starfly-material"
+                uniforms="shader-uniforms"
+                fragment="polyshader.fragment"
+                vertex="polyshader.vertex"
+                transparent="true">
+                <polyshader
+                    type="vertex"
+                    class="vertex"
+                    shaderxml="resources.shaders['vert.default'].shader"
+                ></polyshader>
+                <polyshader
+                    type="fragment"
+                    class="fragment"
+                    shaderxml="resources.shaders['frag.starfly'].shader"
+                ></polyshader>
+                <shader-uniforms
+                    vertex="polyshader.vertex"
+                    fragment="polyshader.fragment"
+                    custom="object">
+                    <object
+                        color="0xFFFFFF"
+                        opacity="1"
+                    >
+                    </object>
+                </shader-uniforms>
+            </shader-material>
+
+            <shader-material class="ds-material"
+                uniforms="shader-uniforms"
+                fragment="polyshader.fragment"
+                vertex="polyshader.vertex"
+                transparent="true">
+                <polyshader
+                    type="vertex"
+                    class="vertex"
+                    shaderxml="resources.shaders['vert.default'].shader"
+                ></polyshader>
+                <polyshader
+                    type="fragment"
+                    class="fragment"
+                    shaderxml="resources.shaders['frag.double.spiral'].shader"
+                ></polyshader>
+                <shader-uniforms
+                    vertex="polyshader.vertex"
+                    fragment="polyshader.fragment"
+                    custom="object">
+                    <object
+                        color="0xFFFFFF"
+                        opacity="1"
+                    >
+                    </object>
+                </shader-uniforms>
+            </shader-material>
+
+            <shader-material class="tb-material"
+                uniforms="shader-uniforms"
+                fragment="polyshader.fragment"
+                vertex="polyshader.vertex"
+                transparent="true">
+                <polyshader
+                    type="vertex"
+                    class="vertex"
+                    shaderxml="resources.shaders['vert.default'].shader"
+                ></polyshader>
+                <polyshader
+                    type="fragment"
+                    class="fragment"
+                    shaderxml="resources.shaders['frag.twisting.bars'].shader"
+                ></polyshader>
+                <shader-uniforms
+                    vertex="polyshader.vertex"
+                    fragment="polyshader.fragment"
+                    custom="object">
+                    <object
+                        color="0xFFFFFF"
+                        opacity="1"
+                    >
+                    </object>
+                </shader-uniforms>
+            </shader-material>
+
+            <shader-material class="fsq-material"
+                uniforms="shader-uniforms"
+                fragment="polyshader.fragment"
+                vertex="polyshader.vertex"
+                transparent="true">
+                <polyshader
+                    type="vertex"
+                    class="vertex"
+                    shaderxml="resources.shaders['vert.default'].shader"
+                ></polyshader>
+                <polyshader
+                    type="fragment"
+                    class="fragment"
+                    shaderxml="resources.shaders['frag.floating.squares'].shader"
+                ></polyshader>
+                <shader-uniforms
+                    vertex="polyshader.vertex"
+                    fragment="polyshader.fragment"
+                    custom="object">
+                    <object
+                        color="0xFFFFFF"
+                        opacity="1"
+                    >
+                    </object>
+                </shader-uniforms>
+            </shader-material>
+
+            <shader-material class="ss-material"
+                uniforms="shader-uniforms"
+                fragment="polyshader.fragment"
+                vertex="polyshader.vertex"
+                transparent="true">
+                <polyshader
+                    type="vertex"
+                    class="vertex"
+                    shaderxml="resources.shaders['vert.default'].shader"
+                ></polyshader>
+                <polyshader
+                    type="fragment"
+                    class="fragment"
+                    shaderxml="resources.shaders['frag.spiraling.spirals'].shader"
+                ></polyshader>
+                <shader-uniforms
+                    vertex="polyshader.vertex"
+                    fragment="polyshader.fragment"
+                    custom="object">
+                    <object
+                        color="0xFFFFFF"
+                        opacity="1"
+                    >
+                    </object>
+                </shader-uniforms>
+            </shader-material>
+
+            <shader-material class="sin-waves-material"
+                uniforms="shader-uniforms"
+                fragment="polyshader.fragment"
+                vertex="polyshader.vertex"
+                transparent="true">
+                <polyshader
+                    type="vertex"
+                    class="vertex"
+                    shaderxml="resources.shaders['vert.default'].shader"
+                ></polyshader>
+                <polyshader
+                    type="fragment"
+                    class="fragment"
+                    shaderxml="resources.shaders['frag.sin.waves'].shader"
+                ></polyshader>
+                <shader-uniforms
+                    vertex="polyshader.vertex"
+                    fragment="polyshader.fragment"
+                    custom="object">
+                    <object
+                        color="0xFFFFFF"
+                        opacity="1"
+                    >
+                    </object>
+                </shader-uniforms>
+            </shader-material>
+
+            <shader-material class="raindrops-material"
+                uniforms="shader-uniforms"
+                fragment="polyshader.fragment"
+                vertex="polyshader.vertex"
+                transparent="true">
+                <polyshader
+                    type="vertex"
+                    class="vertex"
+                    shaderxml="resources.shaders['vert.default'].shader"
+                ></polyshader>
+                <polyshader
+                    type="fragment"
+                    class="fragment"
+                    shaderxml="resources.shaders['frag.raindrops'].shader"
+                ></polyshader>
+                <shader-uniforms
+                    vertex="polyshader.vertex"
+                    fragment="polyshader.fragment"
+                    custom="object">
+                    <object
+                        color="0xFFFFFF"
+                        opacity="1"
+                    >
+                    </object>
+                </shader-uniforms>
+            </shader-material>
+
+            <shader-material class="peacock-material"
+                uniforms="shader-uniforms"
+                fragment="polyshader.fragment"
+                vertex="polyshader.vertex"
+                transparent="true">
+                <polyshader
+                    type="vertex"
+                    class="vertex"
+                    shaderxml="resources.shaders['vert.default'].shader"
+                ></polyshader>
+                <polyshader
+                    type="fragment"
+                    class="fragment"
+                    shaderxml="resources.shaders['frag.peacock'].shader"
+                ></polyshader>
+                <shader-uniforms
+                    vertex="polyshader.vertex"
+                    fragment="polyshader.fragment"
+                    custom="object">
+                    <object
+                        color="0xFFFFFF"
+                        opacity="1"
+                    >
+                    </object>
+                </shader-uniforms>
+            </shader-material>
+
+            <shader-material class="neonc-material"
+                uniforms="shader-uniforms"
+                fragment="polyshader.fragment"
+                vertex="polyshader.vertex"
+                transparent="true">
+                <polyshader
+                    type="vertex"
+                    class="vertex"
+                    shaderxml="resources.shaders['vert.default'].shader"
+                ></polyshader>
+                <polyshader
+                    type="fragment"
+                    class="fragment"
+                    shaderxml="resources.shaders['frag.neon.circles'].shader"
+                ></polyshader>
+                <shader-uniforms
+                    vertex="polyshader.vertex"
+                    fragment="polyshader.fragment"
+                    custom="object">
+                    <object
+                        color="0xFFFFFF"
+                        opacity="1"
+                    >
+                    </object>
+                </shader-uniforms>
+            </shader-material>
+
+            <shader-material class="electroc-material"
+                uniforms="shader-uniforms"
+                fragment="polyshader.fragment"
+                vertex="polyshader.vertex"
+                transparent="true">
+                <polyshader
+                    type="vertex"
+                    class="vertex"
+                    shaderxml="resources.shaders['vert.default'].shader"
+                ></polyshader>
+                <polyshader
+                    type="fragment"
+                    class="fragment"
+                    shaderxml="resources.shaders['frag.electro.cells'].shader"
+                ></polyshader>
+                <shader-uniforms
+                    vertex="polyshader.vertex"
+                    fragment="polyshader.fragment"
+                    custom="object">
+                    <object
+                        color="0xFFFFFF"
+                        opacity="1"
+                    >
+                    </object>
+                </shader-uniforms>
+            </shader-material>
+
+            <shader-material class="fluids-material"
+                uniforms="shader-uniforms"
+                fragment="polyshader.fragment"
+                vertex="polyshader.vertex"
+                transparent="true">
+                <polyshader
+                    type="vertex"
+                    class="vertex"
+                    shaderxml="resources.shaders['vert.default'].shader"
+                ></polyshader>
+                <polyshader
+                    type="fragment"
+                    class="fragment"
+                    shaderxml="resources.shaders['frag.fluids'].shader"
+                ></polyshader>
+                <shader-uniforms
+                    vertex="polyshader.vertex"
+                    fragment="polyshader.fragment"
+                    custom="object">
+                    <object
+                        color="0xFFFFFF"
+                        opacity="1"
+                    >
+                    </object>
+                </shader-uniforms>
+            </shader-material>
+
+            <!-- !Shader materials -->
+
+            <position x="0"></position>
+
+            <mesh 
+                geometry="geometry" 
+                material="shader-material"
+                class="background"
+                receive-shadow="false">
+                <position z="-254" x="0" y="0"></position>
+                <geometry 
+                    type="plane" 
+                    width="{ window.innerWidth * window.devicePixelRatio }" 
+                    height="{ window.innerHeight * window.devicePixelRatio }" 
+                    segments="1">
+                        
+                    </geometry>
+                <link source=".neonc-material"></link>
+            </mesh>
+
+            <!-- <mesh 
+                class="field-ring shadow"
+                geometry="geometry" 
+                material="material"
+                cast-shadow="false"
+                receive-shadow="false">
+                <position z="-253" x="0" y="0"></position>
+                <geometry type="ring" inner-radius="78" outer-radius="80" segments="64"></geometry>
+                <link source=".default-shady-material"></link>
+            </mesh> -->
+
+            <mesh 
+                class="field-ring body"
+                geometry="geometry" 
+                material="material"
+                cast-shadow="false"
+                receive-shadow="false">
+                <position z="-250" x="0" y="0"></position>
+                <geometry type="ring" inner-radius="79" outer-radius="80" segments="96"></geometry>
+                <link source=".default-phong-material"></link>
+            </mesh>
+
+            <mesh 
+                class="racket body"
+                geometry="geometry" 
+                material="material"
+                cast-shadow="false"
+                receive-shadow="false">
+                <position z="-250" x="0" y="0"></position>
+                <geometry type="ring" inner-radius="75" outer-radius="78" segments="96" theta-start="0" theta-length="{ Math.PI / 6 }"></geometry>
+                <link source=".default-phong-material"></link>
+            </mesh>
+
+             <mesh 
+                class="ball"
+                geometry="geometry" 
+                material="material"
+                cast-shadow="false"
+                receive-shadow="false">
+                <position z="-250" x="0" y="0"></position>
+                <geometry type="circle" radius="5" segments="48"></geometry>
+                <link source=".default-phong-material"></link>
+            </mesh>
+
+            <mesh 
+                class="man"
+                geometry="geometry" 
+                material="material"
+                cast-shadow="false"
+                receive-shadow="false">
+                <position z="-250" x="0" y="0"></position>
+                <geometry type="circle" radius="10" segments="32"></geometry>
+                <link source=".default-phong-material"></link>
+            </mesh>
+
+            <mesh 
+                class="superman"
+                geometry="geometry" 
+                material="material"
+                cast-shadow="false"
+                receive-shadow="false">
+                <position z="-250" x="0" y="30"></position>
+                <geometry type="ring" inner-radius="12" outer-radius="16" segments="32"></geometry>
+                <link source=".default-phong-material"></link>
+            </mesh>
+        </group>
+    </scene>
+</renderer>

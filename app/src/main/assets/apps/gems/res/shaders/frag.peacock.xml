@@ -1,0 +1,19 @@
+<uniforms>\
+	<item type="vec2"  name="resolution"></item>
+	<item type="float" name="time"></item>
+</uniforms>
+<program>
+	
+	vec3 Geoffrey(float t)
+	{
+	    vec3 r = t * 0.7 - vec3(0.4
+				   , 4.14, 4.3);
+	    return (cos(3.5 * sin(4.0 - r * r)));
+	}
+
+	void main( void ) {
+		vec2 p = ( gl_FragCoord.xy / resolution.xy ) * 6.0 - 4.0;
+		gl_FragColor = vec4(Geoffrey(cos(p.y * 3.0 + time * 0.3) + sin(p.x + cos(1.0 * p.y + time * 0.18) + p.x * 7.0 + time)), 9.0 );
+	}
+
+</program>
