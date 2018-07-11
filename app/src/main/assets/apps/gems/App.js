@@ -11,8 +11,6 @@ define("App", [
 
 	unicycle.addTask(Tweeny.tick);
 
-	console.log(BezierEasing);
-
 	var App =  new $Class({ name : "App" }, {
 		$constructor : function(){
 			this.stage = trident.buildStage(resources.templates.test.dom);
@@ -88,8 +86,6 @@ define("App", [
 							}, node.subject.position.y, node.subject.position.y - 20)
 						break;	
 					}
-
-					console.log(direction);
 				})
 			});
 

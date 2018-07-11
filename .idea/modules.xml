@@ -3,8 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jive2.iml" filepath="$PROJECT_DIR$/jive2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/omen.iml" filepath="$PROJECT_DIR$/omen.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lure.iml" filepath="$PROJECT_DIR$/lure.iml" />
     </modules>
   </component>
 </project>

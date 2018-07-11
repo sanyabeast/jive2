@@ -208,12 +208,13 @@ define([
 					childFirst : true,
 					source : "constructor",
 					construct : {
-						"lambert" : THREE.MeshLambertMaterial,
-						"normal" : THREE.MeshNormalMaterial,
-						"phong" : THREE.MeshPhongMaterial,
-						"toon" : THREE.MeshToonMaterial,
-						"shadow" : THREE.ShadowMaterial,
-						"sprite" : THREE.SpriteMaterial,
+						"lambert" 	: THREE.MeshLambertMaterial,
+						"normal" 	: THREE.MeshNormalMaterial,
+						"phong" 	: THREE.MeshPhongMaterial,
+						"toon" 		: THREE.MeshToonMaterial,
+						"shadow" 	: THREE.ShadowMaterial,
+						"sprite" 	: THREE.SpriteMaterial,
+						"basic" 	: THREE.MeshBasicMaterial
 					},
 					constructArgs : {
 						"lambert" 	: ["{ int::color, float::opacity, transparent, eval::side }"],
@@ -222,6 +223,7 @@ define([
 						"toon"  	: ["{ int::color, float::opacity, transparent, eval::side }"],
 						"shadow"  	: ["{ int::color, float::opacity, transparent, eval::side }"],
 						"sprite"  	: ["{ map=child::texture, int::color, float::opacity, transparent, eval::side }"],
+						"basic"  	: ["{ int::color, float::opacity, transparent, eval::side }"],
 					}
 				},
 				"shader-material" : {
@@ -328,16 +330,18 @@ define([
 					source : "factory",
 					construct : {
 						"ready" : function(name){
+							console.log(window.resources.textures[name]);
 							return window.resources.textures[name];
 						},
 						"load" : function(image){
-							texture = new THREE.TextureLoader().load(image.src);
+							var image = window.resources.images[image];
+							var texture = new THREE.TextureLoader().load(image.src);
 							return texture;
 						}
 					},
 					constructArgs : {
 						"ready" : ["name"],
-						"load" : ["eval::image", "mapping", "wrapS", "wrapT", "magFilter", "minFilter", "format", "type", "anisotrpy", "encoding"]
+						"load" : ["image", "mapping", "wrapS", "wrapT", "magFilter", "minFilter", "format", "type", "anisotrpy", "encoding"]
 					}
 				},
 				"sprite" : {

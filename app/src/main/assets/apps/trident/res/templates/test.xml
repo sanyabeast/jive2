@@ -242,7 +242,7 @@
 					>
 						<texture
 							type="ready"
-							name="sprite1.png"
+							name="gems.blue_gem_1.png"
 						></texture>
 					</material>
 				</sprite>
