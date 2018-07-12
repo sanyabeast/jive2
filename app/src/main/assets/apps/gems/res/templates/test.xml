@@ -28,205 +28,25 @@
 
             <group>
                 <position y="12"></position>
-                <sprite
-                    trident:repeat="data.gems"
-                    material="material">
-                    <scale value="10"></scale>
-                    <position x="{ index * 12 }" y="12"></position>
-                    <material
-                        type="sprite"
-                        color="0xFFFFFF"
-                        side="THREE.DoubleSide"
-                        texture="texture">
-                        <texture 
-                            name="{ 'gems.' + ['blue', 'yellow', 'green', 'pink'][Math.floor(Math.random() * 4)] + '_gem_' + item[Math.floor(Math.random() * item.length)] + '.png' }"
-                            type="ready">
-                        </texture>
-                        </material>
-                </sprite>
-            </group>
-
-            <group>
-                <position y="24"></position>
-                <sprite
-                    trident:repeat="data.gems"
-                    material="material">
-                    <scale value="10"></scale>
-                    <position x="{ index * 12 }" y="12"></position>
-                    <material
-                        type="sprite"
-                        color="0xFFFFFF"
-                        side="THREE.DoubleSide"
-                        texture="texture">
-                        <texture 
-                            name="{ 'gems.' + ['blue', 'yellow', 'green', 'pink'][Math.floor(Math.random() * 4)] + '_gem_' + item[Math.floor(Math.random() * item.length)] + '.png' }"
-                            type="ready">
-                        </texture>
-                        </material>
-                </sprite>
-            </group>
-
-            <group>
-                <position y="36"></position>
-                <sprite
-                    trident:repeat="data.gems"
-                    material="material">
-                    <scale value="10"></scale>
-                    <position x="{ index * 12 }" y="12"></position>
-                    <material
-                        type="sprite"
-                        color="0xFFFFFF"
-                        side="THREE.DoubleSide"
-                        texture="texture">
-                        <texture 
-                            name="{ 'gems.' + ['blue', 'yellow', 'green', 'pink'][Math.floor(Math.random() * 4)] + '_gem_' + item[Math.floor(Math.random() * item.length)] + '.png' }"
-                            type="ready">
-                        </texture>
-                        </material>
-                </sprite>
-            </group>
-
-            <group>
-                <position y="48"></position>
-                <sprite
-                    trident:repeat="data.gems"
-                    material="material">
-                    <scale value="10"></scale>
-                    <position x="{ index * 12 }" y="12"></position>
-                    <material
-                        type="sprite"
-                        color="0xFFFFFF"
-                        side="THREE.DoubleSide"
-                        texture="texture">
-                        <texture 
-                            name="{ 'gems.' + ['blue', 'yellow', 'green', 'pink'][Math.floor(Math.random() * 4)] + '_gem_' + item[Math.floor(Math.random() * item.length)] + '.png' }"
-                            type="ready">
-                        </texture>
-                        </material>
-                </sprite>
-            </group>
-
-            <group>
-                <position y="60"></position>
-                <sprite
-                    trident:repeat="data.gems"
-                    material="material">
-                    <scale value="10"></scale>
-                    <position x="{ index * 12 }" y="12"></position>
-                    <material
-                        type="sprite"
-                        color="0xFFFFFF"
-                        side="THREE.DoubleSide"
-                        texture="texture">
-                        <texture 
-                            name="{ 'gems.' + ['blue', 'yellow', 'green', 'pink'][Math.floor(Math.random() * 4)] + '_gem_' + item[Math.floor(Math.random() * item.length)] + '.png' }"
-                            type="ready">
-                        </texture>
-                        </material>
-                </sprite>
-            </group>
-
-            <group>
-                <position y="60"></position>
-                <group>
-                    <position y="12"></position>
-                    <sprite
-                        trident:repeat="data.gems"
-                        material="material">
-                        <scale value="10"></scale>
-                        <position x="{ index * 12 }" y="12"></position>
-                        <material
-                            type="sprite"
-                            color="0xFFFFFF"
-                            side="THREE.DoubleSide"
-                            texture="texture">
-                            <texture 
-                                name="{ 'gems.' + ['blue', 'yellow', 'green', 'pink'][Math.floor(Math.random() * 4)] + '_gem_' + item[Math.floor(Math.random() * item.length)] + '.png' }"
-                                type="ready">
-                            </texture>
-                            </material>
-                    </sprite>
-                </group>
-
-                <group>
-                    <position y="24"></position>
-                    <sprite
-                        trident:repeat="data.gems"
-                        material="material">
-                        <scale value="10"></scale>
-                        <position x="{ index * 12 }" y="12"></position>
-                        <material
-                            type="sprite"
-                            color="0xFFFFFF"
-                            side="THREE.DoubleSide"
-                            texture="texture">
-                            <texture 
-                                name="{ 'gems.' + ['blue', 'yellow', 'green', 'pink'][Math.floor(Math.random() * 4)] + '_gem_' + item[Math.floor(Math.random() * item.length)] + '.png' }"
-                                type="ready">
-                            </texture>
-                            </material>
-                    </sprite>
-                </group>
-
-                <group>
-                    <position y="36"></position>
-                    <sprite
-                        trident:repeat="data.gems"
-                        material="material">
-                        <scale value="10"></scale>
-                        <position x="{ index * 12 }" y="12"></position>
-                        <material
-                            type="sprite"
-                            color="0xFFFFFF"
-                            side="THREE.DoubleSide"
-                            texture="texture">
-                            <texture 
-                                name="{ 'gems.' + ['blue', 'yellow', 'green', 'pink'][Math.floor(Math.random() * 4)] + '_gem_' + item[Math.floor(Math.random() * item.length)] + '.png' }"
-                                type="ready">
-                            </texture>
-                            </material>
-                    </sprite>
-                </group>
-
-                <group>
-                    <position y="48"></position>
-                    <sprite
-                        trident:repeat="data.gems"
-                        material="material">
-                        <scale value="10"></scale>
-                        <position x="{ index * 12 }" y="12"></position>
-                        <material
-                            type="sprite"
-                            color="0xFFFFFF"
-                            side="THREE.DoubleSide"
-                            texture="texture">
-                            <texture 
-                                name="{ 'gems.' + ['blue', 'yellow', 'green', 'pink'][Math.floor(Math.random() * 4)] + '_gem_' + item[Math.floor(Math.random() * item.length)] + '.png' }"
-                                type="ready">
-                            </texture>
-                            </material>
-                    </sprite>
-                </group>
-
-                <group>
-                    <position y="60"></position>
-                    <sprite
-                        trident:repeat="data.gems"
-                        material="material">
-                        <scale value="10"></scale>
-                        <position x="{ index * 12 }" y="12"></position>
-                        <material
-                            type="sprite"
-                            color="0xFFFFFF"
-                            side="THREE.DoubleSide"
-                            texture="texture">
-                            <texture 
-                                name="{ 'gems.' + ['blue', 'yellow', 'green', 'pink'][Math.floor(Math.random() * 4)] + '_gem_' + item[Math.floor(Math.random() * item.length)] + '.png' }"
-                                type="ready">
-                            </texture>
-                            </material>
-                    </sprite>
-                </group>
+                _.forEach(data.gems, function(row, x){
+                    _.forEach(row, function(gem, y){
+                        <sprite
+                            material="material">
+                            <scale value="10"></scale>
+                            <position x="{ x }" y="{ y }"></position>
+                            <material
+                                type="sprite"
+                                color="0xFFFFFF"
+                                side="THREE.DoubleSide"
+                                texture="texture">
+                                <texture 
+                                    name="{ 'gems.' + ['blue', 'yellow', 'green', 'pink'][Math.floor(Math.random() * 4)] + '_gem_' + gem + '.png' }"
+                                    type="ready">
+                                </texture>
+                                </material>
+                        </sprite>
+                    });
+                });
             </group>
 
         </group>

@@ -63,7 +63,7 @@ define(function(){
 		},
 		getUrlLevel : function(url){
 			return url.split("/").length - 1;
-		}
+		},
 	});
 
 	window.kek = new ToolChain();

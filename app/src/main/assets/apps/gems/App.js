@@ -172,7 +172,7 @@ define("App", [
 			this.setupOrbitControls(camera, scene, renderer);
 			this.setupCommonUniforms();
 
-			resources.sound["Bouncer 001"].play();
+			// resources.sound["Bouncer 001"].play();
 		},
 		setupOrbitControls : function(camera, scene, renderer){
 			// return;
